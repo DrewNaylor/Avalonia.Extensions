@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Avalonia.Controls.ItemsRepeaterEx
+namespace Avalonia.Controls.Extensions
 {
     public sealed class HorizontalItemsRepeater : ItemsRepeater
     {

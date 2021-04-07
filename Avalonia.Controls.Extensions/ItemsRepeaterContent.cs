@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Avalonia.Controls.ItemsRepeaterEx
+namespace Avalonia.Controls.Extensions
 {
     /// <summary>
     /// This is a clickable <seealso cref="Grid" />,
