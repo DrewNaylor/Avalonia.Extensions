@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        xmlns:ext="using:Avalonia.Controls.Extensions"
+        x:Class="Avalonia.Controls.Demo.MainWindow"
+        Title="Avalonia.Controls.Demo">
+  <StackPanel Orientation="Vertical">
+    <TextBlock Text="{Binding Message}" Foreground="Red"/>
+    <ext:HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}">
+      <ItemsRepeater.ItemTemplate>
+        <DataTemplate>
+          <ext:ItemsRepeaterContent CommandParameter="{Binding content}">
+            <TextBlock Text="{Binding content}" />
+          </ext:ItemsRepeaterContent>
+        </DataTemplate>
+      </ItemsRepeater.ItemTemplate>
+    </ext:HorizontalItemsRepeater>
+  </StackPanel>
+</Window>
