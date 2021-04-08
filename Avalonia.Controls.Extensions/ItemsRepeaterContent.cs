@@ -17,6 +17,7 @@ namespace Avalonia.Controls.Extensions
     {
         static ItemsRepeaterContent()
         {
+            ClipToBoundsProperty.OverrideDefaultValue<ItemsRepeaterContent>(true);
             FocusableProperty.OverrideDefaultValue(typeof(ItemsRepeaterContent), true);
             CommandProperty.Changed.Subscribe(CommandChanged);
             IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
@@ -35,6 +36,13 @@ namespace Avalonia.Controls.Extensions
         }
         public static readonly StyledProperty<bool> IsDefaultProperty =
             AvaloniaProperty.Register<ItemsRepeaterContent, bool>(nameof(IsDefault));
+        public Thickness Padding
+        {
+            get { return GetValue(PaddingProperty); }
+            set { SetValue(PaddingProperty, value); }
+        }
+        public static readonly StyledProperty<Thickness> PaddingProperty =
+           Decorator.PaddingProperty.AddOwner<ItemsRepeaterContent>();
         public ICommand Command
         {
             get { return _command; }

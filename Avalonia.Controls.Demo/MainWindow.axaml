@@ -8,7 +8,7 @@
         Title="Avalonia.Controls.Demo">
   <StackPanel Orientation="Vertical">
     <TextBlock Text="{Binding Message}" Foreground="Red"/>
-    <ext:HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}">
+    <ext:HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
       <ItemsRepeater.ItemTemplate>
         <DataTemplate>
           <ext:ItemsRepeaterContent CommandParameter="{Binding content}">

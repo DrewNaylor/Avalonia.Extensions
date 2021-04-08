@@ -14,6 +14,8 @@ namespace Avalonia.Controls.Extensions
         private ICommand _command;
         public static readonly RoutedEvent<RoutedEventArgs> ClickEvent = 
             RoutedEvent.Register<HorizontalItemsRepeater, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble); 
+        public static readonly StyledProperty<double> SpacingProperty =
+          AvaloniaProperty.Register<StackLayout, double>(nameof(Spacing));
         public static readonly DirectProperty<HorizontalItemsRepeater, ICommand> CommandProperty =
              AvaloniaProperty.RegisterDirect<HorizontalItemsRepeater, ICommand>(nameof(Command),
                  content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
@@ -22,6 +24,15 @@ namespace Avalonia.Controls.Extensions
             add { AddHandler(ClickEvent, value); }
             remove { RemoveHandler(ClickEvent, value); }
         }
+        public double Spacing
+        {
+            get => GetValue(SpacingProperty);
+            set
+            {
+                SetValue(SpacingProperty, value);
+                DrawLayout();
+            }
+        }
         public ICommand Command
         {
             get { return _command; }
@@ -29,8 +40,16 @@ namespace Avalonia.Controls.Extensions
         }
         public HorizontalItemsRepeater() : base()
         {
-            Layout = new StackLayout { Orientation = Orientation.Horizontal };
+            DrawLayout();
             this.Children.CollectionChanged += Children_CollectionChanged;
+        }
+        private void DrawLayout()
+        {
+            Layout = new StackLayout
+            {
+                Spacing = Spacing,
+                Orientation = Orientation.Horizontal
+            };
         }
         private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
