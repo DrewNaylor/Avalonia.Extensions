@@ -23,7 +23,11 @@ namespace Avalonia.Controls.Extensions
         }
         private void UpdateItemView()
         {
+            var total = Items.Count();
+            if (total > 0 && LastIndex < total)
+            {
 
+            }
         }
         private void UpdateItemCount()
         {

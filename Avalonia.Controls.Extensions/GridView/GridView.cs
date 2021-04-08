@@ -7,6 +7,10 @@ namespace Avalonia.Controls.Extensions
 {
     public partial class GridView : TemplatedControl, ICollectionChangedListener
     {
+        /// <summary>
+        /// 最后加载到的Item下标
+        /// </summary>
+        private int LastIndex { get; set; } = 0;
         static GridView()
         {
             ItemsPanelProperty.OverrideDefaultValue<GridView>(DefaultPanel);

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Avalonia.Controls.Extensions.Utils
 {
-    public static class IEnumerableUtils
+    internal static class IEnumerableUtils
     {
         public static int Count(this IEnumerable items)
         {
