@@ -1,6 +1,6 @@
 ﻿using Avalonia.Collections;
+using Avalonia.Controls.Extensions.Presenters;
 using Avalonia.Controls.Generators;
-using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Interactivity;
@@ -46,62 +46,6 @@ namespace Avalonia.Controls.Extensions
         {
             get { return GetValue(ColumnNumProperty); }
             set { SetValue(ColumnNumProperty, value); }
-        }
-        //Items
-        public static readonly DirectProperty<GridView, IEnumerable> ItemsProperty =
-         AvaloniaProperty.RegisterDirect<GridView, IEnumerable>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
-        private IEnumerable _items = new AvaloniaList<object>();
-        [Content]
-        public IEnumerable Items
-        {
-            get { return _items; }
-            set
-            {
-                SetAndRaise(ItemsProperty, ref _items, value);
-                UpdateItemView();
-            }
-        }
-        //ItemCount
-        public static readonly DirectProperty<GridView, int> ItemCountProperty =
-            AvaloniaProperty.RegisterDirect<GridView, int>(nameof(ItemCount), o => o.ItemCount);
-        private int _itemCount;
-        public int ItemCount
-        {
-            get => _itemCount;
-            private set => SetAndRaise(ItemCountProperty, ref _itemCount, value);
-        }
-        //ItemTemplate
-        public static readonly StyledProperty<IDataTemplate> ItemTemplateProperty =
-             AvaloniaProperty.Register<ItemsControl, IDataTemplate>(nameof(ItemTemplate));
-        public IDataTemplate ItemTemplate
-        {
-            get { return GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
-        }
-        //other
-        private IItemContainerGenerator _itemContainerGenerator;
-        public IItemsPresenter Presenter
-        {
-            get;
-            protected set;
-        }
-        public IItemContainerGenerator ItemContainerGenerator
-        {
-            get
-            {
-                if (_itemContainerGenerator == null)
-                {
-                    _itemContainerGenerator = CreateItemContainerGenerator();
-                    if (_itemContainerGenerator != null)
-                    {
-                        _itemContainerGenerator.ItemTemplate = ItemTemplate;
-                        _itemContainerGenerator.Materialized += (_, e) => OnContainersMaterialized(e);
-                        _itemContainerGenerator.Dematerialized += (_, e) => OnContainersDematerialized(e);
-                        _itemContainerGenerator.Recycled += (_, e) => OnContainersRecycled(e);
-                    }
-                }
-                return _itemContainerGenerator;
-            }
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Avalonia.Controls.Demo
         }
         private void InitializeComponent()
         {
+            Width = 480;
+            Height = 300;
             var model = new MainViewModel();
             DataContext = model;
         }
