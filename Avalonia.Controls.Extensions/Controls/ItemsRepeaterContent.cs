@@ -10,10 +10,11 @@ using System.Windows.Input;
 namespace Avalonia.Controls.Extensions
 {
     /// <summary>
-    /// This is a clickable <seealso cref="Grid" />,
-    /// Just like the <seealso cref="Button"/>
+    /// This is a clickable <seealso cref="Panel" />,
+    /// Just like the <seealso cref="Button"/> in 
+    /// <a href="https://avaloniaui.net/docs/controls/button#play-button">this instance</a>.
     /// </summary>
-    public class ItemsRepeaterContent : Grid, ICommandSource
+    public class ItemsRepeaterContent : Panel, ICommandSource
     {
         static ItemsRepeaterContent()
         {

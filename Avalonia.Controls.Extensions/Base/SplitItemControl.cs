@@ -15,12 +15,30 @@ namespace Avalonia.Controls.Extensions
 {
     public class SplitItemControl : TemplatedControl, ICollectionChangedListener, IColumnsPresenterHost
     {
+        static SplitItemControl()
+        {
+            ItemsProperty.Changed.AddClassHandler<GridView>((x, e) => x.ItemsChanged(e));
+            ItemTemplateProperty.Changed.AddClassHandler<GridView>((x, e) => x.ItemTemplateChanged(e));
+        }
+        public SplitItemControl()
+        {
+            PseudoClasses.Add(":empty");
+            SubscribeToItems(_items);
+        }
         public IColumnsPresenter Presenter
         {
             get;
             protected set;
         }
-        //ItemCount
+        private static readonly FuncTemplate<IPanel> DefaultPanel =
+          new FuncTemplate<IPanel>(() => new StackPanel());
+        public static readonly StyledProperty<ITemplate<IPanel>> ItemsPanelProperty =
+             AvaloniaProperty.Register<ItemsControl, ITemplate<IPanel>>(nameof(ItemsPanel), DefaultPanel);
+        public ITemplate<IPanel> ItemsPanel
+        {
+            get { return GetValue(ItemsPanelProperty); }
+            set { SetValue(ItemsPanelProperty, value); }
+        }
         public static readonly DirectProperty<GridView, int> ItemCountProperty =
             AvaloniaProperty.RegisterDirect<GridView, int>(nameof(ItemCount), o => o.ItemCount);
         private int _itemCount;
@@ -29,7 +47,6 @@ namespace Avalonia.Controls.Extensions
             get => _itemCount;
             private set => SetAndRaise(ItemCountProperty, ref _itemCount, value);
         }
-        //Items
         public static readonly DirectProperty<GridView, IEnumerable> ItemsProperty =
          AvaloniaProperty.RegisterDirect<GridView, IEnumerable>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
         private IEnumerable _items = new AvaloniaList<object>();
@@ -39,7 +56,6 @@ namespace Avalonia.Controls.Extensions
             get => _items;
             set => SetAndRaise(ItemsProperty, ref _items, value);
         }
-        //ItemTemplate
         public static readonly StyledProperty<IDataTemplate> ItemTemplateProperty =
              AvaloniaProperty.Register<ItemsControl, IDataTemplate>(nameof(ItemTemplate));
         public IDataTemplate ItemTemplate
@@ -77,7 +93,7 @@ namespace Avalonia.Controls.Extensions
             Presenter = presenter;
             ItemContainerGenerator.Clear();
         }
-        protected void UpdateItemCount()
+        private void UpdateItemCount()
         {
             if (Items == null)
                 ItemCount = 0;
@@ -103,7 +119,7 @@ namespace Avalonia.Controls.Extensions
             PseudoClasses.Set(":empty", collection == null || collection.Count == 0);
             PseudoClasses.Set(":singleitem", collection != null && collection.Count == 1);
         }
-        protected void AddControlItemsToLogicalChildren(IEnumerable items)
+        private void AddControlItemsToLogicalChildren(IEnumerable items)
         {
             var toAdd = new List<ILogical>();
             if (items != null)
@@ -116,7 +132,7 @@ namespace Avalonia.Controls.Extensions
             }
             LogicalChildren.AddRange(toAdd);
         }
-        protected void RemoveControlItemsFromLogicalChildren(IEnumerable items)
+        private void RemoveControlItemsFromLogicalChildren(IEnumerable items)
         {
             var toRemove = new List<ILogical>();
             if (items != null)
@@ -138,6 +154,26 @@ namespace Avalonia.Controls.Extensions
                     LogicalChildren.Add(container.ContainerControl);
             }
         }
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (!e.Handled)
+            {
+
+            }
+        }
+        protected virtual void ItemsChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            var oldValue = e.OldValue as IEnumerable;
+            var newValue = e.NewValue as IEnumerable;
+            if (oldValue is INotifyCollectionChanged incc)
+                CollectionChangedEventManager.Instance.RemoveListener(incc, this);
+            UpdateItemCount();
+            RemoveControlItemsFromLogicalChildren(oldValue);
+            AddControlItemsToLogicalChildren(newValue);
+            if (Presenter != null)
+                Presenter.Items = newValue;
+            SubscribeToItems(newValue);
+        }
         protected virtual IItemContainerGenerator CreateItemContainerGenerator()
         {
             return new ItemContainerGenerator(this);
@@ -149,17 +185,13 @@ namespace Avalonia.Controls.Extensions
                 if (container?.ContainerControl != container?.Item)
                     LogicalChildren.Remove(container.ContainerControl);
             }
-            if (Presenter.Panel is InputElement panel)
-            {
-                foreach (var container in e.Containers)
-                {
-                    if (KeyboardNavigation.GetTabOnceActiveElement(panel) == container.ContainerControl)
-                    {
-                        KeyboardNavigation.SetTabOnceActiveElement(panel, null);
-                        break;
-                    }
-                }
-            }
+        }
+        protected static object ElementAt(IEnumerable items, int index)
+        {
+            if (index != -1 && index < items.Count())
+                return items.ElementAt(index) ?? null;
+            else
+                return null;
         }
         protected static int IndexOf(IEnumerable items, object item)
         {
@@ -179,6 +211,32 @@ namespace Avalonia.Controls.Extensions
                 }
             }
             return -1;
+        }
+        private void ItemTemplateChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            if (_itemContainerGenerator != null)
+                _itemContainerGenerator.ItemTemplate = (IDataTemplate)e.NewValue;
+        }
+        private void SubscribeToItems(IEnumerable items)
+        {
+            PseudoClasses.Set(":empty", items == null || items.Count() == 0);
+            PseudoClasses.Set(":singleitem", items != null && items.Count() == 1);
+            if (items is INotifyCollectionChanged incc)
+                CollectionChangedEventManager.Instance.AddListener(incc, this);
+        }
+        protected static IInputElement GetNextControl(INavigableContainer container, NavigationDirection direction, IInputElement from, bool wrap)
+        {
+            IInputElement result;
+            var c = from;
+            do
+            {
+                result = container.GetControl(direction, c, wrap);
+                from ??= result;
+                if (result != null && result.Focusable && result.IsEffectivelyEnabled && result.IsEffectivelyVisible)
+                    return result;
+                c = result;
+            } while (c != null && c != from);
+            return null;
         }
     }
 }

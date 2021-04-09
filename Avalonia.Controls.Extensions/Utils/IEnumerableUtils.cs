@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +7,15 @@ namespace Avalonia.Controls.Extensions.Utils
 {
     internal static class IEnumerableUtils
     {
+        public static object ElementAt(this IEnumerable source, int index)
+        {
+            var i = -1;
+            var enumerator = source.GetEnumerator();
+            while (enumerator.MoveNext() && ++i < index) ;
+            if (i == index)
+                return enumerator.Current;
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
         public static int Count(this IEnumerable items)
         {
             if (items != null)
