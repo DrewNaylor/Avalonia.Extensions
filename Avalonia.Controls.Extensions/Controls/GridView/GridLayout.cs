@@ -13,14 +13,15 @@ using System.Collections.Specialized;
 
 namespace Avalonia.Controls.Extensions
 {
-    public class SplitItemControl : TemplatedControl, ICollectionChangedListener, IColumnsPresenterHost
+    public class GridLayout : TemplatedControl, ICollectionChangedListener, IColumnsPresenterHost
     {
-        static SplitItemControl()
+        static GridLayout()
         {
             ItemsProperty.Changed.AddClassHandler<GridView>((x, e) => x.ItemsChanged(e));
+            ColumnNumProperty.Changed.AddClassHandler<GridView>((x, e) => x.ColumnNumChanged(e));
             ItemTemplateProperty.Changed.AddClassHandler<GridView>((x, e) => x.ItemTemplateChanged(e));
         }
-        public SplitItemControl()
+        public GridLayout()
         {
             PseudoClasses.Add(":empty");
             SubscribeToItems(_items);
@@ -39,6 +40,7 @@ namespace Avalonia.Controls.Extensions
             get { return GetValue(ItemsPanelProperty); }
             set { SetValue(ItemsPanelProperty, value); }
         }
+        //ItemCount
         public static readonly DirectProperty<GridView, int> ItemCountProperty =
             AvaloniaProperty.RegisterDirect<GridView, int>(nameof(ItemCount), o => o.ItemCount);
         private int _itemCount;
@@ -47,6 +49,7 @@ namespace Avalonia.Controls.Extensions
             get => _itemCount;
             private set => SetAndRaise(ItemCountProperty, ref _itemCount, value);
         }
+        //Items
         public static readonly DirectProperty<GridView, IEnumerable> ItemsProperty =
          AvaloniaProperty.RegisterDirect<GridView, IEnumerable>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
         private IEnumerable _items = new AvaloniaList<object>();
@@ -55,6 +58,14 @@ namespace Avalonia.Controls.Extensions
         {
             get => _items;
             set => SetAndRaise(ItemsProperty, ref _items, value);
+        }
+        //ColumnNum
+        public static readonly StyledProperty<int> ColumnNumProperty =
+            AvaloniaProperty.Register<GridView, int>(nameof(ColumnNum));
+        public int ColumnNum
+        {
+            get { return GetValue(ColumnNumProperty); }
+            set { SetValue(ColumnNumProperty, value); }
         }
         public static readonly StyledProperty<IDataTemplate> ItemTemplateProperty =
              AvaloniaProperty.Register<ItemsControl, IDataTemplate>(nameof(ItemTemplate));
@@ -158,6 +169,15 @@ namespace Avalonia.Controls.Extensions
         {
             if (!e.Handled)
             {
+
+            }
+        }
+        protected virtual void ColumnNumChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is int columnNum)
+            {
+                if (Presenter != null)
+                    Presenter.ColumnNum = columnNum;
 
             }
         }

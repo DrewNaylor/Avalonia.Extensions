@@ -1,15 +1,11 @@
-﻿using Avalonia.Controls.Extensions.Utils;
-using Avalonia.Controls.Primitives;
-using Avalonia.Controls.Templates;
+﻿using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using System;
-using System.Collections;
-using System.Collections.Specialized;
 
 namespace Avalonia.Controls.Extensions
 {
-    public partial class GridView : SplitItemControl
+    public partial class GridView : GridLayout
     {
         //ItemClick
         public static readonly RoutedEvent<RoutedEventArgs> ItemClickEvent =
@@ -27,14 +23,6 @@ namespace Avalonia.Controls.Extensions
         {
             get { return _scroll; }
             private set { SetAndRaise(ScrollProperty, ref _scroll, value); }
-        }
-        //ColumnNum
-        public static readonly DirectProperty<GridView, int> ColumnNumProperty =
-            AvaloniaProperty.RegisterDirect<GridView, int>(nameof(ColumnNum), o => o.ColumnNum, (o, v) => o.ColumnNum = v);
-        public int ColumnNum
-        {
-            get { return GetValue(ColumnNumProperty); }
-            set { SetValue(ColumnNumProperty, value); }
         }
         protected override void OnGotFocus(GotFocusEventArgs e)
         {
@@ -54,6 +42,13 @@ namespace Avalonia.Controls.Extensions
         {
             base.OnApplyTemplate(e);
             Scroll = e.NameScope.Find<IScrollable>("PART_ScrollViewer");
+        }
+        internal void OnContentClick(ClickablePanel gridItem)
+        {
+            if (gridItem != null)
+            {
+
+            }
         }
     }
 }

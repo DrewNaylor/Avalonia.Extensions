@@ -11,18 +11,18 @@
     <ext:HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
       <ItemsRepeater.ItemTemplate>
         <DataTemplate>
-          <ext:ItemsRepeaterContent CommandParameter="{Binding content}">
+          <ext:ClickablePanel CommandParameter="{Binding content}">
             <TextBlock Text="{Binding content}" />
-          </ext:ItemsRepeaterContent>
+          </ext:ClickablePanel>
         </DataTemplate>
       </ItemsRepeater.ItemTemplate>
     </ext:HorizontalItemsRepeater>
-    <ext:GridView Items="{Binding Items}">
+    <ext:GridView ColumnNum="4" Items="{Binding Items}">
       <ext:GridView.ItemTemplate>
         <DataTemplate>
-          <ext:ItemsRepeaterContent CommandParameter="{Binding content}">
+          <ext:ClickablePanel CommandParameter="{Binding content}">
             <TextBlock Text="{Binding content}" />
-          </ext:ItemsRepeaterContent>
+          </ext:ClickablePanel>
         </DataTemplate>
       </ext:GridView.ItemTemplate>
     </ext:GridView>

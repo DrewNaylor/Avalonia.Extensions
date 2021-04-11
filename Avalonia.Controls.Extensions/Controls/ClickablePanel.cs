@@ -1,4 +1,5 @@
-﻿using Avalonia.Data;
+﻿using Avalonia.Controls.Metadata;
+using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
@@ -14,17 +15,18 @@ namespace Avalonia.Controls.Extensions
     /// Just like the <seealso cref="Button"/> in 
     /// <a href="https://avaloniaui.net/docs/controls/button#play-button">this instance</a>.
     /// </summary>
-    public class ItemsRepeaterContent : Panel, ICommandSource
+    [PseudoClasses(":pressed")]
+    public class ClickablePanel : Panel, ICommandSource
     {
-        static ItemsRepeaterContent()
+        static ClickablePanel()
         {
-            ClipToBoundsProperty.OverrideDefaultValue<ItemsRepeaterContent>(true);
-            FocusableProperty.OverrideDefaultValue(typeof(ItemsRepeaterContent), true);
+            ClipToBoundsProperty.OverrideDefaultValue<ClickablePanel>(true);
+            FocusableProperty.OverrideDefaultValue(typeof(ClickablePanel), true);
             CommandProperty.Changed.Subscribe(CommandChanged);
             IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
             IsCancelProperty.Changed.Subscribe(IsCancelChanged);
         }
-        public ItemsRepeaterContent()
+        public ClickablePanel()
         {
             UpdatePseudoClasses(IsPressed);
         }
@@ -36,21 +38,21 @@ namespace Avalonia.Controls.Extensions
             set { SetValue(IsDefaultProperty, value); }
         }
         public static readonly StyledProperty<bool> IsDefaultProperty =
-            AvaloniaProperty.Register<ItemsRepeaterContent, bool>(nameof(IsDefault));
+            AvaloniaProperty.Register<ClickablePanel, bool>(nameof(IsDefault));
         public Thickness Padding
         {
             get { return GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
         }
         public static readonly StyledProperty<Thickness> PaddingProperty =
-           Decorator.PaddingProperty.AddOwner<ItemsRepeaterContent>();
+           Decorator.PaddingProperty.AddOwner<ClickablePanel>();
         public ICommand Command
         {
             get { return _command; }
             set { SetAndRaise(CommandProperty, ref _command, value); }
         }
-        public static readonly DirectProperty<ItemsRepeaterContent, ICommand> CommandProperty =
-          AvaloniaProperty.RegisterDirect<ItemsRepeaterContent, ICommand>(nameof(Command),
+        public static readonly DirectProperty<ClickablePanel, ICommand> CommandProperty =
+          AvaloniaProperty.RegisterDirect<ClickablePanel, ICommand>(nameof(Command),
               content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
         public object CommandParameter
         {
@@ -58,35 +60,35 @@ namespace Avalonia.Controls.Extensions
             set { SetValue(CommandParameterProperty, value); }
         }
         public static readonly StyledProperty<object> CommandParameterProperty =
-           AvaloniaProperty.Register<ItemsRepeaterContent, object>(nameof(CommandParameter));
+           AvaloniaProperty.Register<ClickablePanel, object>(nameof(CommandParameter));
         public event EventHandler<RoutedEventArgs> Click
         {
             add { AddHandler(ClickEvent, value); }
             remove { RemoveHandler(ClickEvent, value); }
         }
         public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
-           RoutedEvent.Register<ItemsRepeaterContent, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
+           RoutedEvent.Register<ClickablePanel, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
         public ClickMode ClickMode
         {
             get { return GetValue(ClickModeProperty); }
             set { SetValue(ClickModeProperty, value); }
         }
         public static readonly StyledProperty<ClickMode> ClickModeProperty =
-            AvaloniaProperty.Register<ItemsRepeaterContent, ClickMode>(nameof(ClickMode));
+            AvaloniaProperty.Register<ClickablePanel, ClickMode>(nameof(ClickMode), ClickMode.Press);
         public bool IsPressed
         {
             get { return GetValue(IsPressedProperty); }
             private set { SetValue(IsPressedProperty, value); }
         }
         public static readonly StyledProperty<bool> IsPressedProperty =
-           AvaloniaProperty.Register<ItemsRepeaterContent, bool>(nameof(IsPressed));
+           AvaloniaProperty.Register<ClickablePanel, bool>(nameof(IsPressed));
         public bool IsCancel
         {
             get { return GetValue(IsCancelProperty); }
             set { SetValue(IsCancelProperty, value); }
         }
         public static readonly StyledProperty<bool> IsCancelProperty =
-            AvaloniaProperty.Register<ItemsRepeaterContent, bool>(nameof(IsCancel));
+            AvaloniaProperty.Register<ClickablePanel, bool>(nameof(IsCancel));
         public void CanExecuteChanged(object sender, EventArgs e)
         {
             var canExecute = Command == null || Command.CanExecute(CommandParameter);
@@ -98,6 +100,10 @@ namespace Avalonia.Controls.Extensions
         }
         protected virtual void OnClick()
         {
+            if (Parent is HorizontalItemsRepeater repeater)
+                repeater.OnContentClick(this);
+            if (Parent is GridView gridView)
+                gridView.OnContentClick(this);
             var e = new RoutedEventArgs(ClickEvent);
             RaiseEvent(e);
             if (!e.Handled && Command?.CanExecute(CommandParameter) == true)
@@ -223,7 +229,7 @@ namespace Avalonia.Controls.Extensions
         }
         private static void CommandChanged(AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.Sender is ItemsRepeaterContent content)
+            if (e.Sender is ClickablePanel content)
             {
                 if (((ILogical)content).IsAttachedToLogicalTree)
                 {
@@ -237,7 +243,7 @@ namespace Avalonia.Controls.Extensions
         }
         private static void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
         {
-            var content = e.Sender as ItemsRepeaterContent;
+            var content = e.Sender as ClickablePanel;
             var isDefault = (bool)e.NewValue;
             if (content?.VisualRoot is IInputElement inputRoot)
             {
@@ -249,7 +255,7 @@ namespace Avalonia.Controls.Extensions
         }
         private static void IsCancelChanged(AvaloniaPropertyChangedEventArgs e)
         {
-            var content = e.Sender as ItemsRepeaterContent;
+            var content = e.Sender as ClickablePanel;
             var isCancel = (bool)e.NewValue;
             if (content?.VisualRoot is IInputElement inputRoot)
             {
