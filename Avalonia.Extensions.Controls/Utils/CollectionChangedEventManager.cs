@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Avalonia.Controls.Extensions.Utils
+namespace Avalonia.Extensions.Controls.Utils
 {
     internal class CollectionChangedEventManager
     {

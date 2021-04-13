@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Avalonia.Controls.Extensions.Utils
+namespace Avalonia.Extensions.Controls.Utils
 {
     internal static class IEnumerableUtils
     {

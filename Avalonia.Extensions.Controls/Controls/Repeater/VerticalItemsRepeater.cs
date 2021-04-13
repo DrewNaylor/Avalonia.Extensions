@@ -1,10 +1,11 @@
-﻿using Avalonia.Interactivity;
+﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
 using System;
 using System.Windows.Input;
 
-namespace Avalonia.Controls.Extensions.Controls
+namespace Avalonia.Extensions.Controls
 {
     public class VerticalItemsRepeater : ItemsRepeater
     {

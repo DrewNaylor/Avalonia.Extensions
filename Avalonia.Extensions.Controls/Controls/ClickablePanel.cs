@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Metadata;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -8,7 +9,7 @@ using System;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Avalonia.Controls.Extensions
+namespace Avalonia.Extensions.Controls
 {
     /// <summary>
     /// This is a clickable <seealso cref="Panel" />,
@@ -102,8 +103,6 @@ namespace Avalonia.Controls.Extensions
         {
             if (Parent is HorizontalItemsRepeater repeater)
                 repeater.OnContentClick(this);
-            if (Parent is GridView gridView)
-                gridView.OnContentClick(this);
             var e = new RoutedEventArgs(ClickEvent);
             RaiseEvent(e);
             if (!e.Handled && Command?.CanExecute(CommandParameter) == true)

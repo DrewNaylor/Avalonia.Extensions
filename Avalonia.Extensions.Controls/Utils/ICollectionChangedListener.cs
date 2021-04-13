@@ -1,6 +1,6 @@
 ﻿using System.Collections.Specialized;
 
-namespace Avalonia.Controls.Extensions.Utils
+namespace Avalonia.Extensions.Controls.Utils
 {
     internal interface ICollectionChangedListener
     {

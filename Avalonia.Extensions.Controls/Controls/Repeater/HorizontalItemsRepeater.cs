@@ -1,14 +1,21 @@
-﻿using Avalonia.Interactivity;
+﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
 using System;
 using System.Windows.Input;
 
-namespace Avalonia.Controls.Extensions
+namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HorizontalItemsRepeater : ItemsRepeater
     {
         private ICommand _command;
+        /// <summary>
+        /// 
+        /// </summary>
         public HorizontalItemsRepeater()
         {
             DrawLayout();

@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-        xmlns:ext="using:Avalonia.Controls.Extensions"
+        xmlns:ext="using:Avalonia.Extensions.Controls"
         x:Class="Avalonia.Controls.Demo.MainWindow"
         Title="Avalonia.Controls.Demo">
   <StackPanel Orientation="Vertical">
@@ -17,15 +17,15 @@
         </DataTemplate>
       </ItemsRepeater.ItemTemplate>
     </ext:HorizontalItemsRepeater>
-    <ext:GridView ColumnNum="4" Items="{Binding Items}">
-      <ext:GridView.ItemTemplate>
+    <ext:ListView Items="{Binding Items}">
+      <ext:ListView.ItemTemplate>
         <DataTemplate>
           <ext:ClickablePanel CommandParameter="{Binding content}">
             <TextBlock Text="12345678" />
             <TextBlock Text="{Binding content}" />
           </ext:ClickablePanel>
         </DataTemplate>
-      </ext:GridView.ItemTemplate>
-    </ext:GridView>
+      </ext:ListView.ItemTemplate>
+    </ext:ListView>
   </StackPanel>
 </Window>

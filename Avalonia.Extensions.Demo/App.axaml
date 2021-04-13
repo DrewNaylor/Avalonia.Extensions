@@ -3,5 +3,6 @@
              x:Class="Avalonia.Controls.Demo.App">
     <Application.Styles>
         <FluentTheme Mode="Light"/>
+        <StyleInclude Source="avares://Avalonia.Extensions.Theme/DefaultTheme.xaml" />
     </Application.Styles>
 </Application>
