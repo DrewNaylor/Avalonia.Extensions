@@ -1,20 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>michael_eddy</Authors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+    <EmbeddedResource Include="*.xaml" />
+    <AvaloniaResource Include="DefaultTheme.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="DefaultTheme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="ListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-  </ItemGroup>
-
 </Project>

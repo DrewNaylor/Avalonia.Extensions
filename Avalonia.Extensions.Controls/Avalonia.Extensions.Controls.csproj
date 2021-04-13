@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <PackageProjectUrl>https://avaloniaui.net</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Product>Avalonia.Extensions.Controls</Product>
+    <Authors>michael_eddy</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
