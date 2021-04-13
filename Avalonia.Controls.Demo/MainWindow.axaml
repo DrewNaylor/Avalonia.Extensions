@@ -21,6 +21,7 @@
       <ext:GridView.ItemTemplate>
         <DataTemplate>
           <ext:ClickablePanel CommandParameter="{Binding content}">
+            <TextBlock Text="12345678" />
             <TextBlock Text="{Binding content}" />
           </ext:ClickablePanel>
         </DataTemplate>

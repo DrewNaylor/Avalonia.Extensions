@@ -7,6 +7,25 @@ namespace Avalonia.Controls.Extensions.Utils
 {
     internal static class IEnumerableUtils
     {
+        public static int IndexOf(this IEnumerable items, object item)
+        {
+            if (items != null && item != null)
+            {
+                if (items is IList list)
+                    return list.IndexOf(item);
+                else
+                {
+                    int index = 0;
+                    foreach (var i in items)
+                    {
+                        if (Equals(i, item))
+                            return index;
+                        ++index;
+                    }
+                }
+            }
+            return -1;
+        }
         public static object ElementAt(this IEnumerable source, int index)
         {
             var i = -1;

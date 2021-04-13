@@ -10,4 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\Expandable\" />
+  </ItemGroup>
 </Project>
