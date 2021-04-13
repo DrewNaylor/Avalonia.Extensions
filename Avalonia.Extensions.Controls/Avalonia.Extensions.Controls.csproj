@@ -26,5 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\Expandable\" />
+    <Folder Include="Controls\Expandable\" />
   </ItemGroup>
 </Project>
