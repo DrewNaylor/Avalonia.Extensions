@@ -6,23 +6,23 @@ namespace Avalonia.Extensions.Controls
 {
     public class ListViewItem : ListBoxItem, IStyleable
     {
-        Type _styleKey;
+        public Type StyleKey { get; private set; }
         Type IStyleable.StyleKey
         {
             get
             {
-                if (_styleKey != null)
-                    return _styleKey;
+                if (StyleKey != null)
+                    return StyleKey;
                 return typeof(ListViewItem);
             }
         }
         internal void SetDefaultStyleKey(Type key)
         {
-            this._styleKey = key;
+            this.StyleKey = key;
         }
         internal void ClearDefaultStyleKey()
         {
-            _styleKey = null;
+            StyleKey = null;
         }
     }
 }

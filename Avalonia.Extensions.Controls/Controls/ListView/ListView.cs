@@ -14,8 +14,8 @@ namespace Avalonia.Extensions.Controls
         public static readonly AvaloniaProperty ViewProperty = AvaloniaProperty.Register<ListView, ViewBase>(nameof(View));
         public ViewBase View
         {
-            get { return (ViewBase)GetValue(ViewProperty); }
-            set { SetValue(ViewProperty, value); }
+            get => (ViewBase)GetValue(ViewProperty);
+            set => SetValue(ViewProperty, value);
         }
         private static void OnViewChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -28,22 +28,22 @@ namespace Avalonia.Extensions.Controls
                     throw new InvalidOperationException("View cannot be shared between multiple instances of ListView");
                 newView.IsUsed = true;
             }
-            listView._previousView = oldView;
+            listView.PreviousView = oldView;
             listView.ApplyNewView();
-            listView._previousView = newView;
+            listView.PreviousView = newView;
             if (oldView != null)
                 oldView.IsUsed = false;
         }
-        Type _defaultstyle;
+        public Type Defaultstyle { get; private set; }
         Type IStyleable.StyleKey => typeof(ListBox);
         private void ApplyNewView()
         {
             ViewBase newView = View;
             if (newView != null)
-                _defaultstyle = newView.DefaultStyleKey;
+                Defaultstyle = newView.DefaultStyleKey;
             else
-                _defaultstyle = null;
+                Defaultstyle = null;
         }
-        private ViewBase _previousView;
+        public ViewBase PreviousView { get; private set; }
     }
 }

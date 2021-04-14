@@ -18,42 +18,37 @@ namespace Avalonia.Extensions.Controls
             GridView.ColumnHeaderTemplateProperty.AddOwner<GridViewHeaderRowPresenter>();
         public IDataTemplate ColumnHeaderTemplate
         {
-            get { return GetValue(ColumnHeaderTemplateProperty); }
-            set { SetValue(ColumnHeaderTemplateProperty, value); }
+            get => GetValue(ColumnHeaderTemplateProperty);
+            set => SetValue(ColumnHeaderTemplateProperty, value);
         }
         public static readonly StyledProperty<string> ColumnHeaderStringFormatProperty =
             GridView.ColumnHeaderStringFormatProperty.AddOwner<GridViewHeaderRowPresenter>();
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string ColumnHeaderStringFormat
         {
-            get { return GetValue(ColumnHeaderStringFormatProperty); }
-            set { SetValue(ColumnHeaderStringFormatProperty, value); }
+            get => GetValue(ColumnHeaderStringFormatProperty);
+            set => SetValue(ColumnHeaderStringFormatProperty, value);
         }
         public static readonly StyledProperty<bool> AllowsColumnReorderProperty =
             GridView.AllowsColumnReorderProperty.AddOwner<GridViewHeaderRowPresenter>();
         public bool AllowsColumnReorder
         {
-            get { return GetValue(AllowsColumnReorderProperty); }
-            set { SetValue(AllowsColumnReorderProperty, value); }
+            get => GetValue(AllowsColumnReorderProperty);
+            set => SetValue(AllowsColumnReorderProperty, value);
         }
         public static readonly StyledProperty<ContextMenu> ColumnHeaderContextMenuProperty =
             GridView.ColumnHeaderContextMenuProperty.AddOwner<GridViewHeaderRowPresenter>();
         public ContextMenu ColumnHeaderContextMenu
         {
-            get { return GetValue(ColumnHeaderContextMenuProperty); }
-            set { SetValue(ColumnHeaderContextMenuProperty, value); }
+            get => GetValue(ColumnHeaderContextMenuProperty);
+            set => SetValue(ColumnHeaderContextMenuProperty, value);
         }
         public static readonly StyledProperty<ToolTip> ColumnHeaderToolTipProperty =
             GridView.ColumnHeaderToolTipProperty.AddOwner<GridViewHeaderRowPresenter>();
         public object ColumnHeaderToolTip
         {
-            get { return GetValue(ColumnHeaderToolTipProperty); }
-            set { SetValue(ColumnHeaderToolTipProperty, value); }
-        }
-        private static void PropertyChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
-        {
-            GridViewHeaderRowPresenter presenter = (GridViewHeaderRowPresenter)d;
-            presenter.UpdateAllHeaders(e.Property);
+            get => GetValue(ColumnHeaderToolTipProperty);
+            set => SetValue(ColumnHeaderToolTipProperty, value);
         }
         protected override Size MeasureOverride(Size constraint)
         {
@@ -109,7 +104,7 @@ namespace Avalonia.Extensions.Controls
                 _indicator.Measure(constraint);
                 _floatingHeader.Measure(constraint);
             }
-            return (new Size(accumulatedWidth, maxHeight));
+            return new Size(accumulatedWidth, maxHeight);
         }
         protected override Size ArrangeOverride(Size arrangeSize)
         {
@@ -160,8 +155,7 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.GetCurrentPoint(null).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
             {
-                GridViewColumnHeader header = e.Source as GridViewColumnHeader;
-                if (header != null && AllowsColumnReorder)
+                if (e.Source is GridViewColumnHeader header && AllowsColumnReorder)
                 {
                     PrepareHeaderDrag(header, e.GetPosition(this), e.GetPosition(header), false);
                     MakeParentItemsControlGotFocus();
@@ -223,9 +217,8 @@ namespace Avalonia.Extensions.Controls
                     {
                         if (!header.IsInternalGenerated || column.Header is GridViewColumnHeader)
                         {
-                            int i = InternalChildren.IndexOf(header);
+                            InternalChildren.IndexOf(header);
                             RemoveHeader(header, -1);
-                            GridViewColumnHeader newHeader = CreateAndInsertHeader(column, i);
                             BuildHeaderLinks();
                         }
                         else
@@ -284,8 +277,7 @@ namespace Avalonia.Extensions.Controls
         internal void MakeParentItemsControlGotFocus() { }
         internal void UpdateHeaderProperty(GridViewColumnHeader header, AvaloniaProperty property)
         {
-            AvaloniaProperty gvDP, columnDP, headerDP;
-            GetMatchingDPs(property, out gvDP, out columnDP, out headerDP);
+            GetMatchingDPs(property, out AvaloniaProperty gvDP, out AvaloniaProperty columnDP, out AvaloniaProperty headerDP);
             UpdateHeaderProperty(header, headerDP, columnDP, gvDP);
         }
         private void OnLayoutUpdated(object sender, EventArgs e)
@@ -359,8 +351,7 @@ namespace Avalonia.Extensions.Controls
                             }
                             else
                             {
-                                GridViewColumnHeader parentAsGVCH = parent as GridViewColumnHeader;
-                                if (parentAsGVCH != null)
+                                if (parent is GridViewColumnHeader parentAsGVCH)
                                     parentAsGVCH.ClearValue(ContentControl.ContentProperty);
                             }
                         }
@@ -368,10 +359,7 @@ namespace Avalonia.Extensions.Controls
                 }
             }
             if (headerContainer == null)
-            {
-                headerContainer = new GridViewColumnHeader();
-                headerContainer.IsInternalGenerated = true;
-            }
+                headerContainer = new GridViewColumnHeader { IsInternalGenerated = true };
             headerContainer.SetValue(GridViewColumnHeader.ColumnProperty, column);
             HookupItemsControlKeyboardEvent(headerContainer);
             InternalChildren.Insert(index, headerContainer);
@@ -392,39 +380,6 @@ namespace Avalonia.Extensions.Controls
             }
             UnhookItemsControlKeyboardEvent(header);
         }
-        private void RenewEvents()
-        {
-            ScrollViewer oldHeaderSV = _headerSV;
-            _headerSV = Parent as ScrollViewer;
-            if (oldHeaderSV != _headerSV)
-            {
-                if (oldHeaderSV != null)
-                    oldHeaderSV.ScrollChanged -= OnHeaderScrollChanged;
-                if (_headerSV != null)
-                    _headerSV.ScrollChanged += OnHeaderScrollChanged;
-            }
-            ScrollViewer oldSV = _mainSV;
-            _mainSV = TemplatedParent as ScrollViewer;
-
-            if (oldSV != _mainSV)
-            {
-                if (oldSV != null)
-                    oldSV.ScrollChanged -= OnMasterScrollChanged;
-                if (_mainSV != null)
-                    _mainSV.ScrollChanged += OnMasterScrollChanged;
-            }
-            ItemsControl oldIC = _itemsControl;
-            _itemsControl = FindItemsControlThroughTemplatedParent(this);
-            if (oldIC != _itemsControl)
-            {
-                if (oldIC != null)
-                    oldIC.KeyDown -= OnColumnHeadersPresenterKeyDown;
-                if (_itemsControl != null)
-                    _itemsControl.KeyDown += OnColumnHeadersPresenterKeyDown;
-            }
-            if (_itemsControl is ListView lv && lv.View != null && lv.View is GridView view)
-                view.HeaderRowPresenter = this;
-        }
         private void UnhookItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
             Debug.Assert(header != null);
@@ -444,31 +399,6 @@ namespace Avalonia.Extensions.Controls
         private void OnHeaderScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (_mainSV != null && _headerSV == e.Source) { }
-        }
-        private void AddPaddingColumnHeader()
-        {
-            GridViewColumnHeader paddingHeader = new GridViewColumnHeader();
-            paddingHeader.IsInternalGenerated = true;
-            paddingHeader.SetValue(GridViewColumnHeader.RoleProperty, GridViewColumnHeaderRole.Padding);
-            paddingHeader.Content = null;
-            paddingHeader.ContentTemplate = null;
-            paddingHeader.MinWidth = 0;
-            paddingHeader.Padding = new Thickness(0.0);
-            paddingHeader.Width = double.NaN;
-            paddingHeader.HorizontalAlignment = Layout.HorizontalAlignment.Stretch;
-            InternalChildren.Add(paddingHeader);
-            _paddingHeader = paddingHeader;
-        }
-        private void AddIndicator()
-        {
-            Separator indicator = new Separator();
-            indicator.IsVisible = false;
-            indicator.Margin = new Thickness(0);
-            indicator.Width = 2.0;
-            var border = new Border();
-            border.SetValue(Border.BackgroundProperty, new SolidColorBrush(Color.FromUInt32(0xFF000080)));
-            InternalChildren.Add(indicator);
-            _indicator = indicator;
         }
         private void AddFloatingHeader(GridViewColumnHeader srcHeader)
         {
@@ -510,19 +440,6 @@ namespace Avalonia.Extensions.Controls
         private bool CheckStartHeaderDrag(Point currentPos, Point originalPos)
         {
             return (MathUtilities.GreaterThan(Math.Abs(currentPos.X - originalPos.X), c_thresholdX));
-        }
-        private static ItemsControl FindItemsControlThroughTemplatedParent(GridViewHeaderRowPresenter presenter)
-        {
-            Control fe = presenter.TemplatedParent as Control;
-            ItemsControl itemsControl = null;
-            while (fe != null)
-            {
-                itemsControl = fe as ItemsControl;
-                if (itemsControl != null)
-                    break;
-                fe = fe.TemplatedParent as Control;
-            }
-            return itemsControl;
         }
         private void OnColumnHeadersPresenterKeyDown(object sender, KeyEventArgs e)
         {
@@ -611,28 +528,6 @@ namespace Avalonia.Extensions.Controls
                         header.Content = column.Header;
                 }
             }
-        }
-        private void UpdatePaddingHeader(GridViewColumnHeader header)
-        {
-            UpdateHeaderProperty(header, ColumnHeaderContextMenuProperty);
-            UpdateHeaderProperty(header, ColumnHeaderToolTipProperty);
-        }
-        private void UpdateAllHeaders(AvaloniaProperty dp)
-        {
-            GetMatchingDPs(dp, out AvaloniaProperty gvDP, out AvaloniaProperty columnDP, out AvaloniaProperty headerDP);
-            GetIndexRange(dp, out int iStart, out int iEnd);
-            ControlArray children = InternalChildren;
-            for (int i = iStart; i <= iEnd; i++)
-            {
-                GridViewColumnHeader header = children[i] as GridViewColumnHeader;
-                if (header != null)
-                    UpdateHeaderProperty(header, headerDP, columnDP, gvDP);
-            }
-        }
-        private void GetIndexRange(AvaloniaProperty dp, out int iStart, out int iEnd)
-        {
-            iStart = (dp == ColumnHeaderStringFormatProperty) ? 1 : 0;
-            iEnd = InternalChildren.Count - 3;
         }
         private void UpdateHeaderProperty(GridViewColumnHeader header, AvaloniaProperty targetDP, AvaloniaProperty columnDP, AvaloniaProperty gvDP)
         {
@@ -767,7 +662,7 @@ namespace Avalonia.Extensions.Controls
                 }
             }
             gvDP = columnDP = headerDP = null;
-        found:;
+            found:;
         }
         private static readonly AvaloniaProperty[][] s_DPList = new AvaloniaProperty[][]
         {
@@ -784,8 +679,8 @@ namespace Avalonia.Extensions.Controls
                 null,
             },
             new AvaloniaProperty[] {
-                GridViewColumnHeader.ContentTemplateProperty,
-                GridViewColumnHeader.ContextMenuProperty,
+                ContentControl.ContentTemplateProperty,
+                ContextMenuProperty,
                 ToolTip.TipProperty,
             }
         };

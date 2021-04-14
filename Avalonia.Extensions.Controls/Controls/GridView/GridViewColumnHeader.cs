@@ -2,7 +2,6 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia.Utilities;
 using System;
@@ -39,16 +38,15 @@ namespace Avalonia.Extensions.Controls
             if (role == GridViewColumnHeaderRole.Normal)
                 HookupGripperEvents();
         }
-
         public static readonly AvaloniaProperty ColumnProperty = AvaloniaProperty.Register<GridViewColumnHeader, GridViewColumn>(nameof(Column), null);
         public GridViewColumn Column
         {
-            get { return (GridViewColumn)GetValue(ColumnProperty); }
+            get => (GridViewColumn)GetValue(ColumnProperty);
         }
         public static readonly AvaloniaProperty RoleProperty = AvaloniaProperty.Register<GridViewColumnHeader, GridViewColumnHeaderRole>(nameof(Role), GridViewColumnHeaderRole.Normal);
         public GridViewColumnHeaderRole Role
         {
-            get { return (GridViewColumnHeaderRole)GetValue(RoleProperty); }
+            get => (GridViewColumnHeaderRole)GetValue(RoleProperty);
         }
 #if OLD_AUTOMATION
         void IInvokeProvider.Invoke()
@@ -126,26 +124,26 @@ namespace Avalonia.Extensions.Controls
                 ClearValue(dp);
             SetFlag(ignoreFlag, false);
         }
+        private GridViewColumnHeader _previousHeader;
         internal GridViewColumnHeader PreviousVisualHeader
         {
-            get { return _previousHeader; }
-            set { _previousHeader = value; }
+            get => _previousHeader;
+            set => _previousHeader = value;
         }
-        private GridViewColumnHeader _previousHeader;
         internal bool SuppressClickEvent
         {
-            get { return GetFlag(Flags.SuppressClickEvent); }
-            set { SetFlag(Flags.SuppressClickEvent, value); }
+            get => GetFlag(Flags.SuppressClickEvent);
+            set => SetFlag(Flags.SuppressClickEvent, value);
         }
         internal GridViewColumnHeader FloatSourceHeader
         {
-            get { return _srcHeader; }
-            set { _srcHeader = value; }
+            get => _srcHeader;
+            set => _srcHeader = value;
         }
         internal bool IsInternalGenerated
         {
-            get { return GetFlag(Flags.IsInternalGenerated); }
-            set { SetFlag(Flags.IsInternalGenerated, value); }
+            get => GetFlag(Flags.IsInternalGenerated);
+            set => SetFlag(Flags.IsInternalGenerated, value);
         }
         private static void PropertyChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -295,15 +293,6 @@ namespace Avalonia.Extensions.Controls
             else
                 _flags &= (~flag);
         }
-        private void UpdateFloatingHeaderCanvas()
-        {
-            if (_floatingHeaderCanvas != null && FloatSourceHeader != null)
-            {
-                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader);
-                _floatingHeaderCanvas.Background = visualBrush;
-                FloatSourceHeader = null;
-            }
-        }
         private bool HandleIsMouseOverChanged() => false;
         private void OnGripperMouseEnterLeave(object sender, PointerEventArgs e)
         {
@@ -331,12 +320,12 @@ namespace Avalonia.Extensions.Controls
         static private Cursor _splitOpenCursorCache = null;
         private bool IsAccessKeyOrAutomation
         {
-            get { return GetFlag(Flags.IsAccessKeyOrAutomation); }
-            set { SetFlag(Flags.IsAccessKeyOrAutomation, value); }
+            get => GetFlag(Flags.IsAccessKeyOrAutomation);
+            set => SetFlag(Flags.IsAccessKeyOrAutomation, value);
         }
         private double ColumnActualWidth
         {
-            get { return (Column != null ? Column.ActualWidth : Bounds.Width); }
+            get => Column != null ? Column.ActualWidth : Bounds.Width;
         }
         [Flags]
         private enum Flags

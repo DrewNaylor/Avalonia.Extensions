@@ -19,15 +19,11 @@ namespace Avalonia.Extensions.Controls
             CellTemplateProperty.Changed.AddClassHandler<GridViewColumn>(OnCellTemplateChanged);
             WidthProperty.Changed.AddClassHandler<GridViewColumn>(OnWidthChanged);
         }
-        public override string ToString()
-        {
-            throw new NotImplementedException(); 
-        }
         public static readonly AvaloniaProperty HeaderProperty = AvaloniaProperty.Register<GridViewColumn, object>(nameof(Header));
         public object Header
         {
-            get { return GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get => GetValue(HeaderProperty); 
+            set => SetValue(HeaderProperty, value); 
         }
         private static void OnHeaderChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -37,8 +33,8 @@ namespace Avalonia.Extensions.Controls
         public static readonly AvaloniaProperty HeaderContainerStyleProperty = AvaloniaProperty.Register<GridViewColumn, Style>(nameof(HeaderContainerStyle));
         public Style HeaderContainerStyle
         {
-            get { return (Style)GetValue(HeaderContainerStyleProperty); }
-            set { SetValue(HeaderContainerStyleProperty, value); }
+            get => (Style)GetValue(HeaderContainerStyleProperty);
+            set => SetValue(HeaderContainerStyleProperty, value);
         }
         private static void OnHeaderContainerStyleChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -48,8 +44,8 @@ namespace Avalonia.Extensions.Controls
         public static readonly AvaloniaProperty HeaderTemplateProperty = AvaloniaProperty.Register<GridViewColumn, IDataTemplate>(nameof(HeaderTemplate));
         public IDataTemplate HeaderTemplate
         {
-            get { return (IDataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
+            get => (IDataTemplate)GetValue(HeaderTemplateProperty);
+            set => SetValue(HeaderTemplateProperty, value);
         }
         private static void OnHeaderTemplateChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -59,8 +55,8 @@ namespace Avalonia.Extensions.Controls
         public static readonly AvaloniaProperty HeaderStringFormatProperty = AvaloniaProperty.Register<GridViewColumn, string>(nameof(HeaderStringFormat), null);
         public string HeaderStringFormat
         {
-            get { return (string)GetValue(HeaderStringFormatProperty); }
-            set { SetValue(HeaderStringFormatProperty, value); }
+            get => (string)GetValue(HeaderStringFormatProperty);
+            set => SetValue(HeaderStringFormatProperty, value);
         }
         private static void OnHeaderStringFormatChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -71,8 +67,8 @@ namespace Avalonia.Extensions.Controls
         public static readonly AvaloniaProperty CellTemplateProperty = AvaloniaProperty.Register<GridViewColumn, IDataTemplate>(nameof(CellTemplate));
         public IDataTemplate CellTemplate
         {
-            get { return (IDataTemplate)GetValue(CellTemplateProperty); }
-            set { SetValue(CellTemplateProperty, value); }
+            get => (IDataTemplate)GetValue(CellTemplateProperty); 
+            set => SetValue(CellTemplateProperty, value); 
         }
         private static void OnCellTemplateChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -82,8 +78,8 @@ namespace Avalonia.Extensions.Controls
         public static readonly AvaloniaProperty WidthProperty = AvaloniaProperty.Register<GridViewColumn, double>(nameof(WidthProperty), double.NaN);
         public double Width
         {
-            get { return (double)GetValue(WidthProperty); }
-            set { SetValue(WidthProperty, value); }
+            get => (double)GetValue(WidthProperty);
+            set => SetValue(WidthProperty, value);
         }
         private static void OnWidthChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
@@ -143,18 +139,17 @@ namespace Avalonia.Extensions.Controls
                 }
                 else if (value == ColumnMeasureState.SpecificWidth)
                     UpdateActualWidth();
-
             }
         }
         internal int ActualIndex
         {
-            get { return _actualIndex; }
-            set { _actualIndex = value; }
+            get => _actualIndex;
+            set => _actualIndex = value;
         }
         internal double DesiredWidth
         {
-            get { return _desiredWidth; }
-            private set { _desiredWidth = value; }
+            get => _desiredWidth;
+            private set => _desiredWidth = value;
         }
         internal const string c_ActualWidthName = "ActualWidth";
         private void OnPropertyChanged(string propertyName)

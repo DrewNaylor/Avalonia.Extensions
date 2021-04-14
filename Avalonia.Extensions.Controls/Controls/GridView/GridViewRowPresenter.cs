@@ -20,22 +20,18 @@ namespace Avalonia.Extensions.Controls
         ContentControl.ContentProperty.AddOwner<GridViewRowPresenter>();
         public object Content
         {
-            get { return GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
+            get => GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
         }
         private static void OnContentChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
             GridViewRowPresenter gvrp = (GridViewRowPresenter)d;
-            Type oldType = (e.OldValue != null) ? e.OldValue.GetType() : null;
-            Type newType = (e.NewValue != null) ? e.NewValue.GetType() : null;
+            Type oldType = e.OldValue?.GetType();
+            Type newType = e.NewValue?.GetType();
             if (oldType != newType)
-            {
                 gvrp.NeedUpdateVisualTree = true;
-            }
             else
-            {
                 gvrp.UpdateCells();
-            }
         }
         protected override Size MeasureOverride(Size constraint)
         {
@@ -162,16 +158,6 @@ namespace Avalonia.Extensions.Controls
             bool result = true;
             return result;
         }
-        private bool CheckContains(Rect container, Rect element)
-        {
-            const double tolerance = 2.0;
-            return (CheckIsPointBetween(container, element.Top) && CheckIsPointBetween(container, element.Bottom)) ||
-                    CheckIsPointBetween(element, container.Top + tolerance) || CheckIsPointBetween(element, container.Bottom - tolerance);
-        }
-        private bool CheckIsPointBetween(Rect rect, double pointY)
-        {
-            return MathUtilities.LessThanOrClose(rect.Top, pointY) && MathUtilities.LessThanOrClose(pointY, rect.Bottom);
-        }
         private void OnLayoutUpdated(object sender, EventArgs e)
         {
             bool desiredWidthChanged = false;
@@ -219,11 +205,6 @@ namespace Avalonia.Extensions.Controls
             cell.Margin = _defalutCellMargin;
             return cell;
         }
-        private void RenewCell(int index, GridViewColumn column)
-        {
-            InternalChildren.RemoveAt(index);
-            InternalChildren.Insert(index, CreateCell(column));
-        }
         private void UpdateCells()
         {
             ContentPresenter cellAsCP;
@@ -258,10 +239,6 @@ namespace Avalonia.Extensions.Controls
                 return _isOnCurrentPage;
             }
         }
-        private Control _viewPort;
-        private Control _viewItem;
-        private Type _oldContentType;
-        private bool _viewPortValid = false;
         private bool _isOnCurrentPage = false;
         private bool _isOnCurrentPageValid = false;
         private static readonly Thickness _defalutCellMargin = new Thickness(6, 0, 6, 0);

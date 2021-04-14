@@ -9,18 +9,18 @@ namespace Avalonia.Extensions.Controls
         protected internal virtual void ClearItem(ListViewItem item) { }
         protected internal virtual Type DefaultStyleKey
         {
-            get { return typeof(ListBox); }
+            get => typeof(ListBox);
         }
         protected internal virtual Type ItemContainerDefaultStyleKey
         {
-            get { return typeof(ListBoxItem); }
+            get => typeof(ListBoxItem);
         }
         internal virtual void OnThemeChanged() { }
+        private bool _isUsed;
         internal bool IsUsed
         {
-            get { return _isUsed; }
-            set { _isUsed = value; }
+            get => _isUsed;
+            set => _isUsed = value;
         }
-        private bool _isUsed;
     }
 }

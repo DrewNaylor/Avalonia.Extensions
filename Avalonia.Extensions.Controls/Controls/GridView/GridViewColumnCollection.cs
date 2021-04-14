@@ -85,7 +85,7 @@ namespace Avalonia.Extensions.Controls
         internal bool InViewMode
         {
             get => _inViewMode;
-            set { _inViewMode = value; }
+            set => _inViewMode = value;
         }
         private bool _inViewMode;
         private void OnInternalCollectionChanged()
@@ -213,7 +213,7 @@ namespace Avalonia.Extensions.Controls
         private bool IsImmutable
         {
             get => _isImmutable;
-            set { _isImmutable = value; }
+            set => _isImmutable = value;
         }
         private bool _isImmutable;
         private event NotifyCollectionChangedEventHandler _internalCollectionChanged;

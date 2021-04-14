@@ -26,10 +26,10 @@ namespace Avalonia.Extensions.Controls
         public static readonly RoutedEvent<RoutedEventArgs> ItemClickEvent =
             RoutedEvent.Register<HorizontalItemsRepeater, RoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
         /// <summary>
-        /// Defines the <see cref="ItemClick"/> property.
+        /// Defines the <see cref="SelectedItem"/> property.
         /// </summary>
-        public static readonly StyledProperty<ClickablePanel> SelectedItemProperty =
-          AvaloniaProperty.Register<HorizontalItemsRepeater, ClickablePanel>(nameof(SelectedItem), null);
+        public static readonly StyledProperty<ClickableView> SelectedItemProperty =
+          AvaloniaProperty.Register<HorizontalItemsRepeater, ClickableView>(nameof(SelectedItem), null);
         /// <summary>
         /// Defines the <see cref="Clickable"/> property.
         /// </summary>
@@ -64,7 +64,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Gets or sets the clicked child item
         /// </summary>
-        public ClickablePanel SelectedItem
+        public ClickableView SelectedItem
         {
             get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
@@ -87,20 +87,21 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public ICommand Command
         {
-            get { return _command; }
-            set { SetAndRaise(CommandProperty, ref _command, value); }
+            get => _command;
+            set => SetAndRaise(CommandProperty, ref _command, value);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="itemsRepeaterContent"></param>
-        internal async void OnContentClick(ClickablePanel itemsRepeaterContent)
+        internal void OnContentClick(ClickableView itemsRepeaterContent)
         {
-            if (Clickable == true)
+            if (Clickable == true && itemsRepeaterContent != null)
             {
-                await Dispatcher.UIThread.InvokeAsync(() =>
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var @event = new RoutedEventArgs(ItemClickEvent);
+                    this.SelectedItem = itemsRepeaterContent;
                     RaiseEvent(@event);
                     if (!@event.Handled && Command?.CanExecute(itemsRepeaterContent.CommandParameter) == true)
                     {

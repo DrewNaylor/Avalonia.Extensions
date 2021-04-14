@@ -18,8 +18,8 @@ namespace Avalonia.Extensions.Controls
             AvaloniaProperty.Register<GridViewRowPresenterBase, GridViewColumnCollection>(nameof(Columns), null);
         public GridViewColumnCollection Columns
         {
-            get { return (GridViewColumnCollection)GetValue(ColumnsProperty); }
-            set { SetValue(ColumnsProperty, value); }
+            get => (GridViewColumnCollection)GetValue(ColumnsProperty); 
+            set => SetValue(ColumnsProperty, value); 
         }
         protected new internal IEnumerator LogicalChildren
         {
@@ -30,16 +30,7 @@ namespace Avalonia.Extensions.Controls
                 return Children.GetEnumerator();
             }
         }
-        protected int VisualChildrenCount
-        {
-            get
-            {
-                if (_uiElementCollection == null)
-                    return 0;
-                else
-                    return _uiElementCollection.Count;
-            }
-        }
+        protected int VisualChildrenCount => _uiElementCollection == null ? 0 : _uiElementCollection.Count;
         internal virtual void OnColumnCollectionChanged(GridViewColumnCollectionChangedEventArgs e)
         {
             if (DesiredWidthList != null)
@@ -69,13 +60,13 @@ namespace Avalonia.Extensions.Controls
         }
         internal List<double> DesiredWidthList
         {
-            get { return _desiredWidthList; }
-            private set { _desiredWidthList = value; }
+            get => _desiredWidthList; 
+            private set => _desiredWidthList = value; 
         }
         internal bool NeedUpdateVisualTree
         {
-            get { return _needUpdateVisualTree; }
-            set { _needUpdateVisualTree = value; }
+            get => _needUpdateVisualTree; 
+            set => _needUpdateVisualTree = value; 
         }
         internal ControlArray InternalChildren
         {
@@ -105,13 +96,10 @@ namespace Avalonia.Extensions.Controls
             c.NeedUpdateVisualTree = true;
             c.InvalidateMeasure();
         }
-        private Control GetStableAncester()
-        {
-            return this;
-        }
+        private Control GetStableAncester() => this;
         private bool IsPresenterVisualReady
         {
-            get { return (IsInitialized && !NeedUpdateVisualTree); }
+            get => IsInitialized && !NeedUpdateVisualTree; 
         }
         private void ColumnCollectionChanged(object sender, NotifyCollectionChangedEventArgs arg)
         {
