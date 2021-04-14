@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Extensions.Controls.Controls.Repeater
+﻿namespace Avalonia.Extensions.Controls
 {
     public sealed class ItemsRepeaterContent : ClickableView
     {

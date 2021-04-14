@@ -6,26 +6,65 @@
         xmlns:ext="using:Avalonia.Extensions.Controls"
         x:Class="Avalonia.Controls.Demo.MainWindow"
         Title="Avalonia.Controls.Demo">
-  <StackPanel Orientation="Vertical">
-    <TextBlock Text="{Binding Message}" Foreground="Red"/>
-    <ext:HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
-      <ItemsRepeater.ItemTemplate>
-        <DataTemplate>
-          <ext:ClickablePanel CommandParameter="{Binding content}">
-            <TextBlock Text="{Binding content}" />
-          </ext:ClickablePanel>
-        </DataTemplate>
-      </ItemsRepeater.ItemTemplate>
-    </ext:HorizontalItemsRepeater>
-    <ext:ListView Items="{Binding Items}">
-      <ext:ListView.ItemTemplate>
-        <DataTemplate>
-          <ext:ClickablePanel CommandParameter="{Binding content}">
-            <TextBlock Text="12345678" />
-            <TextBlock Text="{Binding content}" />
-          </ext:ClickablePanel>
-        </DataTemplate>
-      </ext:ListView.ItemTemplate>
-    </ext:ListView>
-  </StackPanel>
+  <TabControl>
+    <TabItem Header="HorizontalItemsRepeater">
+      <StackPanel Orientation="Vertical">
+        <TextBlock Text="{Binding Message}" Foreground="Red"/>
+        <ext:HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+              <ext:ItemsRepeaterContent CommandParameter="{Binding content}">
+                <TextBlock Text="{Binding content}" />
+              </ext:ItemsRepeaterContent>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ext:HorizontalItemsRepeater>
+      </StackPanel>
+    </TabItem>
+    <TabItem Header="ListView">
+      <ext:ListView Items="{Binding Items}">
+        <ext:ListView.ItemTemplate>
+          <DataTemplate>
+            <ext:ClickableView CommandParameter="{Binding content}">
+              <TextBlock Text="12345678" />
+              <TextBlock Text="{Binding content}" />
+            </ext:ClickableView>
+          </DataTemplate>
+        </ext:ListView.ItemTemplate>
+      </ext:ListView>
+    </TabItem>
+    <TabItem Header="WrapListBox">
+      <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+        <ListBoxItem>
+          <TextBlock Text="1234678" />
+        </ListBoxItem>
+      </ListBox>
+    </TabItem>    
+  </TabControl>
 </Window>

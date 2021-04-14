@@ -17,7 +17,7 @@ namespace Avalonia.Extensions.Controls
     /// <a href="https://avaloniaui.net/docs/controls/button#play-button">this instance</a>.
     /// </summary>
     [PseudoClasses(":pressed")]
-    public abstract class ClickableView : Panel, ICommandSource
+    public class ClickableView : Panel, ICommandSource
     {
         static ClickableView()
         {
