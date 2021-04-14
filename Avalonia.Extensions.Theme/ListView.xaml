@@ -1,5 +1,6 @@
 <!--https://github.com/jhofinger/Avalonia/blob/listview/src/Avalonia.Themes.Default/ListView.xaml-->
 <Styles xmlns="https://github.com/avaloniaui"
+        xmlns:local="using:Avalonia.Extensions.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Styles.Resources>
     <LinearGradientBrush x:Key="GridViewColumnHeaderBackground"
@@ -45,7 +46,7 @@
       </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
   </Styles.Resources>
-  <Style Selector="ListViewItem">
+  <Style Selector="local|ListViewItem">
     <Setter Property="Background"
             Value="Transparent"/>
     <Setter Property="BorderBrush"
@@ -60,7 +61,7 @@
             Value="Center"/>
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type ListViewItem}">
+        <ControlTemplate TargetType="{x:Type local:ListViewItem}">
           <Border BorderThickness="{TemplateBinding BorderThickness}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   Background="{TemplateBinding Background}"
@@ -76,7 +77,7 @@
                 <Rectangle Name="UpperHighlight"
                            IsVisible="false"
                            Fill="#75FFFFFF"/>
-                <GridViewRowPresenter Grid.RowSpan="2"
+                <local:GridViewRowPresenter Grid.RowSpan="2"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
               </Grid>
             </Border>
@@ -105,7 +106,7 @@
                             HorizontalScrollBarVisibility="Hidden"
                             VerticalScrollBarVisibility="Hidden"
                             Focusable="false">
-                <GridViewHeaderRowPresenter Margin="2,0,2,0"
+                <local:GridViewHeaderRowPresenter Margin="2,0,2,0"
                                             Columns="{Binding Path=TemplatedParent.View.Columns,RelativeSource={RelativeSource TemplatedParent}}"
                                             ColumnHeaderTemplate="{Binding Path=TemplatedParent.View.ColumnHeaderTemplate,RelativeSource={RelativeSource TemplatedParent}}"
                                             ColumnHeaderStringFormat="{Binding Path=TemplatedParent.View.ColumnHeaderStringFormat,RelativeSource={RelativeSource TemplatedParent}}"
@@ -156,7 +157,6 @@
     </Setter>
   </Style>
   <Style Selector="Thumb.GridViewColumnHeaderGripper">
-
     <Setter Property="Canvas.Right"
             Value="-9"/>
     <Setter Property="Width"
@@ -180,7 +180,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style Selector="GridViewColumnHeader">
+  <Style Selector="local|GridViewColumnHeader">
     <Setter Property="HorizontalContentAlignment"
             Value="Center"/>
     <Setter Property="VerticalContentAlignment"
@@ -197,7 +197,7 @@
             Value="{DynamicResource ThemeForegroundBrush}"/>
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+        <ControlTemplate TargetType="{x:Type local:GridViewColumnHeader}">
           <Grid>
             <Border Name="HeaderBorder"
                     BorderThickness="0,1,0,1"
@@ -216,7 +216,7 @@
                   <ContentPresenter Name="HeaderContent"
                                     Margin="0,0,0,1"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                 </Border>
               </Grid>
             </Border>

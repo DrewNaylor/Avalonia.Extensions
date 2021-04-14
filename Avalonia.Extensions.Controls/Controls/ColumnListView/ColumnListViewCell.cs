@@ -1,10 +1,10 @@
 ﻿namespace Avalonia.Extensions.Controls
 {
-    public sealed class WrapViewCell : ClickableView
+    public sealed class ColumnListViewCell : ClickableView
     {
         protected override void OnClick()
         {
-            if (Parent is WrapView wrapView)
+            if (Parent is ColumnListView wrapView)
                 wrapView.OnContentClick(this);
             base.OnClick();
         }

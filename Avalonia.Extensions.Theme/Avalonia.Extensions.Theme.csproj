@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
     <EmbeddedResource Include="*.xaml" />
+    <None Remove="ListView.xaml" />
     <AvaloniaResource Include="DefaultTheme.xaml" />
   </ItemGroup>
 

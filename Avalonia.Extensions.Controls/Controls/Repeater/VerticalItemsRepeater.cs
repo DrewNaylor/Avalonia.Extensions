@@ -22,8 +22,8 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
-        public static readonly StyledProperty<ClickableView> SelectedItemProperty =
-          AvaloniaProperty.Register<VerticalItemsRepeater, ClickableView>(nameof(SelectedItem), null);
+        public static readonly StyledProperty<ItemsRepeaterContent> SelectedItemProperty =
+          AvaloniaProperty.Register<VerticalItemsRepeater, ItemsRepeaterContent>(nameof(SelectedItem), null);
         /// <summary>
         /// Defines the <see cref="Clickable"/> property.
         /// </summary>
@@ -58,7 +58,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Gets or sets the clicked child item
         /// </summary>
-        public ClickableView SelectedItem
+        public ItemsRepeaterContent SelectedItem
         {
             get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
@@ -88,7 +88,7 @@ namespace Avalonia.Extensions.Controls
         /// 
         /// </summary>
         /// <param name="itemsRepeaterContent"></param>
-        internal void OnContentClick(ClickableView itemsRepeaterContent)
+        internal void OnContentClick(ItemsRepeaterContent itemsRepeaterContent)
         {
             if (Clickable == true)
             {
