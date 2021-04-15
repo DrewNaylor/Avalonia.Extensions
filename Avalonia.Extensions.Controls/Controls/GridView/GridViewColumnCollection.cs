@@ -7,6 +7,9 @@ using System.Diagnostics;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     public class GridViewColumnCollection : ObservableCollection<GridViewColumn>
     {
         protected override void ClearItems()

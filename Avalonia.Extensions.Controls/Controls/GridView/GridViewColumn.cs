@@ -6,6 +6,9 @@ using System.Diagnostics;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     public class GridViewColumn : AvaloniaObject, INotifyPropertyChanged
     {
         public GridViewColumn()

@@ -1,5 +1,3 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Controls.Demo
@@ -15,7 +13,7 @@ namespace Avalonia.Controls.Demo
         private void InitializeComponent()
         {
             Width = 480;
-            Height = 300;
+            Height = 400;
             var model = new MainViewModel();
             DataContext = model;
         }

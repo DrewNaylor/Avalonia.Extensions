@@ -5,6 +5,9 @@ using System.Diagnostics;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     internal class GridViewColumnCollectionChangedEventArgs : NotifyCollectionChangedEventArgs
     {
         internal GridViewColumnCollectionChangedEventArgs(GridViewColumn column, string propertyName) : base(NotifyCollectionChangedAction.Reset)

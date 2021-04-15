@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Input;
-using Avalonia.Media;
 using Avalonia.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,9 @@ using ControlArray = Avalonia.Controls.Controls;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     public class GridViewHeaderRowPresenter : GridViewRowPresenterBase
     {
         public static readonly StyledProperty<IDataTemplate> ColumnHeaderTemplateProperty =

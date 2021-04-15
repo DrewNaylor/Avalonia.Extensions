@@ -33,13 +33,13 @@
       </ext:ListView>
     </TabItem>
     <TabItem Header="WrapListBox">
-      <ext:ColumnListView Items="{Binding Items}">
-        <ext:ColumnListView.ItemTemplate>
+      <ext:CellListView Items="{Binding Items}">
+        <ext:CellListView.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding content}" />
           </DataTemplate>
-        </ext:ColumnListView.ItemTemplate>
-      </ext:ColumnListView>
+        </ext:CellListView.ItemTemplate>      
+    </ext:CellListView>
     </TabItem>    
   </TabControl>
 </Window>

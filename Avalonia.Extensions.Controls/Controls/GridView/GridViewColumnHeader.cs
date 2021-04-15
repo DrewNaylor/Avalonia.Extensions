@@ -18,6 +18,9 @@ namespace Avalonia.Extensions.Controls
 #if OLD_AUTOMATION
     [Automation(AccessibilityControlType = "Button")]
 #endif
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     public class GridViewColumnHeader : Button, IStyleable
 #if OLD_AUTOMATION
     , IInvokeProvider

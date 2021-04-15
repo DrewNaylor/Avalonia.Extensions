@@ -9,6 +9,9 @@ using ControlArray = Avalonia.Controls.Controls;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     public class GridViewRowPresenter : GridViewRowPresenterBase
     {
         public GridViewRowPresenter()

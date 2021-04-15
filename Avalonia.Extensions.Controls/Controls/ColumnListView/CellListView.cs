@@ -9,24 +9,28 @@ using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ColumnListView : ListView
+    /// <summary>
+    /// the uwp like "GridView", it just define itempanel with wrappanel
+    /// https://stackoverflow.com/questions/23084576/wpf-combobox-multiple-columns
+    /// </summary>
+    public class CellListView : ListView
     {
         private ICommand _command;
         /// <summary>
         /// Defines the <see cref="Clickable"/> property.
         /// </summary>
         public static readonly StyledProperty<bool> ClickableProperty =
-          AvaloniaProperty.Register<ColumnListView, bool>(nameof(Clickable), true);
+          AvaloniaProperty.Register<CellListView, bool>(nameof(Clickable), true);
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
         public static readonly RoutedEvent<RoutedEventArgs> ItemClickEvent =
-            RoutedEvent.Register<ColumnListView, RoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
+            RoutedEvent.Register<CellListView, RoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
         /// <summary>
         /// Defines the <see cref="Command"/> property.
         /// </summary>
-        public static readonly DirectProperty<ColumnListView, ICommand> CommandProperty =
-             AvaloniaProperty.RegisterDirect<ColumnListView, ICommand>(nameof(Command), content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
+        public static readonly DirectProperty<CellListView, ICommand> CommandProperty =
+             AvaloniaProperty.RegisterDirect<CellListView, ICommand>(nameof(Command), content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
         /// <summary>
         /// Raised when the user clicks the child item.
         /// </summary>
@@ -51,14 +55,14 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ClickableProperty);
             set => SetValue(ClickableProperty, value);
         }
-        public ColumnListView()
+        public CellListView()
         {
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             var xaml = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(xaml);
             SetValue(ItemsPanelProperty, target);
         }
-        public void OnContentClick(ColumnListViewCell wrapViewCell)
+        public void OnContentClick(CellListViewCell wrapViewCell)
         {
             if (Clickable == true && wrapViewCell != null)
             {

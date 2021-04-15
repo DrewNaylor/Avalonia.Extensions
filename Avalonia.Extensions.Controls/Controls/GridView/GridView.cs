@@ -5,6 +5,9 @@ using System.ComponentModel;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
+    /// </summary>
     public class GridView : ViewBase
     {
         protected virtual void AddChild(object column)
