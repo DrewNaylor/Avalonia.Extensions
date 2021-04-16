@@ -12,9 +12,7 @@ using System.Windows.Input;
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
-    /// This is a clickable <seealso cref="Panel" />,
-    /// Just like the <seealso cref="Button"/> in 
-    /// <a href="https://avaloniaui.net/docs/controls/button#play-button">this instance</a>.
+    /// a clickable <seealso cref="Panel" />
     /// </summary>
     [PseudoClasses(":pressed")]
     public class ClickableView : Panel, ICommandSource
@@ -27,17 +25,26 @@ namespace Avalonia.Extensions.Controls
             IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
             IsCancelProperty.Changed.Subscribe(IsCancelChanged);
         }
+        /// <summary>
+        /// create an instance
+        /// </summary>
         public ClickableView()
         {
             UpdatePseudoClasses(IsPressed);
         }
         private ICommand _command;
         private bool _commandCanExecute = true;
+        /// <summary>
+        /// Gets or sets a value indicating whether the clickableview is the default clickableview for the window.
+        /// </summary>
         public bool IsDefault
         {
             get => GetValue(IsDefaultProperty);
             set => SetValue(IsDefaultProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="IsDefaultProperty"/> property.
+        /// </summary>
         public static readonly StyledProperty<bool> IsDefaultProperty =
             AvaloniaProperty.Register<ClickableView, bool>(nameof(IsDefault));
         public Thickness Padding
@@ -47,33 +54,57 @@ namespace Avalonia.Extensions.Controls
         }
         public static readonly StyledProperty<Thickness> PaddingProperty =
            Decorator.PaddingProperty.AddOwner<ClickableView>();
+        /// <summary>
+        /// Gets or sets an <see cref="ICommand"/> to be invoked when the clickableview is clicked.
+        /// </summary>
         public ICommand Command
         {
             get => _command;
             set => SetAndRaise(CommandProperty, ref _command, value);
         }
+        /// <summary>
+        /// Defines the <see cref="Command"/> property.
+        /// </summary>
         public static readonly DirectProperty<ClickableView, ICommand> CommandProperty =
           AvaloniaProperty.RegisterDirect<ClickableView, ICommand>(nameof(Command),
               content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
+        /// <summary>
+        /// Gets or sets a parameter to be passed to the <see cref="Command"/>.
+        /// </summary>
         public object CommandParameter
         {
             get => GetValue(CommandParameterProperty);
             set => SetValue(CommandParameterProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="CommandParameter"/> property.
+        /// </summary>
         public static readonly StyledProperty<object> CommandParameterProperty =
            AvaloniaProperty.Register<ClickableView, object>(nameof(CommandParameter));
+        /// <summary>
+        /// Raised when the user clicks the clickableview.
+        /// </summary>
         public event EventHandler<RoutedEventArgs> Click
         {
             add { AddHandler(ClickEvent, value); }
             remove { RemoveHandler(ClickEvent, value); }
         }
+        /// <summary>
+        /// Defines the <see cref="Click"/> event.
+        /// </summary>
         public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
            RoutedEvent.Register<ClickableView, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
+        /// <summary>
+        /// Gets or sets a value indicating how the <see cref="ClickableView"/> should react to clicks.
+        /// </summary>
         public ClickMode ClickMode
         {
             get => GetValue(ClickModeProperty);
             set => SetValue(ClickModeProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="ClickMode"/> property.
+        /// </summary>
         public static readonly StyledProperty<ClickMode> ClickModeProperty =
             AvaloniaProperty.Register<ClickableView, ClickMode>(nameof(ClickMode), ClickMode.Press);
         public bool IsPressed
@@ -83,13 +114,24 @@ namespace Avalonia.Extensions.Controls
         }
         public static readonly StyledProperty<bool> IsPressedProperty =
            AvaloniaProperty.Register<ClickableView, bool>(nameof(IsPressed));
+        /// <summary>
+        /// Gets or sets a value indicating whether the clickableview is the Cancel clickableview for the window.
+        /// </summary>
         public bool IsCancel
         {
             get => GetValue(IsCancelProperty);
             set => SetValue(IsCancelProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="IsCancelProperty"/> property.
+        /// </summary>
         public static readonly StyledProperty<bool> IsCancelProperty =
             AvaloniaProperty.Register<ClickableView, bool>(nameof(IsCancel));
+        /// <summary>
+        /// Called when the <see cref="ICommand.CanExecuteChanged"/> event fires.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event args.</param>
         public void CanExecuteChanged(object sender, EventArgs e)
         {
             var canExecute = Command == null || Command.CanExecute(CommandParameter);
@@ -99,6 +141,9 @@ namespace Avalonia.Extensions.Controls
                 UpdateIsEffectivelyEnabled();
             }
         }
+        /// <summary>
+        /// Invokes the <see cref="Click"/> event.
+        /// </summary>
         protected virtual void OnClick()
         {
             var e = new RoutedEventArgs(ClickEvent);
@@ -224,6 +269,10 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
+        /// <summary>
+        /// Called when the <see cref="Command"/> property changes.
+        /// </summary>
+        /// <param name="e">The event args.</param>
         private static void CommandChanged(AvaloniaPropertyChangedEventArgs e)
         {
             if (e.Sender is ClickableView content)
@@ -238,6 +287,10 @@ namespace Avalonia.Extensions.Controls
                 content.CanExecuteChanged(content, EventArgs.Empty);
             }
         }
+        /// <summary>
+        /// Called when the <see cref="IsDefault"/> property changes.
+        /// </summary>
+        /// <param name="e">The event args.</param>
         private static void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var content = e.Sender as ClickableView;
@@ -250,6 +303,10 @@ namespace Avalonia.Extensions.Controls
                     content.StopListeningForDefault(inputRoot);
             }
         }
+        /// <summary>
+        /// Called when the <see cref="IsCancel"/> property changes.
+        /// </summary>
+        /// <param name="e">The event args.</param>
         private static void IsCancelChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var content = e.Sender as ClickableView;
@@ -262,27 +319,53 @@ namespace Avalonia.Extensions.Controls
                     content.StopListeningForCancel(inputRoot);
             }
         }
+        /// <summary>
+        /// Starts listening for the Enter key when the clickableview <see cref="IsDefault"/>.
+        /// </summary>
+        /// <param name="root">The input root.</param>
         private void ListenForDefault(IInputElement root)
         {
             root.AddHandler(KeyDownEvent, RootDefaultKeyDown);
         }
+        /// <summary>
+        /// Starts listening for the Escape key when the clickableview <see cref="IsCancel"/>.
+        /// </summary>
+        /// <param name="root">The input root.</param>
         private void ListenForCancel(IInputElement root)
         {
             root.AddHandler(KeyDownEvent, RootCancelKeyDown);
         }
+        /// <summary>
+        /// Stops listening for the Enter key when the clickableview is no longer <see cref="IsDefault"/>.
+        /// </summary>
+        /// <param name="root">The input root.</param>
         private void StopListeningForDefault(IInputElement root)
         {
             root.RemoveHandler(KeyDownEvent, RootDefaultKeyDown);
         }
+        /// <summary>
+        /// Stops listening for the Escape key when the clickableview is no longer <see cref="IsCancel"/>.
+        /// </summary>
+        /// <param name="root">The input root.</param>
         private void StopListeningForCancel(IInputElement root)
         {
             root.RemoveHandler(KeyDownEvent, RootCancelKeyDown);
         }
+        /// <summary>
+        /// Called when a key is pressed on the input root and the clickableview <see cref="IsCancel"/>.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event args.</param>
         private void RootCancelKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape && IsVisible && IsEnabled)
                 OnClick();
         }
+        /// <summary>
+        /// Called when a key is pressed on the input root and the clickableview <see cref="IsDefault"/>.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event args.</param>
         private void RootDefaultKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && IsVisible && IsEnabled)

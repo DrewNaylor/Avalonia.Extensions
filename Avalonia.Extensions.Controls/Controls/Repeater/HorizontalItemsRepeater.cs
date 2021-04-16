@@ -8,13 +8,14 @@ using System.Windows.Input;
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
-    /// 
+    /// the itemsrepeater layout <seealso cref="this.Orientation"/> as
+    /// <seealso cref="Orientation.Horizontal"/>
     /// </summary>
     public class HorizontalItemsRepeater : ItemsRepeater
     {
         private ICommand _command;
         /// <summary>
-        /// 
+        /// create an instance
         /// </summary>
         public HorizontalItemsRepeater()
         {
@@ -91,9 +92,10 @@ namespace Avalonia.Extensions.Controls
             set => SetAndRaise(CommandProperty, ref _command, value);
         }
         /// <summary>
-        /// 
+        /// handle clild item click event,
+        /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>
+        /// when child item has been click, but <seealso cref="Clickable"/> must be true
         /// </summary>
-        /// <param name="itemsRepeaterContent"></param>
         internal void OnContentClick(ItemsRepeaterContent itemsRepeaterContent)
         {
             if (Clickable == true && itemsRepeaterContent != null)

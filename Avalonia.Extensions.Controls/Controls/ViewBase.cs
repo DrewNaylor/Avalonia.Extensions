@@ -19,11 +19,6 @@ namespace Avalonia.Extensions.Controls
             get => typeof(ListBoxItem);
         }
         internal virtual void OnThemeChanged() { }
-        private bool _isUsed;
-        internal bool IsUsed
-        {
-            get => _isUsed;
-            set => _isUsed = value;
-        }
+        internal bool IsUsed { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System;
 namespace Avalonia.Extensions.Controls
 {
     //https://github.com/AndreiMisiukevich/ExpandableView/blob/master/ExpandableView/ExpandableView.cs
-    public class ExpandableView : Panel
+    internal class ExpandableView : Panel
     {
         public ExpandableView()
         {

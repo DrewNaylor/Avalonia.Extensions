@@ -1,4 +1,7 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Extensions.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Threading;
+using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 using System.Reactive;

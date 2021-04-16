@@ -55,6 +55,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ClickableProperty);
             set => SetValue(ClickableProperty, value);
         }
+        /// <summary>
+        /// create a instance
+        /// </summary>
         public CellListView()
         {
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
@@ -62,18 +65,24 @@ namespace Avalonia.Extensions.Controls
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(xaml);
             SetValue(ItemsPanelProperty, target);
         }
-        public void OnContentClick(CellListViewCell wrapViewCell)
+        /// <summary>
+        /// handle clild item click event,
+        /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>
+        /// when child item has been click
+        /// </summary>
+        /// <param name="viewCell"></param>
+        internal void OnContentClick(CellListViewCell viewCell)
         {
-            if (Clickable == true && wrapViewCell != null)
+            if (Clickable == true && viewCell != null)
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var @event = new RoutedEventArgs(ItemClickEvent);
-                    this.SelectedItem = wrapViewCell;
+                    this.SelectedItem = viewCell;
                     RaiseEvent(@event);
-                    if (!@event.Handled && Command?.CanExecute(wrapViewCell.CommandParameter) == true)
+                    if (!@event.Handled && Command?.CanExecute(viewCell.CommandParameter) == true)
                     {
-                        Command.Execute(wrapViewCell.CommandParameter);
+                        Command.Execute(viewCell.CommandParameter);
                         @event.Handled = true;
                     }
                 });

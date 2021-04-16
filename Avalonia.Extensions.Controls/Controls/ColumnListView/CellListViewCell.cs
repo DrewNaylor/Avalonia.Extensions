@@ -6,10 +6,13 @@
     /// </summary>
     public sealed class CellListViewCell : ClickableView
     {
+        /// <summary>
+        /// handle click event
+        /// </summary>
         protected override void OnClick()
         {
-            if (Parent is CellListView wrapView)
-                wrapView.OnContentClick(this);
+            if (Parent is CellListView itemView)
+                itemView.OnContentClick(this);
             base.OnClick();
         }
     }

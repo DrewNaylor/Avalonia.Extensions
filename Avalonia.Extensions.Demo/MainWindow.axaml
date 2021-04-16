@@ -40,6 +40,11 @@
           </DataTemplate>
         </ext:CellListView.ItemTemplate>      
     </ext:CellListView>
-    </TabItem>    
+    </TabItem>
+    <TabItem Header="PopupDialog">
+      <Grid Name="PopupContent">
+        <Button Click="OnPopupClick">Show PopupDialog</Button>
+      </Grid>
+    </TabItem>
   </TabControl>
 </Window>
