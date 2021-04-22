@@ -11,7 +11,7 @@
         /// </summary>
         protected override void OnClick()
         {
-            if (Parent is CellListView itemView)
+            if (Parent.Parent is CellListView itemView)
                 itemView.OnContentClick(this);
             base.OnClick();
         }

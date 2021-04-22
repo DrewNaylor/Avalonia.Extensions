@@ -1,26 +1,38 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Extensions.Controls.Utils;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Threading;
 using System;
+using System.Collections.Specialized;
 using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
     /// the uwp like "GridView", it just define itempanel with wrappanel
+    /// you need to set "ColumnNum" for columns count
     /// https://stackoverflow.com/questions/23084576/wpf-combobox-multiple-columns
     /// </summary>
     public class CellListView : ListView
     {
         private ICommand _command;
         /// <summary>
+        /// The width of each cell.
+        /// </summary>
+        public double CellWidth { get; private set; }
+        /// <summary>
         /// Defines the <see cref="Clickable"/> property.
         /// </summary>
         public static readonly StyledProperty<bool> ClickableProperty =
           AvaloniaProperty.Register<CellListView, bool>(nameof(Clickable), true);
+        /// <summary>
+        /// Defines the <see cref="ColumnNum"/> property.
+        /// </summary>
+        public static readonly StyledProperty<int> ColumnNumProperty =
+          AvaloniaProperty.Register<CellListView, int>(nameof(ColumnNum), 1);
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
@@ -56,6 +68,18 @@ namespace Avalonia.Extensions.Controls
             set => SetValue(ClickableProperty, value);
         }
         /// <summary>
+        /// get or set column number
+        /// </summary>
+        public int ColumnNum
+        {
+            get => GetValue(ColumnNumProperty);
+            set
+            {
+                CellWidth = Bounds.Width / value;
+                SetValue(ColumnNumProperty, value);
+            }
+        }
+        /// <summary>
         /// create a instance
         /// </summary>
         public CellListView()
@@ -64,6 +88,36 @@ namespace Avalonia.Extensions.Controls
             var xaml = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(xaml);
             SetValue(ItemsPanelProperty, target);
+            BoundsProperty.Changed.AddClassHandler<CellListView>(OnBoundsChange);
+            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
+        }
+        private void OnBoundsChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is Rect rect)
+            {
+                CellWidth = rect.Width / ColumnNum;
+                for (var index = 0; index < LogicalChildren.Count; index++)
+                {
+                    var item = LogicalChildren.ElementAt(index);
+                    SetItemWidth(item);
+                }
+            }
+        }
+        private void SetItemWidth(object item)
+        {
+            if (item is ListBoxItem obj)
+            {
+                obj.Width = CellWidth;
+                obj.HorizontalAlignment = Layout.HorizontalAlignment.Center;
+            }
+        }
+        private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems.Count > 0)
+            {
+                var item = e.NewItems.ElementAt(0);
+                SetItemWidth(item);
+            }
         }
         /// <summary>
         /// handle clild item click event,

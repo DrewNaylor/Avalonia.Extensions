@@ -3,11 +3,14 @@ using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
 {
+    /// <summary>
+    /// Inherited from <see cref="Image"/>.
+    /// Used to display HTTP/HTTPS pictures
+    /// </summary>
     public sealed class ImageRemote : Image
     {
         private HttpClient HttpClient { get; }
@@ -15,6 +18,10 @@ namespace Avalonia.Extensions.Controls
         {
             HttpClient = Core.Instance.GetClient();
         }
+        /// <summary>
+        /// error message if loading failed
+        /// </summary>
+        public string FailedMessage { get; private set; }
         /// <summary>
         /// Defines the <see cref="Address"/> property.
         /// </summary>
@@ -72,7 +79,10 @@ namespace Avalonia.Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
+                    FailedMessage = ex.Message;
+#if DEBUG
+                    System.Diagnostics.Debug.WriteLine(FailedMessage);
+#endif
                     MediaChange(false);
                 }
             });

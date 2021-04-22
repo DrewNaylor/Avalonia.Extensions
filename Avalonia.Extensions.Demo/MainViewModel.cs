@@ -1,7 +1,4 @@
-﻿using Avalonia.Extensions.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Threading;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
@@ -23,8 +20,10 @@ namespace Avalonia.Controls.Demo
             private set => this.RaiseAndSetIfChanged(ref items, value);
         }
         public ReactiveCommand<object, Unit> OnButtonClick { get; }
+        public ReactiveCommand<object, Unit> OnItemClick { get; }
         public MainViewModel()
         {
+            OnItemClick= ReactiveCommand.Create<object>(ItemClick);
             OnButtonClick = ReactiveCommand.Create<object>(ButtonClick);
             items = new ObservableCollection<object>{
                 new { content="111111"},
@@ -37,6 +36,10 @@ namespace Avalonia.Controls.Demo
                 new { content="888888"},
                 new { content="999999"},
                 new { content="000000"}};
+        }
+        private void ItemClick(object obj)
+        {
+            Message = "你点击了CellListView , CommandParameter :" + obj;
         }
         private void ButtonClick(object obj)
         {

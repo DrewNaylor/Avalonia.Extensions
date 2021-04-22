@@ -33,13 +33,22 @@
       </ext:ListView>
     </TabItem>
     <TabItem Header="WrapListBox">
-      <ext:CellListView Items="{Binding Items}">
-        <ext:CellListView.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding content}" />
-          </DataTemplate>
-        </ext:CellListView.ItemTemplate>      
-    </ext:CellListView>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
+        <ext:CellListView Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
+          <ext:CellListView.ItemTemplate>
+            <DataTemplate>
+              <ext:CellListViewCell CommandParameter="{Binding content}">
+                <TextBlock Text="{Binding content}" />
+              </ext:CellListViewCell>
+            </DataTemplate>
+          </ext:CellListView.ItemTemplate>
+        </ext:CellListView>
+      </Grid>
     </TabItem>
     <TabItem Header="PopupDialog">
       <Grid Name="PopupContent">
@@ -49,10 +58,11 @@
     <TabItem Header="ImageRemote">
       <ScrollViewer>
         <StackPanel Orientation="Vertical">
-          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+          <ext:ImageRemote Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+          <ext:ImageRemote Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+          <ext:ImageRemote Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+          <ext:ImageRemote Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
           <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
