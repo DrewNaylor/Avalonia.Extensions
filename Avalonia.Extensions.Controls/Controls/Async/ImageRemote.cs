@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
@@ -14,6 +15,14 @@ namespace Avalonia.Extensions.Controls
     public sealed class ImageRemote : Image
     {
         private HttpClient HttpClient { get; }
+        /// <summary>
+        /// original  image width
+        /// </summary>
+        public double ImageWidth { get; private set; }
+        /// <summary>
+        /// original  image height
+        /// </summary>
+        public double ImageHeight { get; private set; }
         public ImageRemote() : base()
         {
             HttpClient = Core.Instance.GetClient();
@@ -74,18 +83,26 @@ namespace Avalonia.Extensions.Controls
                     HttpResponseMessage hr = HttpClient.GetAsync(Address).ConfigureAwait(false).GetAwaiter().GetResult();
                     hr.EnsureSuccessStatusCode();
                     using var stream = hr.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-                    this.Source = new Bitmap(stream);
+                    var bitmap = new Bitmap(stream);
+                    ImageWidth = Width = bitmap.PixelSize.Width;
+                    ImageHeight = Height = bitmap.PixelSize.Height;
+                    this.Source = bitmap;
                     MediaChange(true);
                 }
                 catch (Exception ex)
                 {
                     FailedMessage = ex.Message;
 #if DEBUG
-                    System.Diagnostics.Debug.WriteLine(FailedMessage);
+                    Debug.WriteLine(FailedMessage);
 #endif
                     MediaChange(false);
                 }
             });
+        }
+        public void ZoomIn(double percentage)
+        {
+            Width = ImageWidth * percentage;
+            Height = ImageHeight * percentage;
         }
         private void MediaChange(bool isSuccess)
         {

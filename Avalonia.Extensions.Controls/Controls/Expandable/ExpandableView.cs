@@ -1,46 +1,62 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
-using System;
+using Avalonia.Layout;
+using Avalonia.Styling;
 
 namespace Avalonia.Extensions.Controls
 {
-    //https://github.com/AndreiMisiukevich/ExpandableView/blob/master/ExpandableView/ExpandableView.cs
-    internal class ExpandableView : Panel
+    public partial class ExpandableView : StackPanel, ITemplatedControl
     {
-        public ExpandableView()
+        public ExpandableView() : base()
         {
-            ExpandModeProperty.Changed.AddClassHandler<ExpandableView>(OnExpandModeChange);
-            PrimaryViewProperty.Changed.AddClassHandler<ExpandableView>(OnPrimaryViewChange);
+            Status = ExpandStatus.Collapsed;
+            Orientation = Orientation.Vertical;
             SecondViewProperty.Changed.AddClassHandler<ExpandableView>(OnSecondViewChange);
+            PrimaryViewProperty.Changed.AddClassHandler<ExpandableView>(OnPrimaryViewChange);
         }
-        private void OnExpandModeChange(ExpandableView sender, AvaloniaPropertyChangedEventArgs e)
+        private void OnSecondViewChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-
+            bool isVisible = false;
+            if (e.OldValue is Panel oldControl)
+            {
+                isVisible = oldControl.IsVisible;
+                Children.Remove(oldControl);
+            }
+            if (e.NewValue is Panel newControl)
+            {
+                newControl.IsVisible = isVisible;
+                Children.Add(newControl);
+            }
         }
-        private void OnSecondViewChange(ExpandableView sender, AvaloniaPropertyChangedEventArgs e)
+        private void OnPrimaryViewChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-
-        }
-        private void OnPrimaryViewChange(ExpandableView sender, AvaloniaPropertyChangedEventArgs e)
-        {
-
+            if (e.OldValue is ClickableView oldControl)
+                Children.Remove(oldControl);
+            if (e.NewValue is ClickableView newControl)
+            {
+                newControl.Click += NewControl_Click;
+                Children.Add(newControl);
+            }
         }
         /// <summary>
-        /// Defines the <see cref="ExpandMode"/> property.
+        /// Defines the <see cref="Status"/> property.
         /// </summary>
-        public static readonly StyledProperty<ExpandMode> ExpandModeProperty =
-          AvaloniaProperty.Register<ExpandableView, ExpandMode>(nameof(ExpandMode));
-        public ExpandMode ExpandMode
+        public static readonly StyledProperty<ExpandStatus> StatusProperty =
+          AvaloniaProperty.Register<ExpandableView, ExpandStatus>(nameof(Status), ExpandStatus.Collapsed);
+        /// <summary>
+        /// get or set second view <see cref="ExpandStatus.Collapsed"/> or <see cref="ExpandStatus.Expanded"/>
+        /// </summary>
+        public ExpandStatus Status
         {
-            get => GetValue(ExpandModeProperty);
-            set => SetValue(ExpandModeProperty, value);
+            get => GetValue(StatusProperty);
+            private set => SetValue(StatusProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="PrimaryView"/> property.
         /// </summary>
-        public static readonly StyledProperty<Panel> PrimaryViewProperty =
-          AvaloniaProperty.Register<ExpandableView, Panel>(nameof(PrimaryView));
-        public Panel PrimaryView
+        public static readonly StyledProperty<ClickableView> PrimaryViewProperty =
+          AvaloniaProperty.Register<ExpandableView, ClickableView>(nameof(PrimaryView));
+        public ClickableView PrimaryView
         {
             get => GetValue(PrimaryViewProperty);
             set => SetValue(PrimaryViewProperty, value);
@@ -55,23 +71,34 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(SecondViewProperty);
             set => SetValue(SecondViewProperty, value);
         }
-        /// <summary>
-        /// Defines the <see cref="StatusChange"/> property.
-        /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> StatusChangeEvent =
-            RoutedEvent.Register<ExpandableView, RoutedEventArgs>(nameof(StatusChange), RoutingStrategies.Bubble);
-        public event EventHandler<RoutedEventArgs> StatusChange
+        private void NewControl_Click(object sender, RoutedEventArgs e)
         {
-            add { AddHandler(StatusChangeEvent, value); }
-            remove { RemoveHandler(StatusChangeEvent, value); }
+            if (Status == ExpandStatus.Collapsed)
+            {
+                Expand();
+                Status = ExpandStatus.Expanded;
+            }
+            else
+            {
+                Collapse();
+                Status = ExpandStatus.Collapsed;
+            }
         }
         public void Collapse()
         {
-
+            if (Status == ExpandStatus.Expanded)
+            {
+                SecondView.IsVisible = false;
+                Status = ExpandStatus.Collapsed;
+            }
         }
         public void Expand()
         {
-
+            if (Status == ExpandStatus.Collapsed)
+            {
+                SecondView.IsVisible = true;
+                Status = ExpandStatus.Expanded;
+            }
         }
     }
 }

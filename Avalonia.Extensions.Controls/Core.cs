@@ -16,6 +16,7 @@ namespace Avalonia.Extensions.Controls
         }
         private Core() { }
         private HttpClient HttpClient { get; set; }
+        public const string WRAP_TEMPLATE = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
         public HttpClient GetClient()
         {
             if (HttpClient == null)

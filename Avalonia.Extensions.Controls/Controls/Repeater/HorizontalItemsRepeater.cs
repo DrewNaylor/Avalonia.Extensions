@@ -45,7 +45,8 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="Command"/> property.
         /// </summary>
         public static readonly DirectProperty<HorizontalItemsRepeater, ICommand> CommandProperty =
-             AvaloniaProperty.RegisterDirect<HorizontalItemsRepeater, ICommand>(nameof(Command), content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
+             AvaloniaProperty.RegisterDirect<HorizontalItemsRepeater, ICommand>(nameof(Command), content => content.Command,
+                 (content, command) => content.Command = command, enableDataValidation: true);
         /// <summary>
         /// Raised when the user clicks the child item.
         /// </summary>

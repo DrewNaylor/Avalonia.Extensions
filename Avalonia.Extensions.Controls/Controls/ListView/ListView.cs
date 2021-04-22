@@ -22,20 +22,22 @@ namespace Avalonia.Extensions.Controls
         }
         private static void OnViewChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
-            ListView listView = (ListView)d;
-            ViewBase oldView = (ViewBase)e.OldValue;
-            ViewBase newView = (ViewBase)e.NewValue;
-            if (newView != null)
+            if (d is ListView listView)
             {
-                if (newView.IsUsed)
-                    throw new InvalidOperationException("View cannot be shared between multiple instances of ListView");
-                newView.IsUsed = true;
+                ViewBase oldView = (ViewBase)e.OldValue;
+                ViewBase newView = (ViewBase)e.NewValue;
+                if (newView != null)
+                {
+                    if (newView.IsUsed)
+                        throw new InvalidOperationException("View cannot be shared between multiple instances of ListView");
+                    newView.IsUsed = true;
+                }
+                listView.PreviousView = oldView;
+                listView.ApplyNewView();
+                listView.PreviousView = newView;
+                if (oldView != null)
+                    oldView.IsUsed = false;
             }
-            listView.PreviousView = oldView;
-            listView.ApplyNewView();
-            listView.PreviousView = newView;
-            if (oldView != null)
-                oldView.IsUsed = false;
         }
         public Type Defaultstyle { get; private set; }
         Type IStyleable.StyleKey => typeof(ListBox);

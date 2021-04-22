@@ -14,7 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Controls\ListView\ListView.xaml" />
     <None Remove="DefaultTheme.xaml" />
   </ItemGroup>
 
@@ -22,7 +21,7 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0" />
-    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.0" />
+    <PackageReference Include="Avalonia" Version="0.10.2" />
+    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.2" />
   </ItemGroup>
 </Project>

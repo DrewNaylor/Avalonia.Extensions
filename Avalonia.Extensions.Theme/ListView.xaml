@@ -1,235 +1,28 @@
-<!--https://github.com/jhofinger/Avalonia/blob/listview/src/Avalonia.Themes.Default/ListView.xaml-->
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:local="using:Avalonia.Extensions.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Styles.Resources>
-    <LinearGradientBrush x:Key="GridViewColumnHeaderBackground"
-                       StartPoint="0,0"
-                       EndPoint="0,1">
-      <LinearGradientBrush.GradientStops>
-        <GradientStop Color="#FFFFFFFF"
-                      Offset="0"/>
-        <GradientStop Color="#FFFFFFFF"
-                      Offset="0.4091"/>
-        <GradientStop Color="#FFF7F8F9"
-                      Offset="1"/>
-      </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="GridViewColumnHeaderBorderBackground"
-                     StartPoint="0,0"
-                     EndPoint="0,1">
-      <LinearGradientBrush.GradientStops>
-        <GradientStop Color="#FFF2F2F2"
-                      Offset="0"/>
-        <GradientStop Color="#FFD5D5D5"
-                      Offset="1"/>
-      </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="GridViewColumnHeaderHoverBackground"
-                   StartPoint="0,0"
-                   EndPoint="0,1">
-      <LinearGradientBrush.GradientStops>
-        <GradientStop Color="#FFBDEDFF"
-                      Offset="0"/>
-        <GradientStop Color="#FFB7E7FB"
-                      Offset="1"/>
-      </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="GridViewColumnHeaderPressBackground"
-                         StartPoint="0,0"
-                         EndPoint="0,1">
-      <LinearGradientBrush.GradientStops>
-        <GradientStop Color="#FF8DD6F7"
-                      Offset="0"/>
-        <GradientStop Color="#FF8AD1F5"
-                      Offset="1"/>
-      </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-  </Styles.Resources>
   <Style Selector="local|ListViewItem">
-    <Setter Property="Background"
-            Value="Transparent"/>
-    <Setter Property="BorderBrush"
-            Value="Transparent"/>
-    <Setter Property="BorderThickness"
-            Value="1"/>
-    <Setter Property="Margin"
-            Value="0,0,0,1"/>
-    <Setter Property="Padding"
-            Value="5,2,5,2"/>
-    <Setter Property="VerticalContentAlignment"
-            Value="Center"/>
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Margin" Value="0,0,0,1" />
+    <Setter Property="Padding" Value="5,2,5,2" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type local:ListViewItem}">
-          <Border BorderThickness="{TemplateBinding BorderThickness}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  Background="{TemplateBinding Background}"
-                  CornerRadius="2">
-            <Border Name="InnerBorder"
-                    CornerRadius="1"
-                    BorderThickness="1">
+          <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+                  Background="{TemplateBinding Background}" CornerRadius="2">
+            <Border Name="InnerBorder" CornerRadius="1" BorderThickness="1">
               <Grid>
                 <Grid.RowDefinitions>
-                  <RowDefinition MaxHeight="11"/>
-                  <RowDefinition/>
+                  <RowDefinition MaxHeight="11" />
+                  <RowDefinition />
                 </Grid.RowDefinitions>
-                <Rectangle Name="UpperHighlight"
-                           IsVisible="false"
-                           Fill="#75FFFFFF"/>
-                <local:GridViewRowPresenter Grid.RowSpan="2"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                <Rectangle Name="UpperHighlight" IsVisible="false" Fill="#75FFFFFF" />
               </Grid>
             </Border>
           </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-  <Style  Selector="ScrollViewer">
-    <Setter Property="Focusable"
-            Value="false"/>
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type ScrollViewer}">
-          <Grid Background="{TemplateBinding Background}">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*"/>
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="*"/>
-              <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <DockPanel Margin="{TemplateBinding Padding}">
-              <ScrollViewer DockPanel.Dock="Top"
-                            HorizontalScrollBarVisibility="Hidden"
-                            VerticalScrollBarVisibility="Hidden"
-                            Focusable="false">
-                <local:GridViewHeaderRowPresenter Margin="2,0,2,0"
-                                            Columns="{Binding Path=TemplatedParent.View.Columns,RelativeSource={RelativeSource TemplatedParent}}"
-                                            ColumnHeaderTemplate="{Binding Path=TemplatedParent.View.ColumnHeaderTemplate,RelativeSource={RelativeSource TemplatedParent}}"
-                                            ColumnHeaderStringFormat="{Binding Path=TemplatedParent.View.ColumnHeaderStringFormat,RelativeSource={RelativeSource TemplatedParent}}"
-                                            AllowsColumnReorder="{Binding Path=TemplatedParent.View.AllowsColumnReorder,RelativeSource={RelativeSource TemplatedParent}}"
-                                            ColumnHeaderContextMenu="{Binding Path=TemplatedParent.View.ColumnHeaderContextMenu,RelativeSource={RelativeSource TemplatedParent}}"
-                                            ColumnHeaderToolTip="{Binding Path=TemplatedParent.View.ColumnHeaderToolTip,RelativeSource={RelativeSource TemplatedParent}}"
-                                            />
-              </ScrollViewer>
-              <ScrollContentPresenter Name="PART_ScrollContentPresenter"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      />
-            </DockPanel>
-            <ScrollBar Name="PART_HorizontalScrollBar"
-                       Orientation="Horizontal"
-                       Grid.Row="1"
-                       Minimum="0.0"
-                       Maximum="{TemplateBinding HorizontalScrollBarMaximum}"
-                       ViewportSize="{TemplateBinding HorizontalScrollBarViewportSize}"
-                       Value="{Binding Path=HorizontalOffset,RelativeSource={RelativeSource TemplatedParent},Mode=OneWay}"
-                       Visibility="{TemplateBinding HorizontalScrollBarVisibility}"
-                       Cursor="Arrow"/>
-            <ScrollBar Name="PART_VerticalScrollBar"
-                       Orientation="Vertical"
-                       Grid.Column="1"
-                       Minimum="0.0"
-                       Maximum="{TemplateBinding VerticalScrollBarMaximum}"
-                       ViewportSize="{TemplateBinding VerticalScrollBarViewportSize}"
-                       Value="{Binding Path=VerticalOffset,RelativeSource={RelativeSource TemplatedParent},Mode=OneWay}"
-                       Visibility="{TemplateBinding VerticalScrollBarVisibility}"
-                       Cursor="Arrow"/>
-            <DockPanel Grid.Column="1"
-                       Grid.Row="1"
-                       Background="{Binding Path=Background,ElementName=PART_VerticalScrollBar}"
-                       LastChildFill="false">
-              <Rectangle DockPanel.Dock="Left"
-                         Width="1"
-                         Fill="White"
-                         />
-              <Rectangle DockPanel.Dock="Top"
-                         Height="1"
-                         Fill="White"
-                        />
-            </DockPanel>
-          </Grid>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-  <Style Selector="Thumb.GridViewColumnHeaderGripper">
-    <Setter Property="Canvas.Right"
-            Value="-9"/>
-    <Setter Property="Width"
-            Value="18"/>
-    <Setter Property="Height"
-            Value="{Binding Path=ActualHeight,RelativeSource={RelativeSource TemplatedParent}}"/>
-    <Setter Property="Padding"
-            Value="0"/>
-    <Setter Property="Background"
-            Value="{StaticResource GridViewColumnHeaderBorderBackground}"/>
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type Thumb}">
-          <Border Padding="{TemplateBinding Padding}"
-                  Background="Transparent">
-            <Rectangle HorizontalAlignment="Center"
-                       Width="1"
-                       Fill="{TemplateBinding Background}"/>
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-  <Style Selector="local|GridViewColumnHeader">
-    <Setter Property="HorizontalContentAlignment"
-            Value="Center"/>
-    <Setter Property="VerticalContentAlignment"
-            Value="Center"/>
-    <Setter Property="Background"
-            Value="{StaticResource GridViewColumnHeaderBackground}"/>
-    <Setter Property="BorderBrush"
-            Value="{StaticResource GridViewColumnHeaderBorderBackground}"/>
-    <Setter Property="BorderThickness"
-            Value="0"/>
-    <Setter Property="Padding"
-            Value="2,0,2,0"/>
-    <Setter Property="Foreground"
-            Value="{DynamicResource ThemeForegroundBrush}"/>
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:GridViewColumnHeader}">
-          <Grid>
-            <Border Name="HeaderBorder"
-                    BorderThickness="0,1,0,1"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    Background="{TemplateBinding Background}">
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition MaxHeight="7"/>
-                  <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Rectangle Name="UpperHighlight"
-                           IsVisible="False"
-                           Fill="#FFE3F7FF"/>
-                <Border Grid.RowSpan="2"
-                        Padding="{TemplateBinding Padding}">
-                  <ContentPresenter Name="HeaderContent"
-                                    Margin="0,0,0,1"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                </Border>
-              </Grid>
-            </Border>
-            <Border Name="HeaderHoverBorder"
-                    BorderThickness="1,0,1,1"
-                    Margin="1,1,0,0"/>
-            <Border Name="HeaderPressBorder"
-                    BorderThickness="1,1,1,0"
-                    Margin="1,0,0,1"/>
-            <Canvas>
-              <Thumb x:Name="PART_HeaderGripper" Classes="GridViewColumnHeaderGripper"/>
-            </Canvas>
-          </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>

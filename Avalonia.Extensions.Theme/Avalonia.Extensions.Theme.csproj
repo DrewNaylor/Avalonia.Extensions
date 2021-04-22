@@ -9,11 +9,17 @@
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
     <EmbeddedResource Include="*.xaml" />
-    <None Remove="ListView.xaml" />
+    <None Remove="ExpandableView.xaml" />
     <AvaloniaResource Include="DefaultTheme.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0" />
+    <PackageReference Include="Avalonia" Version="0.10.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ExpandableView.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

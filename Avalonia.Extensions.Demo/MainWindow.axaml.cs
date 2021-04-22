@@ -17,8 +17,8 @@ namespace Avalonia.Controls.Demo
         }
         private void InitializeComponent()
         {
-            Width = 480;
-            Height = 400;
+            Width = 800;
+            Height = 600;
             var model = new MainViewModel();
             DataContext = model;
             PopupContent = this.FindControl<Grid>("PopupContent");

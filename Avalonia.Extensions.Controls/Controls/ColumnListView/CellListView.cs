@@ -68,14 +68,18 @@ namespace Avalonia.Extensions.Controls
             set => SetValue(ClickableProperty, value);
         }
         /// <summary>
-        /// get or set column number
+        /// get or set column number.
+        /// default value is 1.if the value smaller than 1 it's means depend layout by item controls
         /// </summary>
         public int ColumnNum
         {
             get => GetValue(ColumnNumProperty);
             set
             {
-                CellWidth = Bounds.Width / value;
+                if (value > 0)
+                    CellWidth = Bounds.Width / value;
+                else
+                    CellWidth = double.NaN;
                 SetValue(ColumnNumProperty, value);
             }
         }
@@ -85,8 +89,7 @@ namespace Avalonia.Extensions.Controls
         public CellListView()
         {
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
-            var xaml = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
-            var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(xaml);
+            var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(Core.WRAP_TEMPLATE);
             SetValue(ItemsPanelProperty, target);
             BoundsProperty.Changed.AddClassHandler<CellListView>(OnBoundsChange);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
@@ -95,11 +98,14 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.NewValue is Rect rect)
             {
-                CellWidth = rect.Width / ColumnNum;
-                for (var index = 0; index < LogicalChildren.Count; index++)
+                if (CellWidth != double.NaN)
                 {
-                    var item = LogicalChildren.ElementAt(index);
-                    SetItemWidth(item);
+                    CellWidth = rect.Width / ColumnNum;
+                    for (var index = 0; index < LogicalChildren.Count; index++)
+                    {
+                        var item = LogicalChildren.ElementAt(index);
+                        SetItemWidth(item);
+                    }
                 }
             }
         }
@@ -115,8 +121,11 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.NewItems.Count > 0)
             {
-                var item = e.NewItems.ElementAt(0);
-                SetItemWidth(item);
+                if (CellWidth != double.NaN)
+                {
+                    var item = e.NewItems.ElementAt(0);
+                    SetItemWidth(item);
+                }
             }
         }
         /// <summary>

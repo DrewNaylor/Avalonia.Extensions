@@ -21,18 +21,7 @@
         </ext:HorizontalItemsRepeater>
       </StackPanel>
     </TabItem>
-    <TabItem Header="ListView">
-      <ext:ListView Items="{Binding Items}">
-        <ext:ListView.ItemTemplate>
-          <DataTemplate>
-            <ext:ClickableView CommandParameter="{Binding content}">
-              <TextBlock Text="{Binding content}" />
-            </ext:ClickableView>
-          </DataTemplate>
-        </ext:ListView.ItemTemplate>
-      </ext:ListView>
-    </TabItem>
-    <TabItem Header="WrapListBox">
+    <TabItem Header="ColumnListView">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="auto" />
@@ -42,7 +31,7 @@
         <ext:CellListView Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
           <ext:CellListView.ItemTemplate>
             <DataTemplate>
-              <ext:CellListViewCell CommandParameter="{Binding content}">
+              <ext:CellListViewCell HorizontalAlignment="Center" CommandParameter="{Binding content}">
                 <TextBlock Text="{Binding content}" />
               </ext:CellListViewCell>
             </DataTemplate>
@@ -73,6 +62,31 @@
           <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
         </StackPanel>
       </ScrollViewer>
+    </TabItem>
+    <TabItem Header="ExpandableView">
+        <ext:ExpandableView>
+          <ext:ExpandableView.PrimaryView>
+            <ext:ClickableView>
+              <ext:ImageRemote Width="64" Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+            </ext:ClickableView>
+          </ext:ExpandableView.PrimaryView>
+          <ext:ExpandableView.SecondView>
+            <StackPanel Orientation="Vertical">
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+              <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+            </StackPanel>
+          </ext:ExpandableView.SecondView>
+        </ext:ExpandableView>
     </TabItem>
   </TabControl>
 </Window>
