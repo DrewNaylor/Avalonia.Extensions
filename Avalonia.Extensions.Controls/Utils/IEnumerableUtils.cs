@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Avalonia.Extensions.Controls.Utils
 {
-    internal static class IEnumerableUtils
+    public static class IEnumerableUtils
     {
         public static int IndexOf(this IEnumerable items, object item)
         {

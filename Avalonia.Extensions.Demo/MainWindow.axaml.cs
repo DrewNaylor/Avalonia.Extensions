@@ -1,4 +1,5 @@
 using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Controls.Utils;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -22,6 +23,7 @@ namespace Avalonia.Controls.Demo
             var model = new MainViewModel();
             DataContext = model;
             PopupContent = this.FindControl<Grid>("PopupContent");
+            var list = PopupContent.FindControls<TextBlock>(true);
         }
         private void OnPopupClick(object sender, RoutedEventArgs e)
         {

@@ -1,9 +1,9 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Extensions.Controls.Base;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls

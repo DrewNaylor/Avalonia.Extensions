@@ -20,6 +20,20 @@ namespace Avalonia.Extensions.Controls
                 throw ex;
             }
         }
+        public static T GetPrivateField<T>(this NameScope scope, string fieldName)
+        {
+            try
+            {
+                var type = scope.GetType();
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                FieldInfo field = type.GetField(fieldName, flag);
+                return (T)field?.GetValue(scope);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void SetPrivateField(this Control control, string fieldName, object fieldValue)
         {
             try
