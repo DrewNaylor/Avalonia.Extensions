@@ -1,8 +1,8 @@
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Controls.Utils;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
+using System.Collections.Generic;
 
 namespace Avalonia.Controls.Demo
 {
@@ -23,7 +23,12 @@ namespace Avalonia.Controls.Demo
             var model = new MainViewModel();
             DataContext = model;
             PopupContent = this.FindControl<Grid>("PopupContent");
-            var list = PopupContent.FindControls<TextBlock>(true);
+            var imgList = this.FindControl<ListBox>("imgList");
+            imgList.Items = new List<object>
+            {
+                new { Url = "http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" },
+                new { Url = "https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" }
+            };
         }
         private void OnPopupClick(object sender, RoutedEventArgs e)
         {

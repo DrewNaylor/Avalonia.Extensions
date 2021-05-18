@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using Avalonia.Metadata;
 using Avalonia.Threading;
 using System;
 using System.Diagnostics;
@@ -23,9 +24,11 @@ namespace Avalonia.Extensions.Controls
         /// original  image height
         /// </summary>
         public double ImageHeight { get; private set; }
+        private string _address;
         public ImageRemote() : base()
         {
             HttpClient = Core.Instance.GetClient();
+            AddressProperty.Changed.AddClassHandler<ImageRemote>(OnAddressChange);
         }
         /// <summary>
         /// error message if loading failed
@@ -34,19 +37,16 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Defines the <see cref="Address"/> property.
         /// </summary>
-        public static readonly StyledProperty<string> AddressProperty =
-          AvaloniaProperty.Register<ImageRemote, string>(nameof(Address), string.Empty);
+        public static readonly DirectProperty<ImageRemote, string> AddressProperty =
+          AvaloniaProperty.RegisterDirect<ImageRemote, string>(nameof(Address), o => o.Address, (o, v) => o.Address = v);
         /// <summary>
         /// get or set image url address
         /// </summary>
+        [Content]
         public string Address
         {
             get => GetValue(AddressProperty);
-            set
-            {
-                SetValue(AddressProperty, value);
-                LoadBitmap();
-            }
+            set => SetAndRaise(AddressProperty, ref _address, value);
         }
         /// <summary>
         /// Defines the <see cref="Failed"/> property.
@@ -74,20 +74,24 @@ namespace Avalonia.Extensions.Controls
             add { AddHandler(OpenedEvent, value); }
             remove { RemoveHandler(OpenedEvent, value); }
         }
-        private void LoadBitmap()
+        private void OnAddressChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
+                var address = e.NewValue.ToString();
                 try
                 {
-                    HttpResponseMessage hr = HttpClient.GetAsync(Address).ConfigureAwait(false).GetAwaiter().GetResult();
-                    hr.EnsureSuccessStatusCode();
-                    using var stream = hr.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-                    var bitmap = new Bitmap(stream);
-                    ImageWidth = Width = bitmap.PixelSize.Width;
-                    ImageHeight = Height = bitmap.PixelSize.Height;
-                    this.Source = bitmap;
-                    MediaChange(true);
+                    if (!string.IsNullOrEmpty(address))
+                    {
+                        HttpResponseMessage hr = HttpClient.GetAsync(address).ConfigureAwait(false).GetAwaiter().GetResult();
+                        hr.EnsureSuccessStatusCode();
+                        using var stream = hr.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                        var bitmap = new Bitmap(stream);
+                        ImageWidth = Width = bitmap.PixelSize.Width;
+                        ImageHeight = Height = bitmap.PixelSize.Height;
+                        this.Source = bitmap;
+                        MediaChange(true);
+                    }
                 }
                 catch (Exception ex)
                 {
