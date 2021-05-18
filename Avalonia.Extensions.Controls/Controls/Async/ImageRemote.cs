@@ -15,6 +15,8 @@ namespace Avalonia.Extensions.Controls
     /// </summary>
     public sealed class ImageRemote : Image
     {
+        private bool Loading = false;
+        private string oldVaule = string.Empty;
         private HttpClient HttpClient { get; }
         /// <summary>
         /// original  image width
@@ -25,10 +27,10 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public double ImageHeight { get; private set; }
         private string _address;
+        private bool _mandatory = false;
         public ImageRemote() : base()
         {
             HttpClient = Core.Instance.GetClient();
-            AddressProperty.Changed.AddClassHandler<ImageRemote>(OnAddressChange);
         }
         /// <summary>
         /// error message if loading failed
@@ -40,13 +42,72 @@ namespace Avalonia.Extensions.Controls
         public static readonly DirectProperty<ImageRemote, string> AddressProperty =
           AvaloniaProperty.RegisterDirect<ImageRemote, string>(nameof(Address), o => o.Address, (o, v) => o.Address = v);
         /// <summary>
+        /// Defines the <see cref="Mandatory"/> property.
+        /// </summary>
+        public static readonly DirectProperty<ImageRemote, bool> MandatoryProperty =
+          AvaloniaProperty.RegisterDirect<ImageRemote, bool>(nameof(Mandatory), o => o.Mandatory, (o, v) => o.Mandatory = v);
+        /// <summary>
         /// get or set image url address
         /// </summary>
         [Content]
         public string Address
         {
             get => GetValue(AddressProperty);
-            set => SetAndRaise(AddressProperty, ref _address, value);
+            set
+            {
+                oldVaule = _address;
+                SetAndRaise(AddressProperty, ref _address, value);
+                LoadBitmap(value);
+            }
+        }
+        /// <summary>
+        /// force refresh of the picture resource or not,
+        /// regardless of whether the <see cref="Address"/> is the same
+        /// </summary>
+        [Content]
+        public bool Mandatory
+        {
+            get => GetValue(MandatoryProperty);
+            set => SetAndRaise(MandatoryProperty, ref _mandatory, value);
+        }
+        private void LoadBitmap(string url)
+        {
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                if (oldVaule != url || _mandatory)
+                {
+                    Loading = true;
+                    try
+                    {
+                        if (!Loading)
+                        {
+                            if (!string.IsNullOrEmpty(url))
+                            {
+                                HttpResponseMessage hr = HttpClient.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
+                                hr.EnsureSuccessStatusCode();
+                                using var stream = hr.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                                var bitmap = new Bitmap(stream);
+                                ImageWidth = Width = bitmap.PixelSize.Width;
+                                ImageHeight = Height = bitmap.PixelSize.Height;
+                                this.Source = bitmap;
+                                MediaChange(true);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        FailedMessage = ex.Message;
+#if DEBUG
+                        Debug.WriteLine(FailedMessage);
+#endif
+                        MediaChange(false);
+                    }
+                    finally
+                    {
+                        Loading = false;
+                    }
+                }
+            });
         }
         /// <summary>
         /// Defines the <see cref="Failed"/> property.
@@ -73,35 +134,6 @@ namespace Avalonia.Extensions.Controls
         {
             add { AddHandler(OpenedEvent, value); }
             remove { RemoveHandler(OpenedEvent, value); }
-        }
-        private void OnAddressChange(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                var address = e.NewValue.ToString();
-                try
-                {
-                    if (!string.IsNullOrEmpty(address))
-                    {
-                        HttpResponseMessage hr = HttpClient.GetAsync(address).ConfigureAwait(false).GetAwaiter().GetResult();
-                        hr.EnsureSuccessStatusCode();
-                        using var stream = hr.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-                        var bitmap = new Bitmap(stream);
-                        ImageWidth = Width = bitmap.PixelSize.Width;
-                        ImageHeight = Height = bitmap.PixelSize.Height;
-                        this.Source = bitmap;
-                        MediaChange(true);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    FailedMessage = ex.Message;
-#if DEBUG
-                    Debug.WriteLine(FailedMessage);
-#endif
-                    MediaChange(false);
-                }
-            });
         }
         public void ZoomIn(double percentage)
         {
