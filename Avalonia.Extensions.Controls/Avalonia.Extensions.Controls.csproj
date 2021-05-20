@@ -14,6 +14,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="Controls\Notify\NotifyWindow.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controls\Notify\NotifyWindow.axaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="DefaultTheme.xaml" />
   </ItemGroup>
 

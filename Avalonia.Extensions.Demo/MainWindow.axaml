@@ -39,9 +39,14 @@
         </ext:CellListView>
       </Grid>
     </TabItem>
-    <TabItem Header="PopupDialog">
+    <TabItem Header="Popup/Notify">
       <Grid Name="PopupContent">
-        <Button Click="OnPopupClick">Show PopupDialog</Button>
+		  <Grid.RowDefinitions>
+			  <RowDefinition Height=".2*"/>
+			  <RowDefinition Height=".2*"/>
+		  </Grid.RowDefinitions>
+        <Button Grid.Row="0" Click="OnPopupClick">Show PopupDialog</Button>
+		<Button Grid.Row="1" Click="OnNotifyClick">Show NotifyWindow</Button>
       </Grid>
     </TabItem>
     <TabItem Header="ImageRemote">

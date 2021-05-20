@@ -50,5 +50,11 @@ namespace Avalonia.Controls.Demo
                 dialog.Open($"PopupDialog has been show for {Time} times");
             });
         }
+        private void OnNotifyClick(object sender, RoutedEventArgs e)
+        {
+            NotifyWindow window = new NotifyWindow();
+            window.Content = new TextBlock { Text = "大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大" };
+            window.Show(Postion.BottomRight);
+        }
     }
 }
