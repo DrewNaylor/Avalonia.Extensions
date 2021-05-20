@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
 {
-    public static class BaseExt
+    public static class ControlUtils
     {
         public static T GetPrivateField<T>(this Control control, string fieldName)
         {
