@@ -70,22 +70,22 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(MandatoryProperty);
             set => SetAndRaise(MandatoryProperty, ref _mandatory, value);
         }
-        private void LoadBitmap(string url)
+        private async void LoadBitmap(string url)
         {
-            Dispatcher.UIThread.InvokeAsync(() =>
+            await Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 if (oldVaule != url || _mandatory)
                 {
-                    Loading = true;
                     try
                     {
                         if (!Loading)
                         {
+                            Loading = true;
                             if (!string.IsNullOrEmpty(url))
                             {
-                                HttpResponseMessage hr = HttpClient.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
+                                HttpResponseMessage hr = await HttpClient.GetAsync(url);
                                 hr.EnsureSuccessStatusCode();
-                                using var stream = hr.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                                using var stream = await hr.Content.ReadAsStreamAsync();
                                 var bitmap = new Bitmap(stream);
                                 ImageWidth = Width = bitmap.PixelSize.Width;
                                 ImageHeight = Height = bitmap.PixelSize.Height;

@@ -2,6 +2,7 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Controls.Utils;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Threading;
@@ -84,6 +85,58 @@ namespace Avalonia.Extensions.Controls
             }
         }
         /// <summary>
+        /// Defines the <see cref="ChildHorizontalContentAlignment"/> property.
+        /// </summary>
+        public static readonly StyledProperty<HorizontalAlignment> ChildHorizontalContentAlignmentProperty =
+            AvaloniaProperty.Register<CellListView, HorizontalAlignment>(nameof(ChildHorizontalContentAlignment));
+        /// <summary>
+        /// Gets or sets the horizontal alignment of the content within the control.
+        /// </summary>
+        public HorizontalAlignment ChildHorizontalContentAlignment
+        {
+            get { return GetValue(ChildHorizontalContentAlignmentProperty); }
+            set { SetValue(ChildHorizontalContentAlignmentProperty, value); }
+        }
+        /// <summary>
+        /// Defines the <see cref="ChildVerticalContentAlignment"/> property.
+        /// </summary>
+        public static readonly StyledProperty<VerticalAlignment> ChildVerticalContentAlignmentProperty =
+            AvaloniaProperty.Register<CellListView, VerticalAlignment>(nameof(ChildVerticalContentAlignment));
+        /// <summary>
+        /// Gets or sets the vertical alignment of the content within the control.
+        /// </summary>
+        public VerticalAlignment ChildVerticalContentAlignment
+        {
+            get { return GetValue(ChildVerticalContentAlignmentProperty); }
+            set { SetValue(ChildVerticalContentAlignmentProperty, value); }
+        }
+        /// <summary>
+        /// Defines the <see cref="HorizontalAlignment"/> property.
+        /// </summary>
+        public static readonly StyledProperty<HorizontalAlignment> ChildHorizontalAlignmentProperty =
+            AvaloniaProperty.Register<CellListView, HorizontalAlignment>(nameof(ChildHorizontalAlignment));
+        /// <summary>
+        /// Gets or sets the element's preferred horizontal alignment in its parent.
+        /// </summary>
+        public HorizontalAlignment ChildHorizontalAlignment
+        {
+            get { return GetValue(HorizontalAlignmentProperty); }
+            set { SetValue(HorizontalAlignmentProperty, value); }
+        }
+        /// <summary>
+        /// Defines the <see cref="VerticalAlignment"/> property.
+        /// </summary>
+        public static readonly StyledProperty<VerticalAlignment> ChildVerticalAlignmentProperty =
+            AvaloniaProperty.Register<CellListView, VerticalAlignment>(nameof(ChildVerticalAlignment));
+        /// <summary>
+        /// Gets or sets the element's preferred vertical alignment in its parent.
+        /// </summary>
+        public VerticalAlignment ChildVerticalAlignment
+        {
+            get { return GetValue(VerticalAlignmentProperty); }
+            set { SetValue(VerticalAlignmentProperty, value); }
+        }
+        /// <summary>
         /// create a instance
         /// </summary>
         public CellListView()
@@ -91,8 +144,44 @@ namespace Avalonia.Extensions.Controls
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(Core.WRAP_TEMPLATE);
             SetValue(ItemsPanelProperty, target);
-            BoundsProperty.Changed.AddClassHandler<CellListView>(OnBoundsChange);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
+            BoundsProperty.Changed.AddClassHandler<CellListView>(OnBoundsChange);
+            ChildVerticalAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildVerticalAlignmentChange);
+            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildHorizontalAlignmentChange);
+            ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildVerticalContentAlignmentChange);
+            ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildHorizontalContentAlignmentChange);
+        }
+        private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            for (var index = 0; index < LogicalChildren.Count; index++)
+            {
+                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                    listBoxItem.VerticalAlignment = this.ChildVerticalAlignment;
+            }
+        }
+        private void OnChildHorizontalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            for (var index = 0; index < LogicalChildren.Count; index++)
+            {
+                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                    listBoxItem.HorizontalAlignment = this.ChildHorizontalAlignment;
+            }
+        }
+        private void OnChildVerticalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            for (var index = 0; index < LogicalChildren.Count; index++)
+            {
+                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                    listBoxItem.VerticalContentAlignment = this.ChildVerticalContentAlignment;
+            }
+        }
+        private void OnChildHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            for (var index = 0; index < LogicalChildren.Count; index++)
+            {
+                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                    listBoxItem.HorizontalContentAlignment = this.ChildHorizontalContentAlignment;
+            }
         }
         private void OnBoundsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {

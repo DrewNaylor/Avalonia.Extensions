@@ -30,11 +30,11 @@
         <TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
         <ext:CellListView Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
           <ext:CellListView.ItemTemplate>
-            <DataTemplate>
-              <ext:CellListViewCell HorizontalAlignment="Center" CommandParameter="{Binding content}">
-                <TextBlock Text="{Binding content}" />
-              </ext:CellListViewCell>
-            </DataTemplate>
+			  <DataTemplate>
+				  <ext:CellListViewCell HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding content}">
+					  <TextBlock Text="{Binding content}" />
+				  </ext:CellListViewCell>
+			  </DataTemplate>
           </ext:CellListView.ItemTemplate>
         </ext:CellListView>
       </Grid>
