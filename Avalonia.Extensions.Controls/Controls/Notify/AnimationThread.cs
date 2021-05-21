@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
-    internal sealed class AnimationThread
+    internal sealed class AnimationThread : IDisposable
     {
         private Thread Thread { get; }
         private Window Window { get; }
-        private PixelPoint Next { get; set; }
         private Options Options { get; set; }
+        public event EventHandler DisposeEvent;
         private PixelPoint StopPosition { get; set; }
         private PixelPoint StartPosition { get; set; }
+        private PixelPoint LeftHorizontalNext { get; set; }
+        private PixelPoint BottomVerticalNext { get; set; }
+        private PixelPoint RightHorizontalNext { get; set; }
         public AnimationThread(Window window)
         {
             this.Window = window;
@@ -21,14 +24,23 @@ namespace Avalonia.Extensions.Controls
         }
         public void Start(Options options)
         {
-            this.Options = options;
-            Next = new PixelPoint(0, -Options.MovePixel);
-            Thread.Start();
+            if (options.IsVaidate)
+            {
+                this.Options = options;
+                LeftHorizontalNext = new PixelPoint(-Options.MovePixel, 0);
+                BottomVerticalNext = new PixelPoint(0, -Options.MovePixel);
+                RightHorizontalNext = new PixelPoint(-Options.MovePixel, 0);
+                Thread.Start();
+            }
+            else
+            {
+                throw new NotSupportedException("when Position is Top***,the Scroll Way(ScollOrientation) cannot be Vertical!");
+            }
         }
         public void SetPath(PixelPoint startPosition, PixelPoint endPosition)
         {
-            this.StartPosition = startPosition;
             this.StopPosition = endPosition;
+            this.StartPosition = startPosition;
         }
         private async void RunJob()
         {
@@ -41,31 +53,27 @@ namespace Avalonia.Extensions.Controls
                         case ShowPosition.BottomLeft:
                             {
                                 if (Options.ScollOrientation == ScollOrientation.Vertical)
-                                    await BottomVertical();
+                                    await BottomVerticalVoid();
                                 else
-                                {
-
-                                }
+                                    await LeftHorizontalVoid();
                                 break;
                             }
                         case ShowPosition.BottomRight:
                             {
                                 if (Options.ScollOrientation == ScollOrientation.Vertical)
-                                    await BottomVertical();
+                                    await BottomVerticalVoid();
                                 else
-                                {
-
-                                }
+                                    await RightHorizontalVoid();
                                 break;
                             }
                         case ShowPosition.TopLeft:
                             {
-
+                                await LeftHorizontalVoid();
                                 break;
                             }
                         case ShowPosition.TopRight:
                             {
-
+                                await RightHorizontalVoid();
                                 break;
                             }
                     }
@@ -76,18 +84,51 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        private async Task BottomVertical()
+        private async Task LeftHorizontalVoid()
         {
-            StartPosition -= Next;
+            StartPosition -= LeftHorizontalNext;
             Window.Position = StartPosition;
-            if (StartPosition == StopPosition)
+            if (StartPosition.BiggerThan(StopPosition, true))
             {
-                Thread.Abort();
                 await Task.Delay(Options.MoveDelay);
-                Window.Close();
+                Dispose();
             }
             else
                 await Task.Delay(Options.MoveDelay);
+        }
+        private async Task RightHorizontalVoid()
+        {
+            StartPosition -= RightHorizontalNext;
+            Window.Position = StartPosition;
+            if (StartPosition.BiggerThan(StopPosition, true))
+            {
+                await Task.Delay(Options.MoveDelay);
+                Dispose();
+            }
+            else
+                await Task.Delay(Options.MoveDelay);
+        }
+        private async Task BottomVerticalVoid()
+        {
+            StartPosition -= BottomVerticalNext;
+            Window.Position = StartPosition;
+            if (StartPosition.BiggerThan(StopPosition, true))
+            {
+                await Task.Delay(Options.MoveDelay);
+                Dispose();
+            }
+            else
+                await Task.Delay(Options.MoveDelay);
+        }
+        public void Dispose()
+        {
+            try
+            {
+                Thread.Interrupt();
+                DisposeEvent?.Invoke(this, null);
+                GC.Collect();
+            }
+            catch { }
         }
     }
 }

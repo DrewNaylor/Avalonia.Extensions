@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Threading;
 using System;
 
 namespace Avalonia.Extensions.Controls
@@ -9,11 +10,22 @@ namespace Avalonia.Extensions.Controls
         private AnimationThread Thread { get; }
         public NotifyWindow() : base()
         {
+            ShowInTaskbar = false;
             Thread = new AnimationThread(this);
+            Thread.DisposeEvent += Thread_DisposeEvent;
             Options = new Options(ShowPosition.BottomRight);
+        }
+        private void Thread_DisposeEvent(object sender, EventArgs e)
+        {
+            Dispatcher.UIThread.InvokeAsync(() =>
+           {
+               this.Close();
+           });
         }
         public void Show(Options options)
         {
+            if (!options.IsVaidate)
+                throw new NotSupportedException("when Position is Top***,the Scroll Way(ScollOrientation) cannot be Vertical!");
             try
             {
                 Width = options.Size.Width;
@@ -59,20 +71,14 @@ namespace Avalonia.Extensions.Controls
                     case ShowPosition.TopLeft:
                         {
                             this.Position = new PixelPoint(0, 0);
-                            if (Options.ScollOrientation == ScollOrientation.Vertical)
-                                endPoint = new PixelPoint(0, -h);
-                            else
-                                endPoint = new PixelPoint(-w, 0);
+                            endPoint = new PixelPoint(-w, 0);
                             break;
                         }
                     case ShowPosition.TopRight:
                         {
                             var left = sw - w;
                             this.Position = new PixelPoint(left, 0);
-                            if (Options.ScollOrientation == ScollOrientation.Vertical)
-                                this.Position = new PixelPoint(left, -h);
-                            else
-                                endPoint = new PixelPoint(sw, 0);
+                            endPoint = new PixelPoint(sw, 0);
                             break;
                         }
                 }

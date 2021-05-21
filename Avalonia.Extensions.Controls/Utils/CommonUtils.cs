@@ -4,6 +4,12 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static bool BiggerThan(this PixelPoint pixelPoint, PixelPoint point, bool inCludeEquals = false)
+        {
+            if (inCludeEquals && pixelPoint.X == point.X && pixelPoint.Y == point.Y)
+                return true;
+            return pixelPoint.X > point.X && pixelPoint.Y > point.Y;
+        }
         public static int ToInt32(this object obj)
         {
             if (obj is int result)

@@ -54,7 +54,7 @@ namespace Avalonia.Controls.Demo
         {
             NotifyWindow window = new NotifyWindow();
             window.Content = new TextBlock { Text = "大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大" };
-            var options = new Options (ShowPosition.BottomRight);
+            var options = new Options(ShowPosition.BottomRight, new Size(160, 60), ScollOrientation.Horizontal);
             window.Show(options);
         }
     }

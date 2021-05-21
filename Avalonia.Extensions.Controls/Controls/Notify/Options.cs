@@ -29,6 +29,14 @@
         public int MovePixel { get; set; } = 1;
         public int MoveDelay { get; set; } = 20;
         public ScollOrientation ScollOrientation { get; set; }
+        public bool IsVaidate
+        {
+            get
+            {
+                return !((Position == ShowPosition.TopLeft || Position == ShowPosition.TopRight)
+                    && ScollOrientation == ScollOrientation.Vertical);
+            }
+        }
         public void Update(Options options)
         {
             Size = options.Size;
