@@ -52,9 +52,51 @@ namespace Avalonia.Controls.Demo
         }
         private void OnNotifyClick(object sender, RoutedEventArgs e)
         {
+            var text = ((Button)sender).CommandParameter.ToInt32();
+            ShowPosition position = ShowPosition.BottomLeft;
+            ScollOrientation orientation = ScollOrientation.Horizontal;
+            switch (text)
+            {
+                case 1:
+                    {
+                        position = ShowPosition.TopLeft;
+                        orientation = ScollOrientation.Horizontal;
+                        break;
+                    }
+                case 2:
+                    {
+                        position = ShowPosition.TopRight;
+                        orientation = ScollOrientation.Horizontal;
+                        break;
+                    }
+                case 3:
+                    {
+                        position = ShowPosition.BottomLeft;
+                        orientation = ScollOrientation.Horizontal;
+                        break;
+                    }
+                case 4:
+                    {
+                        position = ShowPosition.BottomRight;
+                        orientation = ScollOrientation.Horizontal;
+                        break;
+                    }
+                case 5:
+                    {
+                        position = ShowPosition.BottomLeft;
+                        orientation = ScollOrientation.Vertical;
+                        break;
+                    }
+                case 6:
+                    {
+                        position = ShowPosition.BottomRight;
+                        orientation = ScollOrientation.Vertical;
+                        break;
+                    }
+            }
             NotifyWindow window = new NotifyWindow();
             window.Content = new TextBlock { Text = "大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大" };
-            var options = new Options(ShowPosition.BottomRight, new Size(160, 60), ScollOrientation.Horizontal);
+            var options = new Options(position, new Size(160, 60), orientation);
             window.Show(options);
         }
     }

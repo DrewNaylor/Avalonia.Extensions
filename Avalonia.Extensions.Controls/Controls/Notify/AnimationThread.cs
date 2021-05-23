@@ -27,7 +27,7 @@ namespace Avalonia.Extensions.Controls
             if (options.IsVaidate)
             {
                 this.Options = options;
-                LeftHorizontalNext = new PixelPoint(-Options.MovePixel, 0);
+                LeftHorizontalNext = new PixelPoint(Options.MovePixel, 0);
                 BottomVerticalNext = new PixelPoint(0, -Options.MovePixel);
                 RightHorizontalNext = new PixelPoint(-Options.MovePixel, 0);
                 Thread.Start();
@@ -88,7 +88,12 @@ namespace Avalonia.Extensions.Controls
         {
             StartPosition -= LeftHorizontalNext;
             Window.Position = StartPosition;
-            if (StartPosition.BiggerThan(StopPosition, true))
+            if (StartPosition.BiggerThan(StopPosition, true) && Options.Position == ShowPosition.BottomLeft)
+            {
+                await Task.Delay(Options.MoveDelay);
+                Dispose();
+            }
+            else if (StartPosition.SmallerThan(StopPosition, true) && Options.Position == ShowPosition.TopLeft)
             {
                 await Task.Delay(Options.MoveDelay);
                 Dispose();

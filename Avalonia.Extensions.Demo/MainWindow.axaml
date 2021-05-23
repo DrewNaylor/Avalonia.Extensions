@@ -46,7 +46,14 @@
 			  <RowDefinition Height=".2*"/>
 		  </Grid.RowDefinitions>
         <Button Grid.Row="0" Click="OnPopupClick">Show PopupDialog</Button>
-		<Button Grid.Row="1" Click="OnNotifyClick">Show NotifyWindow</Button>
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+          <Button Click="OnNotifyClick" CommandParameter="1">TopLeft / Horizontal</Button>
+          <Button Click="OnNotifyClick" CommandParameter="2">TopRight / Horizontal</Button>
+          <Button Click="OnNotifyClick" CommandParameter="3">BottomLeft / Horizontal</Button>
+          <Button Click="OnNotifyClick" CommandParameter="4">BottomRight / Horizontal</Button>
+          <Button Click="OnNotifyClick" CommandParameter="5">BottomLeft / Vertical</Button>
+          <Button Click="OnNotifyClick" CommandParameter="6">BottomRight / Vertical</Button>
+        </StackPanel>
       </Grid>
     </TabItem>
     <TabItem Header="ImageRemote">
