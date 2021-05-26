@@ -16,19 +16,23 @@ namespace Avalonia.Extensions.Controls
     public sealed class ImageRemote : Image
     {
         private bool Loading = false;
-        private string oldVaule = string.Empty;
         private HttpClient HttpClient { get; }
         /// <summary>
         /// original image width
         /// </summary>
-        public double ImageWidth { get; private set; }
+        public double ImageWidth
+        {
+            get => imageWidth;
+        }
         /// <summary>
         /// original image height
         /// </summary>
-        public double ImageHeight { get; private set; }
-        private string _address;
-        private ImageStretch _stretch = ImageStretch.None;
-        private bool _mandatory = false;
+        public double ImageHeight
+        {
+            get => imageHeight;
+        }
+        private string _address, failedMessage;
+        private double imageWidth, imageHeight;
         public ImageRemote() : base()
         {
             HttpClient = Core.Instance.GetClient();
@@ -36,22 +40,15 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// error message if loading failed
         /// </summary>
-        public string FailedMessage { get; private set; }
+        public string FailedMessage
+        {
+            get => failedMessage;
+        }
         /// <summary>
         /// Defines the <see cref="Address"/> property.
         /// </summary>
         public static readonly DirectProperty<ImageRemote, string> AddressProperty =
           AvaloniaProperty.RegisterDirect<ImageRemote, string>(nameof(Address), o => o.Address, (o, v) => o.Address = v);
-        /// <summary>
-        /// Defines the <see cref="Stretch"/> property.
-        /// </summary>
-        public static new readonly DirectProperty<ImageRemote, ImageStretch> StretchProperty =
-          AvaloniaProperty.RegisterDirect<ImageRemote, ImageStretch>(nameof(Stretch), o => o.Stretch, (o, v) => o.Stretch = v);
-        /// <summary>
-        /// Defines the <see cref="Mandatory"/> property.
-        /// </summary>
-        public static readonly DirectProperty<ImageRemote, bool> MandatoryProperty =
-          AvaloniaProperty.RegisterDirect<ImageRemote, bool>(nameof(Mandatory), o => o.Mandatory, (o, v) => o.Mandatory = v);
         /// <summary>
         /// get or set image url address
         /// </summary>
@@ -61,82 +58,43 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(AddressProperty);
             set
             {
-                oldVaule = _address;
                 SetAndRaise(AddressProperty, ref _address, value);
                 LoadBitmap(value);
             }
-        }
-        [Content]
-        public new ImageStretch Stretch
-        {
-            get => GetValue(StretchProperty);
-            set
-            {
-                SetAndRaise(StretchProperty, ref _stretch, value);
-                base.Stretch = value == ImageStretch.None ? Media.Stretch.None : Media.Stretch.UniformToFill;
-                LoadBitmap(oldVaule, true);
-            }
-        }
-        /// <summary>
-        /// force refresh of the picture resource or not,
-        /// regardless of whether the <see cref="Address"/> is the same
-        /// </summary>
-        [Content]
-        public bool Mandatory
-        {
-            get => GetValue(MandatoryProperty);
-            set => SetAndRaise(MandatoryProperty, ref _mandatory, value);
         }
         private async void LoadBitmap(string url, bool refresh = false)
         {
             await Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                if (refresh || oldVaule != url || _mandatory)
+                try
                 {
-                    try
+                    if (!Loading)
                     {
-                        if (!Loading)
+                        Loading = true;
+                        if (!string.IsNullOrEmpty(url))
                         {
-                            Loading = true;
-                            if (!string.IsNullOrEmpty(url))
-                            {
-                                HttpResponseMessage hr = await HttpClient.GetAsync(url);
-                                hr.EnsureSuccessStatusCode();
-                                using var stream = await hr.Content.ReadAsStreamAsync();
-                                var bitmap = new Bitmap(stream);
-                                ImageWidth = bitmap.PixelSize.Width;
-                                ImageHeight = bitmap.PixelSize.Height;
-                                switch (_stretch)
-                                {
-                                    case ImageStretch.None:
-                                        {
-                                            Width = ImageWidth;
-                                            Height = ImageHeight;
-                                            break;
-                                        }
-                                    case ImageStretch.UniformToFill:
-                                        {
-                                            bitmap = Bitmap.DecodeToWidth(stream, Width.ToInt32());
-                                            break;
-                                        }
-                                }
-                                this.Source = bitmap;
-                                MediaChange(true);
-                            }
+                            HttpResponseMessage hr = await HttpClient.GetAsync(url);
+                            hr.EnsureSuccessStatusCode();
+                            using var stream = await hr.Content.ReadAsStreamAsync();
+                            var bitmap = Bitmap.DecodeToWidth(stream, Width.ToInt32());
+                            imageWidth = bitmap.PixelSize.Width;
+                            imageHeight = bitmap.PixelSize.Height;
+                            this.Source = bitmap;
+                            MediaChange(true);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        FailedMessage = ex.Message;
+                }
+                catch (Exception ex)
+                {
+                    failedMessage = ex.Message;
 #if DEBUG
-                        Debug.WriteLine(FailedMessage);
+                    Debug.WriteLine(FailedMessage);
 #endif
-                        MediaChange(false);
-                    }
-                    finally
-                    {
-                        Loading = false;
-                    }
+                    MediaChange(false);
+                }
+                finally
+                {
+                    Loading = false;
                 }
             });
         }

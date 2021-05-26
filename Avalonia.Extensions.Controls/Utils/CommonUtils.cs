@@ -2,7 +2,7 @@
 
 namespace Avalonia.Extensions.Controls
 {
-    public static class CommonUtils
+    internal static class CommonUtils
     {
         public static bool SmallerThan(this PixelPoint pixelPoint, PixelPoint point, bool inCludeEquals = false)
         {

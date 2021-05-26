@@ -12,9 +12,4 @@
         Vertical,
         Horizontal
     }
-    public enum ImageStretch
-    {
-        None,
-        UniformToFill
-    }
 }
