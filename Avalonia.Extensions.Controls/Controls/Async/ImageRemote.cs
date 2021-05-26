@@ -73,28 +73,8 @@ namespace Avalonia.Extensions.Controls
             set
             {
                 SetAndRaise(StretchProperty, ref _stretch, value);
-                SetSize();
-            }
-        }
-        private void SetSize()
-        {
-            switch (_stretch)
-            {
-                case ImageStretch.Fill:
-                    {
-
-                        break;
-                    }
-                case ImageStretch.None:
-                    {
-
-                        break;
-                    }
-                case ImageStretch.UniformToFill:
-                    {
-
-                        break;
-                    }
+                base.Stretch = value == ImageStretch.None ? Media.Stretch.None : Media.Stretch.UniformToFill;
+                LoadBitmap(oldVaule, true);
             }
         }
         /// <summary>
@@ -107,11 +87,11 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(MandatoryProperty);
             set => SetAndRaise(MandatoryProperty, ref _mandatory, value);
         }
-        private async void LoadBitmap(string url)
+        private async void LoadBitmap(string url, bool refresh = false)
         {
             await Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                if (oldVaule != url || _mandatory)
+                if (refresh || oldVaule != url || _mandatory)
                 {
                     try
                     {
@@ -124,8 +104,22 @@ namespace Avalonia.Extensions.Controls
                                 hr.EnsureSuccessStatusCode();
                                 using var stream = await hr.Content.ReadAsStreamAsync();
                                 var bitmap = new Bitmap(stream);
-                                ImageWidth = Width = bitmap.PixelSize.Width;
-                                ImageHeight = Height = bitmap.PixelSize.Height;
+                                ImageWidth = bitmap.PixelSize.Width;
+                                ImageHeight = bitmap.PixelSize.Height;
+                                switch (_stretch)
+                                {
+                                    case ImageStretch.None:
+                                        {
+                                            Width = ImageWidth;
+                                            Height = ImageHeight;
+                                            break;
+                                        }
+                                    case ImageStretch.UniformToFill:
+                                        {
+                                            bitmap = Bitmap.DecodeToWidth(stream, Width.ToInt32());
+                                            break;
+                                        }
+                                }
                                 this.Source = bitmap;
                                 MediaChange(true);
                             }

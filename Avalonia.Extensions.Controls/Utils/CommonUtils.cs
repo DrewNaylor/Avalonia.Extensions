@@ -20,14 +20,21 @@ namespace Avalonia.Extensions.Controls
         }
         public static int ToInt32(this object obj)
         {
-            if (obj is int result)
-                return result;
-            else
+            try
             {
-                if (int.TryParse(obj.ToString(), out result))
+                if (obj is int result)
                     return result;
                 else
-                    return Convert.ToInt32(obj.ToString());
+                {
+                    if (int.TryParse(obj.ToString(), out result))
+                        return result;
+                    else
+                        return Convert.ToInt32(obj.ToString());
+                }
+            }
+            catch
+            {
+                return 0;
             }
         }
         public static double ActualWidth(this Visual visual)
