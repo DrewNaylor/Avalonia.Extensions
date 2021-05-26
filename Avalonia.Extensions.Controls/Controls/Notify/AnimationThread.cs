@@ -11,12 +11,12 @@ namespace Avalonia.Extensions.Controls
         private Thread Thread { get; }
         private Window Window { get; }
         private Options Options { get; set; }
-        public event EventHandler DisposeEvent;
         private PixelPoint StopPosition { get; set; }
         private PixelPoint StartPosition { get; set; }
         private PixelPoint LeftHorizontalNext { get; set; }
         private PixelPoint BottomVerticalNext { get; set; }
         private PixelPoint RightHorizontalNext { get; set; }
+        public event EventHandler DisposeEvent;
         public AnimationThread(Window window)
         {
             this.Window = window;

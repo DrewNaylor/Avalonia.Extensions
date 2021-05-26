@@ -19,14 +19,15 @@ namespace Avalonia.Extensions.Controls
         private string oldVaule = string.Empty;
         private HttpClient HttpClient { get; }
         /// <summary>
-        /// original  image width
+        /// original image width
         /// </summary>
         public double ImageWidth { get; private set; }
         /// <summary>
-        /// original  image height
+        /// original image height
         /// </summary>
         public double ImageHeight { get; private set; }
         private string _address;
+        private ImageStretch _stretch = ImageStretch.None;
         private bool _mandatory = false;
         public ImageRemote() : base()
         {
@@ -41,6 +42,11 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public static readonly DirectProperty<ImageRemote, string> AddressProperty =
           AvaloniaProperty.RegisterDirect<ImageRemote, string>(nameof(Address), o => o.Address, (o, v) => o.Address = v);
+        /// <summary>
+        /// Defines the <see cref="Stretch"/> property.
+        /// </summary>
+        public static new readonly DirectProperty<ImageRemote, ImageStretch> StretchProperty =
+          AvaloniaProperty.RegisterDirect<ImageRemote, ImageStretch>(nameof(Stretch), o => o.Stretch, (o, v) => o.Stretch = v);
         /// <summary>
         /// Defines the <see cref="Mandatory"/> property.
         /// </summary>
@@ -58,6 +64,37 @@ namespace Avalonia.Extensions.Controls
                 oldVaule = _address;
                 SetAndRaise(AddressProperty, ref _address, value);
                 LoadBitmap(value);
+            }
+        }
+        [Content]
+        public new ImageStretch Stretch
+        {
+            get => GetValue(StretchProperty);
+            set
+            {
+                SetAndRaise(StretchProperty, ref _stretch, value);
+                SetSize();
+            }
+        }
+        private void SetSize()
+        {
+            switch (_stretch)
+            {
+                case ImageStretch.Fill:
+                    {
+
+                        break;
+                    }
+                case ImageStretch.None:
+                    {
+
+                        break;
+                    }
+                case ImageStretch.UniformToFill:
+                    {
+
+                        break;
+                    }
             }
         }
         /// <summary>
