@@ -2,7 +2,7 @@
 
 namespace Avalonia.Extensions.Controls
 {
-    internal static class CommonUtils
+    public static class CommonUtils
     {
         public static bool SmallerThan(this PixelPoint pixelPoint, PixelPoint point, bool inCludeEquals = false)
         {
@@ -24,6 +24,8 @@ namespace Avalonia.Extensions.Controls
             {
                 if (obj is int result)
                     return result;
+                else if (obj is double d && double.IsNaN(d))
+                    return 0;
                 else
                 {
                     if (int.TryParse(obj.ToString(), out result))

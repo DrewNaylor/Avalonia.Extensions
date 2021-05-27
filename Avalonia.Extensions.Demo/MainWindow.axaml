@@ -59,8 +59,6 @@
     <TabItem Header="ImageRemote">
       <ScrollViewer>
         <StackPanel Orientation="Vertical">
-          <ext:ImageRemote Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
-          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           <ListBox Name="imgList">
             <ListBox.ItemTemplate>
               <DataTemplate>

@@ -76,11 +76,23 @@ namespace Avalonia.Extensions.Controls
                             HttpResponseMessage hr = await HttpClient.GetAsync(url);
                             hr.EnsureSuccessStatusCode();
                             using var stream = await hr.Content.ReadAsStreamAsync();
-                            var bitmap = Bitmap.DecodeToWidth(stream, Width.ToInt32());
-                            imageWidth = bitmap.PixelSize.Width;
-                            imageHeight = bitmap.PixelSize.Height;
-                            this.Source = bitmap;
-                            MediaChange(true);
+                            var width = Width.ToInt32();
+                            if (double.IsNaN(Width) || width == 0)
+                            {
+                                var bitmap = new Bitmap(stream);
+                                Width = imageWidth = bitmap.PixelSize.Width;
+                                Height = imageHeight = bitmap.PixelSize.Height;
+                                this.Source = bitmap;
+                                MediaChange(true);
+                            }
+                            else
+                            {
+                                var bitmap = Bitmap.DecodeToWidth(stream, width);
+                                imageWidth = bitmap.PixelSize.Width;
+                                imageHeight = bitmap.PixelSize.Height;
+                                this.Source = bitmap;
+                                MediaChange(true);
+                            }
                         }
                     }
                 }
