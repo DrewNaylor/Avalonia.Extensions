@@ -4,8 +4,6 @@ using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Threading;
 using System;
-using System.Diagnostics;
-using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -15,8 +13,6 @@ namespace Avalonia.Extensions.Controls
     /// </summary>
     public sealed class ImageRemote : Image
     {
-        private bool Loading = false;
-        private HttpClient HttpClient { get; }
         /// <summary>
         /// original image width
         /// </summary>
@@ -33,9 +29,10 @@ namespace Avalonia.Extensions.Controls
         }
         private string _address, failedMessage;
         private double imageWidth, imageHeight;
+        private DownloadTask Task { get; }
         public ImageRemote() : base()
         {
-            HttpClient = Core.Instance.GetClient();
+            Task = new DownloadTask();
         }
         /// <summary>
         /// error message if loading failed
@@ -62,53 +59,39 @@ namespace Avalonia.Extensions.Controls
                 LoadBitmap(value);
             }
         }
-        private async void LoadBitmap(string url, bool refresh = false)
+        private void LoadBitmap(string url)
         {
-            await Dispatcher.UIThread.InvokeAsync(async () =>
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                try
-                {
-                    if (!Loading)
-                    {
-                        Loading = true;
-                        if (!string.IsNullOrEmpty(url))
-                        {
-                            HttpResponseMessage hr = await HttpClient.GetAsync(url);
-                            hr.EnsureSuccessStatusCode();
-                            using var stream = await hr.Content.ReadAsStreamAsync();
-                            var width = Width.ToInt32();
-                            if (double.IsNaN(Width) || width == 0)
-                            {
-                                var bitmap = new Bitmap(stream);
-                                Width = imageWidth = bitmap.PixelSize.Width;
-                                Height = imageHeight = bitmap.PixelSize.Height;
-                                this.Source = bitmap;
-                                MediaChange(true);
-                            }
-                            else
-                            {
-                                var bitmap = Bitmap.DecodeToWidth(stream, width);
-                                imageWidth = bitmap.PixelSize.Width;
-                                imageHeight = bitmap.PixelSize.Height;
-                                this.Source = bitmap;
-                                MediaChange(true);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    failedMessage = ex.Message;
-#if DEBUG
-                    Debug.WriteLine(FailedMessage);
-#endif
-                    MediaChange(false);
-                }
-                finally
-                {
-                    Loading = false;
-                }
+                Task.Create(url, OnDrawBitmap);
             });
+        }
+        private void OnDrawBitmap(DownloadTask.Result result)
+        {
+            if (result.Success)
+            {
+                Bitmap bitmap;
+                var width = Width.ToInt32();
+                if (double.IsNaN(Width) || width == 0)
+                {
+                    bitmap = new Bitmap(result.Stream);
+                    Width = imageWidth = bitmap.PixelSize.Width;
+                    Height = imageHeight = bitmap.PixelSize.Height;
+                }
+                else
+                {
+                    bitmap = Bitmap.DecodeToWidth(result.Stream, width);
+                    imageWidth = bitmap.PixelSize.Width;
+                    imageHeight = bitmap.PixelSize.Height;
+                }
+                this.Source = bitmap;
+                MediaChange(true);
+            }
+            else
+            {
+                failedMessage = result.Message;
+                MediaChange(false);
+            }
         }
         /// <summary>
         /// Defines the <see cref="Failed"/> property.
