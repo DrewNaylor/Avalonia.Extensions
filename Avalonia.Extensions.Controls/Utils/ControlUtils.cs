@@ -6,6 +6,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
+        private const double Epsilon = 0.00000153;
         public static T GetPrivateField<T>(this Control control, string fieldName)
         {
             try
@@ -62,7 +63,18 @@ namespace Avalonia.Extensions.Controls
                 throw ex;
             }
         }
-        public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
+        internal static bool AreClose(Size size1, Size size2)
+        {
+            return AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
+        }
+        public static bool AreClose(double value1, double value2)
+        {
+            if (value1 == value2)
+                return true;
+            double delta = value1 - value2;
+            return (delta < Epsilon) && (delta > -Epsilon);
+        }
+            public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
         {
             try
             {

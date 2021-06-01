@@ -39,10 +39,20 @@ namespace Avalonia.Extensions.Controls
                 return 0;
             }
         }
+        /// <summary>
+        /// only target is Initialized can get the value
+        /// </summary>
+        /// <param name="visual">target</param>
+        /// <returns>size</returns>
         public static double ActualWidth(this Visual visual)
         {
             return visual.Bounds.Width;
         }
+        /// <summary>
+        /// only target is Initialized can get the value
+        /// </summary>
+        /// <param name="visual">target</param>
+        /// <returns>size</returns>
         public static double ActualHeight(this Visual visual)
         {
             return visual.Bounds.Height;
