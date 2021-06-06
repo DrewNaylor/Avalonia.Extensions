@@ -102,11 +102,14 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                for (var idx = 0; idx < arr.Count; idx++)
+                if (arr != null && arr.Count > 0)
                 {
-                    var item = arr.ElementAt(idx);
-                    if (item is ListBoxItem obj)
-                        obj.PointerPressed += Item_PointerPressed;
+                    for (var idx = 0; idx < arr.Count; idx++)
+                    {
+                        var item = arr.ElementAt(idx);
+                        if (item is ListBoxItem obj)
+                            obj.PointerPressed += Item_PointerPressed;
+                    }
                 }
             }
             catch { }
@@ -115,11 +118,14 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                for (var idx = 0; idx < arr.Count; idx++)
+                if (arr != null && arr.Count > 0)
                 {
-                    var item = arr.ElementAt(idx);
-                    if (item is ListBoxItem obj)
-                        obj.PointerPressed -= Item_PointerPressed;
+                    for (var idx = 0; idx < arr.Count; idx++)
+                    {
+                        var item = arr.ElementAt(idx);
+                        if (item is ListBoxItem obj)
+                            obj.PointerPressed -= Item_PointerPressed;
+                    }
                 }
             }
             catch { }

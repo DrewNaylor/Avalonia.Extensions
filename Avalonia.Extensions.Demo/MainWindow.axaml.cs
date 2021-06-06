@@ -42,6 +42,17 @@ namespace Avalonia.Controls.Demo
                 new { Url = "https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" }
             };
             imgList.Items = Collection;
+            var scrollView = this.FindControl<ScrollView>("scrollView");
+            scrollView.ScrollEnd += ScrollView_ScrollEnd;
+            scrollView.ScrollTop += ScrollView_ScrollTop;
+        }
+        private void ScrollView_ScrollTop(object? sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ScrollView_ScrollEnd(object? sender, RoutedEventArgs e)
+        {
+
         }
         private void OnPopupClick(object sender, RoutedEventArgs e)
         {

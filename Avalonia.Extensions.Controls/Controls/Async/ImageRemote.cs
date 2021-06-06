@@ -52,7 +52,7 @@ namespace Avalonia.Extensions.Controls
         [Content]
         public string Address
         {
-            get => GetValue(AddressProperty);
+            get => _address;
             set
             {
                 SetAndRaise(AddressProperty, ref _address, value);

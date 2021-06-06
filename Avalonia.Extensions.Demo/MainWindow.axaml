@@ -57,8 +57,6 @@
       </Grid>
     </TabItem>
     <TabItem Header="ImageRemote">
-      <ScrollViewer>
-        <StackPanel Orientation="Vertical">
           <ListBox Name="imgList">
             <ListBox.ItemTemplate>
               <DataTemplate>
@@ -66,8 +64,6 @@
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
-        </StackPanel>
-      </ScrollViewer>
     </TabItem>
     <TabItem Header="ExpandableView">
       <ext:ExpandableView>
@@ -93,6 +89,24 @@
           </StackPanel>
         </ext:ExpandableView.SecondView>
       </ext:ExpandableView>
+    </TabItem>
+    <TabItem Header="ScrollView">
+      <ext:ScrollView Name="scrollView">
+        <StackPanel Orientation="Vertical">
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <ext:ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+        </StackPanel>
+      </ext:ScrollView>
     </TabItem>
   </TabControl>
 </Window>
