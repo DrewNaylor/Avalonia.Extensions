@@ -92,7 +92,6 @@
     <TabItem Header="ScrollView">
       <ScrollView Name="scrollView">
         <StackPanel Orientation="Vertical">
-		  <PersonPicture Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
@@ -106,6 +105,11 @@
           <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
         </StackPanel>
       </ScrollView>
+    </TabItem>
+    <TabItem Header="PersonPicture">
+      <StackPanel Orientation="Vertical">
+        <PersonPicture Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+      </StackPanel>
     </TabItem>
   </TabControl>
 </Window>

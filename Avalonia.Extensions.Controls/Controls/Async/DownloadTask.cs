@@ -12,6 +12,10 @@ namespace Avalonia.Extensions.Controls
         {
             HttpClient = Core.Instance.GetClient();
         }
+        public void Create(Uri uri, Action<Result> callBack)
+        {
+            Create(uri.ToString(), callBack);
+        }
         public async void Create(string url, Action<Result> callBack)
         {
             if (!Loading)

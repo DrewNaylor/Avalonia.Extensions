@@ -2,13 +2,14 @@
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
+using Avalonia.Threading;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
     public sealed class PersonPicture : Ellipse
     {
-        private ImageBrush Pencil { get; }
+        private DownloadTask Task { get; }
         /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>
@@ -26,20 +27,36 @@ namespace Avalonia.Extensions.Controls
             AffectsRender<PersonPicture>(SourceProperty, StretchProperty, StretchDirectionProperty);
             AffectsMeasure<PersonPicture>(SourceProperty, StretchProperty, StretchDirectionProperty);
         }
-        public PersonPicture()
+        public PersonPicture():base()
         {
-            Pencil = new ImageBrush();
-            this.Fill = Pencil;
+            Task = new DownloadTask();
             SourceProperty.Changed.AddClassHandler<PersonPicture>(OnSourceChange);
         }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is Uri uri)
             {
-                Pencil.Source = new Bitmap("");
-                InvalidateMeasure();
+                switch (uri.Scheme)
+                {
+                    case "http":
+                    case "https":
+                        Dispatcher.UIThread.InvokeAsync(() =>
+                        {
+                            Task.Create(uri, (result) =>
+                            {
+                                var pencil = new ImageBrush();
+                                pencil.Source = new Bitmap(result.Stream);
+                                this.Fill = pencil;
+                            });
+                        });
+                        break;
+                    default:
+
+                        break;
+                }
             }
-        }
+            InvalidateMeasure();
+        } 
         /// <summary>
         /// Gets or sets the image that will be displayed.
         /// </summary>
