@@ -1,4 +1,5 @@
-﻿using Avalonia.Platform;
+﻿using Avalonia.Media;
+using Avalonia.Platform;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
@@ -27,7 +28,6 @@ namespace Avalonia.Extensions.Controls
             }
         }
         private HttpClient HttpClient { get; set; }
-        public const string LOADING_IMAGE_CODE = "";
         public const string WRAP_TEMPLATE = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
         public HttpClient GetClient()
         {
@@ -38,6 +38,16 @@ namespace Avalonia.Extensions.Controls
                 HttpClient = new HttpClient(clientHandler);
             }
             return HttpClient;
+        }
+        private SolidColorBrush _primaryBrush;
+        public SolidColorBrush PrimaryBrush
+        {
+            get
+            {
+                if (_primaryBrush == null)
+                    _primaryBrush = new SolidColorBrush(Color.FromRgb(139, 68, 172));
+                return _primaryBrush;
+            }
         }
     }
 }

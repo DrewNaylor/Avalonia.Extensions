@@ -72,7 +72,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void SetSize(Size size)
         {
-            if (Width == double.NaN || Width == 0 || Height == double.NaN || Height == 0)
+            if (double.IsNaN(Width) || double.IsNaN(Height))
             {
                 var round = Math.Min(size.Width, size.Height);
                 Height = Width = round;

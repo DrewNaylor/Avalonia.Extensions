@@ -10,7 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28A7A1E6-B47C-4241-8227-645D8D769F23}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		Libs\AvaloniaGif.dll = Libs\AvaloniaGif.dll
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Controls", "Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj", "{C6F08B78-C20E-4BDA-89D8-55D392A86208}"

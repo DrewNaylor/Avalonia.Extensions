@@ -106,9 +106,14 @@
         </StackPanel>
       </ScrollView>
     </TabItem>
-    <TabItem Header="PersonPicture">
+    <TabItem Header="CircleImage">
       <StackPanel Orientation="Vertical">
-        <PersonPicture Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+        <CircleImage Source="https://avatars.githubusercontent.com/u/22364738" />
+      </StackPanel>
+    </TabItem>
+    <TabItem Header="ProgressRing">
+      <StackPanel Orientation="Vertical">
+        <ProgressRing />
       </StackPanel>
     </TabItem>
   </TabControl>

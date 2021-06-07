@@ -1,40 +1,29 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
-    <PackageProjectUrl>https://avaloniaui.net</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Product>Avalonia.Extensions.Controls</Product>
-    <Authors>michael_eddy</Authors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <AvaloniaXaml Remove="Controls\Notify\NotifyWindow.axaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Controls\Notify\NotifyWindow.axaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="DefaultTheme.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.6" />
-    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="AvaloniaGif">
-      <HintPath>..\Libs\AvaloniaGif.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+        <PackageProjectUrl>https://avaloniaui.net</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Product>Avalonia.Extensions.Controls</Product>
+        <Authors>michael_eddy</Authors>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile></DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaXaml Remove="Controls\Notify\NotifyWindow.axaml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Controls\Notify\NotifyWindow.axaml.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="DefaultTheme.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.6" />
+        <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
+    </ItemGroup>
 </Project>
