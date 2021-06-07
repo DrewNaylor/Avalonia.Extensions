@@ -10,7 +10,7 @@ namespace Avalonia.Extensions.Controls
         private AnimationThread Thread { get; }
         public NotifyWindow() : base()
         {
-            //ShowInTaskbar = false;
+            ShowInTaskbar = false;
             Thread = new AnimationThread(this);
             Thread.DisposeEvent += Thread_DisposeEvent;
             Options = new Options(ShowPosition.BottomRight);

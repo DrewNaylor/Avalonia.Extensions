@@ -55,10 +55,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// UIElement this Adorner adorns.
         /// </summary>
-        public Control AdornedElement
-        {
-            get { return _adornedControl; }
-        }
+        public Control AdornedElement => _adornedControl;
         /// <summary>
         /// If set to true, the adorner will be clipped using the same clip geometry as the
         /// AdornedElement.  This is expensive, and therefore should not normally be used.

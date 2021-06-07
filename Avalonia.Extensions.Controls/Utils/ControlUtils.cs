@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
@@ -74,7 +75,7 @@ namespace Avalonia.Extensions.Controls
             double delta = value1 - value2;
             return (delta < Epsilon) && (delta > -Epsilon);
         }
-            public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
+        public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
         {
             try
             {
@@ -100,6 +101,21 @@ namespace Avalonia.Extensions.Controls
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        public static IEnumerable<T> FindControls<T>(this Panel control, bool isLoop = false) where T : Control
+        {
+            Contract.Requires<ArgumentNullException>(control != null);
+            foreach (var childControl in control.Children)
+            {
+                if (childControl is T obj)
+                    yield return obj;
+                if (childControl is Panel panel)
+                {
+                    var array = panel.FindControls<T>(isLoop);
+                    foreach (var item in array)
+                        yield return item;
+                }
             }
         }
     }

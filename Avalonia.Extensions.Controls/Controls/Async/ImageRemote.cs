@@ -16,17 +16,11 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// original image width
         /// </summary>
-        public double ImageWidth
-        {
-            get => imageWidth;
-        }
+        public double ImageWidth => imageWidth;
         /// <summary>
         /// original image height
         /// </summary>
-        public double ImageHeight
-        {
-            get => imageHeight;
-        }
+        public double ImageHeight => imageHeight;
         private string _address, failedMessage;
         private double imageWidth, imageHeight;
         private DownloadTask Task { get; }
@@ -37,10 +31,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// error message if loading failed
         /// </summary>
-        public string FailedMessage
-        {
-            get => failedMessage;
-        }
+        public string FailedMessage => failedMessage;
         /// <summary>
         /// Defines the <see cref="Address"/> property.
         /// </summary>
