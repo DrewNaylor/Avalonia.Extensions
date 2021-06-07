@@ -32,4 +32,9 @@
     <PackageReference Include="Avalonia" Version="0.10.6" />
     <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AvaloniaGif">
+      <HintPath>..\Libs\AvaloniaGif.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

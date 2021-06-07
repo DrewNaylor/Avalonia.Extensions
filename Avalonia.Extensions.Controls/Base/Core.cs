@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using Avalonia.Platform;
+using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -15,7 +16,18 @@ namespace Avalonia.Extensions.Controls
             }
         }
         private Core() { }
+        private IAssetLoader assetLoader;
+        public IAssetLoader AssetLoader
+        {
+            get
+            {
+                if (assetLoader == null)
+                    assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                return assetLoader;
+            }
+        }
         private HttpClient HttpClient { get; set; }
+        public const string LOADING_IMAGE_CODE = "";
         public const string WRAP_TEMPLATE = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
         public HttpClient GetClient()
         {

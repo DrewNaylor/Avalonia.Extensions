@@ -76,12 +76,14 @@ namespace Avalonia.Extensions.Controls
                     imageHeight = bitmap.PixelSize.Height;
                 }
                 this.Source = bitmap;
-                MediaChange(true);
             }
             else
             {
                 failedMessage = result.Message;
-                MediaChange(false);
+                var @event = new RoutedEventArgs(FailedEvent);
+                RaiseEvent(@event);
+                if (!@event.Handled)
+                    @event.Handled = true;
             }
         }
         /// <summary>
@@ -97,30 +99,10 @@ namespace Avalonia.Extensions.Controls
             add { AddHandler(FailedEvent, value); }
             remove { RemoveHandler(FailedEvent, value); }
         }
-        /// <summary>
-        /// Defines the <see cref="Opened"/> property.
-        /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> OpenedEvent =
-            RoutedEvent.Register<ImageRemote, RoutedEventArgs>(nameof(Opened), RoutingStrategies.Bubble);
-        /// <summary>
-        /// Raised when the image load failed.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> Opened
-        {
-            add { AddHandler(OpenedEvent, value); }
-            remove { RemoveHandler(OpenedEvent, value); }
-        }
         public void ZoomIn(double percentage)
         {
             Width = ImageWidth * percentage;
             Height = ImageHeight * percentage;
-        }
-        private void MediaChange(bool isSuccess)
-        {
-            var @event = isSuccess ? new RoutedEventArgs(OpenedEvent) : new RoutedEventArgs(FailedEvent);
-            RaiseEvent(@event);
-            if (!@event.Handled)
-                @event.Handled = true;
         }
     }
 }

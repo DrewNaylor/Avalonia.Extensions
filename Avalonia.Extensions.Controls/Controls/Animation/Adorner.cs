@@ -19,17 +19,16 @@ namespace Avalonia.Extensions.Controls
         protected Adorner(Control adornedControl)
         {
             _adornedControl = adornedControl ?? throw new ArgumentNullException("adornedElement");
-            _isClipEnabled = false;
+            _isClipEnabled = false;            
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                Adorner adorner = this;
-                Binding binding = new Binding("FlowDirection")
-                {
-                    Mode = BindingMode.OneWay,
-                    Source = adorner.AdornedElement
-                };
+                //Adorner adorner = this;
+                //Binding binding = new Binding("FlowDirection")
+                //{
+                //    Mode = BindingMode.OneWay,
+                //    Source = adorner.AdornedElement
+                //};
                 //adorner.Bind(FlowDirectionProperty, binding);
-
             }, DispatcherPriority.Normal);
         }
         protected override Size MeasureOverride(Size constraint)
