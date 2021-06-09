@@ -19,8 +19,8 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> ItemClickEvent =
-            RoutedEvent.Register<ListView, RoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
+        public static readonly RoutedEvent<ViewRoutedEventArgs> ItemClickEvent =
+            RoutedEvent.Register<ListView, ViewRoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
         /// <summary>
         /// Defines the <see cref="Clickable"/> property.
         /// </summary>
@@ -32,22 +32,9 @@ namespace Avalonia.Extensions.Controls
         public static readonly DirectProperty<ListView, ICommand> CommandProperty =
              AvaloniaProperty.RegisterDirect<ListView, ICommand>(nameof(Command), content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
         /// <summary>
-        /// Defines the <see cref="ItemRightClick"/> property.
-        /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> ItemRightClickEvent =
-            RoutedEvent.Register<ListView, RoutedEventArgs>(nameof(ItemRightClick), RoutingStrategies.Bubble);
-        /// <summary>
         /// Raised when the user clicks the child item.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> ItemRightClick
-        {
-            add { AddHandler(ItemRightClickEvent, value); }
-            remove { RemoveHandler(ItemRightClickEvent, value); }
-        }
-        /// <summary>
-        /// Raised when the user clicks the child item.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> ItemClick
+        public event EventHandler<ViewRoutedEventArgs> ItemClick
         {
             add { AddHandler(ItemClickEvent, value); }
             remove { RemoveHandler(ItemClickEvent, value); }
@@ -69,6 +56,8 @@ namespace Avalonia.Extensions.Controls
             set => SetAndRaise(CommandProperty, ref _command, value);
         }
         private ICommand _command;
+        private MouseButton _mouseButton;
+        public MouseButton MouseClickButton => _mouseButton;
         static ListView()
         {
             ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);
@@ -85,7 +74,7 @@ namespace Avalonia.Extensions.Controls
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new RoutedEventArgs(ItemRightClickEvent);
+                    var @event = new ViewRoutedEventArgs(ItemClickEvent, MouseButton.Right);
                     this.SelectedItem = item;
                     RaiseEvent(@event);
                     if (!@event.Handled)
@@ -133,7 +122,7 @@ namespace Avalonia.Extensions.Controls
         private void OnSelectionChanged((object, RoutedEventArgs) obj)
         {
             if (obj.Item2.Source is ListBoxItem listBoxItem)
-                OnContentClick(listBoxItem);
+                OnContentClick(listBoxItem, MouseButton.Left);
         }
         public static readonly AvaloniaProperty ViewProperty = AvaloniaProperty.Register<ListView, ViewBase>(nameof(View));
         public ViewBase View
@@ -177,13 +166,14 @@ namespace Avalonia.Extensions.Controls
         /// when child item has been click
         /// </summary>
         /// <param name="viewCell"></param>
-        internal virtual void OnContentClick(object control)
+        internal virtual void OnContentClick(object control, MouseButton mouseButton)
         {
             if (Clickable == true && control != null)
             {
+                _mouseButton = mouseButton;
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new RoutedEventArgs(ItemClickEvent);
+                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
                     RaiseEvent(@event);
                     if (control is CellListViewCell viewCell)
                     {

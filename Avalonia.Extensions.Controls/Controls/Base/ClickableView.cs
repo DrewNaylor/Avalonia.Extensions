@@ -21,9 +21,9 @@ namespace Avalonia.Extensions.Controls
         {
             ClipToBoundsProperty.OverrideDefaultValue<ClickableView>(true);
             FocusableProperty.OverrideDefaultValue(typeof(ClickableView), true);
-            CommandProperty.Changed.Subscribe(CommandChanged);
-            IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
             IsCancelProperty.Changed.Subscribe(IsCancelChanged);
+            IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
+            CommandProperty.Changed.Subscribe(CommandChanged);
         }
         /// <summary>
         /// create an instance
@@ -95,6 +95,19 @@ namespace Avalonia.Extensions.Controls
         public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
            RoutedEvent.Register<ClickableView, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
         /// <summary>
+        /// Raised when the user clicks the clickableview.
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> RightClick
+        {
+            add { AddHandler(RightClickEvent, value); }
+            remove { RemoveHandler(RightClickEvent, value); }
+        }
+        /// <summary>
+        /// Defines the <see cref="RightClick"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<RoutedEventArgs> RightClickEvent =
+           RoutedEvent.Register<ClickableView, RoutedEventArgs>(nameof(RightClick), RoutingStrategies.Bubble);        
+        /// <summary>
         /// Gets or sets a value indicating how the <see cref="ClickableView"/> should react to clicks.
         /// </summary>
         public ClickMode ClickMode
@@ -147,6 +160,19 @@ namespace Avalonia.Extensions.Controls
         protected virtual void OnClick()
         {
             var e = new RoutedEventArgs(ClickEvent);
+            RaiseEvent(e);
+            if (!e.Handled && Command?.CanExecute(CommandParameter) == true)
+            {
+                Command.Execute(CommandParameter);
+                e.Handled = true;
+            }
+        }
+        /// <summary>
+        /// Invokes the <see cref="Click"/> event.
+        /// </summary>
+        protected virtual void OnRightClick()
+        {
+            var e = new RoutedEventArgs(RightClickEvent);
             RaiseEvent(e);
             if (!e.Handled && Command?.CanExecute(CommandParameter) == true)
             {
@@ -221,23 +247,36 @@ namespace Avalonia.Extensions.Controls
         protected override void OnPointerPressed(PointerPressedEventArgs e)
         {
             base.OnPointerPressed(e);
-            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            var  properties= e.GetCurrentPoint(this).Properties;
+            if (properties.IsLeftButtonPressed)
             {
                 IsPressed = true;
                 e.Handled = true;
                 if (ClickMode == ClickMode.Press)
                     OnClick();
             }
+            else if(properties.IsRightButtonPressed)
+            {
+                IsPressed = true;
+                e.Handled = true;
+                if (ClickMode == ClickMode.Press)
+                    OnRightClick();                
+            }
         }
         protected override void OnPointerReleased(PointerReleasedEventArgs e)
         {
             base.OnPointerReleased(e);
-            if (IsPressed && e.InitialPressMouseButton == MouseButton.Left)
+            if (IsPressed)
             {
                 IsPressed = false;
                 e.Handled = true;
                 if (ClickMode == ClickMode.Release && this.GetVisualsAt(e.GetPosition(this)).Any(c => this == c || this.IsVisualAncestorOf(c)))
-                    OnClick();
+                {
+                    if (e.InitialPressMouseButton == MouseButton.Left)
+                        OnClick();
+                    else if (e.InitialPressMouseButton == MouseButton.Right)
+                        OnRightClick();
+                }
             }
         }
         protected override void OnPointerCaptureLost(PointerCaptureLostEventArgs e)

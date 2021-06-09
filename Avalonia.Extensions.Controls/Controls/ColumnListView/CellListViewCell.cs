@@ -79,8 +79,14 @@ namespace Avalonia.Extensions.Controls
         protected override void OnClick()
         {
             if (Parent.Parent is CellListView itemView)
-                itemView.OnContentClick(this);
+                itemView.OnContentClick(this, Input.MouseButton.Left);
             base.OnClick();
+        }
+        protected override void OnRightClick()
+        {
+            if (Parent.Parent is CellListView itemView)
+                itemView.OnContentClick(this, Input.MouseButton.Right);
+            base.OnRightClick();
         }
     }
 }
