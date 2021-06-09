@@ -4,6 +4,10 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static double Round(this double d, int decimals)
+        {
+            return Math.Round(d, decimals);
+        }
         public static bool SmallerThan(this PixelPoint pixelPoint, PixelPoint point, bool inCludeEquals = false)
         {
             if (inCludeEquals && pixelPoint.X <= point.X && pixelPoint.Y <= point.Y)

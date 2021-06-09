@@ -9,13 +9,24 @@ namespace Avalonia.Extensions.Controls
     public class ProgressRing : Canvas
     {
         private SolidColorBrush fillBrush;
+        private double centerRound, innerRound, outterRound;
         public ProgressRing() : base()
         {
+            WidthProperty.Changed.AddClassHandler<ProgressRing>(OnWidthChange);
             fillBrush = new SolidColorBrush(Colors.White);
             if (double.IsNaN(Width) && double.IsNaN(Height))
             {
                 Width = 128;
                 Height = 128;
+            }
+        }
+        private void OnWidthChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is double d)
+            {
+                centerRound = d / 2;
+                innerRound = d * 0.6;
+                outterRound = d * 0.8;
             }
         }
         protected override void OnInitialized()
@@ -24,39 +35,51 @@ namespace Avalonia.Extensions.Controls
             DrawBase();
             DrawAnimation();
         }
-        private Ellipse _scroll;
+        private Ellipse _moving;
+        private double _movingLeft, _movingTop;
         private void DrawAnimation()
         {
             Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 while (IsVisible)
                 {
-                    double centerLength = Height / 2, round = Width * 0.2;
-                    if (_scroll == null)
+                    double round = (outterRound - innerRound) / 2, r = round / 4;
+                    if (_moving == null)
                     {
-                        _scroll = new Ellipse
+                        _moving = new Ellipse
                         {
                             ZIndex = 2,
                             Width = round,
                             Height = round,
                             Fill = fillBrush
                         };
-                        _scroll.Measure(new Size(round, round));
-                        _scroll.Arrange(new Rect(0, 0, round, round));
-                        this.Children.Add(_scroll);
+                        _moving.Measure(new Size(round, round));
+                        _moving.Arrange(new Rect(0, 0, round, round));
+                        this.Children.Add(_moving);
                     }
-                    var top = (centerLength - round) / 2;
-                    SetLeft(_scroll, top);
-                    SetTop(_scroll, top);
+                    if (_movingLeft == 0 && _movingTop == 0)
+                    {
+                        _movingTop = circleBounds + r;
+                        _movingLeft = circleBounds + (outterRound / 2) - r;
+                        SetTop(_moving, _movingTop);
+                        SetLeft(_moving, _movingLeft);
+                    }
+                    else
+                    {
+
+
+                        SetTop(_moving, _movingTop);
+                        SetLeft(_moving, _movingLeft);
+                    }
                     await Task.Delay(80);
                 }
             });
         }
+        private double circleBounds;
         private void DrawBase()
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                double centerLength = Height / 2, innerRound = Width * 0.6, outterRound = Width * 0.8;
                 var target = new Ellipse
                 {
                     ZIndex = 1,
@@ -67,7 +90,7 @@ namespace Avalonia.Extensions.Controls
                 target.Measure(new Size(innerRound, innerRound));
                 target.Arrange(new Rect(0, 0, innerRound, innerRound));
                 this.Children.Add(target);
-                var top = (centerLength - innerRound) / 2;
+                var top = centerRound - innerRound / 2;
                 SetLeft(target, top);
                 SetTop(target, top);
 
@@ -80,9 +103,9 @@ namespace Avalonia.Extensions.Controls
                 target.Measure(new Size(outterRound, outterRound));
                 target.Arrange(new Rect(0, 0, outterRound, outterRound));
                 this.Children.Add(target);
-                top = (centerLength - outterRound) / 2;
-                SetLeft(target, top);
-                SetTop(target, top);
+                circleBounds = centerRound - outterRound / 2;
+                SetLeft(target, circleBounds);
+                SetTop(target, circleBounds);
             });
         }
         public void Show()
