@@ -7,6 +7,7 @@ namespace Avalonia.Extensions.Controls
     public class ScrollView : ScrollViewer
     {
         private double lastSize = -1;
+        public ScrollView() : base() { }
         /// <summary>
         /// Defines the <see cref="ScrollTop"/> event.
         /// </summary>
@@ -27,6 +28,15 @@ namespace Avalonia.Extensions.Controls
             add { AddHandler(ScrollEndEvent, value); }
             remove { RemoveHandler(ScrollEndEvent, value); }
         }
+        /// <summary>
+        /// Called when a change in scrolling state is detected, such as a change in scroll
+        /// position, extent, or viewport size.
+        /// </summary>
+        /// <param name="e">The event args.</param>
+        /// <remarks>
+        /// If you override this method, call `base.OnScrollChanged(ScrollChangedEventArgs)` to
+        /// ensure that this event is raised.
+        /// </remarks>
         protected override void OnScrollChanged(ScrollChangedEventArgs e)
         {
             base.OnScrollChanged(e);

@@ -27,7 +27,7 @@
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-        <CellListView Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
+        <CellListView Name="cellListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
           <CellListView.ItemTemplate>
 			  <DataTemplate>
 				  <CellListViewCell HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding content}">
@@ -92,17 +92,19 @@
     <TabItem Header="ScrollView">
       <ScrollView Name="scrollView">
         <StackPanel Orientation="Vertical">
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-          <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
+          <Label>111111111</Label>
         </StackPanel>
       </ScrollView>
     </TabItem>

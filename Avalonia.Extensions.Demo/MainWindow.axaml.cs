@@ -1,8 +1,9 @@
 using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Demo;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Demo
@@ -26,6 +27,8 @@ namespace Avalonia.Controls.Demo
             DataContext = model;
             PopupContent = this.FindControl<Grid>("PopupContent");
             var imgList = this.FindControl<ListBox>("imgList");
+            var cellListView = this.FindControl<CellListView>("cellListView");
+            cellListView.ItemClick += CellListView_ItemRightClick;
             Collection = new ObservableCollection<object>
             {
                 new { Url = "http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" },
@@ -45,14 +48,22 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
+            var a = scrollView.Content;
+        }
+        private void CellListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
+        {
+            if (e.ClickMouse == MouseButton.Right)
+                MessageBox.Show("tips", "CellListView -> Right Click");
+            else
+                MessageBox.Show("tips", "CellListView -> Left Click");
         }
         private void ScrollView_ScrollTop(object? sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("tips", "ScrollView -> Scroll Top");
         }
         private void ScrollView_ScrollEnd(object? sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("tips", "ScrollView -> Scroll End");
         }
         private void OnPopupClick(object sender, RoutedEventArgs e)
         {
