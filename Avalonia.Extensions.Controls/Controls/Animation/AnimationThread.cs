@@ -88,12 +88,7 @@ namespace Avalonia.Extensions.Controls
         {
             StartPosition -= LeftHorizontalNext;
             Window.Position = StartPosition;
-            if (StartPosition.BiggerThan(StopPosition, true) && Options.Position == ShowPosition.BottomLeft)
-            {
-                await Task.Delay(Options.MoveDelay);
-                Dispose();
-            }
-            else if (StartPosition.SmallerThan(StopPosition, true) && Options.Position == ShowPosition.TopLeft)
+            if (StartPosition.SmallerThan(StopPosition, true))
             {
                 await Task.Delay(Options.MoveDelay);
                 Dispose();
@@ -117,7 +112,7 @@ namespace Avalonia.Extensions.Controls
         {
             StartPosition -= BottomVerticalNext;
             Window.Position = StartPosition;
-            if (StartPosition.BiggerThan(StopPosition, true))
+            if (StartPosition.SmallerThan(StopPosition, true))
             {
                 await Task.Delay(Options.MoveDelay);
                 Dispose();

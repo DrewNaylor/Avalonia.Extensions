@@ -115,7 +115,8 @@
     </TabItem>
     <TabItem Header="ProgressRing">
       <StackPanel Orientation="Vertical">
-        <ProgressRing />
+        <ProgressRing Name="progressRing" />
+        <Button Name="btnStart">开始</Button>
       </StackPanel>
     </TabItem>
   </TabControl>

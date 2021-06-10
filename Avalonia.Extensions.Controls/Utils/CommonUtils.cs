@@ -4,6 +4,10 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static double ToRadians(this double angle)
+        {
+            return Math.PI / 180 * angle;
+        }
         public static double Round(this double d, int decimals)
         {
             return Math.Round(d, decimals);

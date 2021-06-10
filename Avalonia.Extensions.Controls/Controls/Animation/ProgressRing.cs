@@ -2,14 +2,15 @@
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using Avalonia.Threading;
+using System;
 using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
     public class ProgressRing : Canvas
     {
-        private SolidColorBrush fillBrush;
-        private double centerRound, innerRound, outterRound;
+        private readonly SolidColorBrush fillBrush;
+        private double centerRound, innerRound, horizontalSeek, verticalSeek;
         public ProgressRing() : base()
         {
             WidthProperty.Changed.AddClassHandler<ProgressRing>(OnWidthChange);
@@ -25,25 +26,27 @@ namespace Avalonia.Extensions.Controls
             if (e.NewValue is double d)
             {
                 centerRound = d / 2;
-                innerRound = d * 0.6;
-                outterRound = d * 0.8;
+                innerRound = d * 0.8;
+                horizontalSeek = d / 80;
+                verticalSeek = d / 40;
             }
         }
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            IsVisible = false;
             DrawBase();
             DrawAnimation();
         }
         private Ellipse _moving;
-        private double _movingLeft, _movingTop;
+        private double _movingLeft, _movingTop,_movingCenter;
         private void DrawAnimation()
         {
             Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 while (IsVisible)
                 {
-                    double round = (outterRound - innerRound) / 2, r = round / 4;
+                    double round = (Width - innerRound) / 2;
                     if (_moving == null)
                     {
                         _moving = new Ellipse
@@ -51,7 +54,7 @@ namespace Avalonia.Extensions.Controls
                             ZIndex = 2,
                             Width = round,
                             Height = round,
-                            Fill = fillBrush
+                            Fill = new SolidColorBrush(Colors.Red)
                         };
                         _moving.Measure(new Size(round, round));
                         _moving.Arrange(new Rect(0, 0, round, round));
@@ -59,19 +62,50 @@ namespace Avalonia.Extensions.Controls
                     }
                     if (_movingLeft == 0 && _movingTop == 0)
                     {
-                        _movingTop = circleBounds + r;
-                        _movingLeft = circleBounds + (outterRound / 2) - r;
+                        _movingTop = 0;
+                        _movingCenter = _movingLeft = (Width / 2) - (round / 2);
                         SetTop(_moving, _movingTop);
                         SetLeft(_moving, _movingLeft);
                     }
                     else
                     {
-
-
+                        if (_movingLeft >= _movingCenter)
+                        {
+                            if (_movingTop >= _movingCenter)
+                            {
+                                //right-bottom circle
+                                _movingTop += 1;
+                                _movingLeft -= 1;
+                            }
+                            else
+                            {
+                                var radian = 1D.ToRadians();
+                                var pointX = centerRound * Math.Cos(radian);
+                                var pointY = centerRound * Math.Sin(radian);
+                                //right-top circle
+                                _movingTop += pointY;
+                                _movingLeft += pointX;
+                            }
+                        }
+                        else
+                        {
+                            if (_movingTop >= _movingCenter)
+                            {
+                                //left-bottom circle
+                                _movingTop -= 1;
+                                _movingLeft -= 1;
+                            }
+                            else
+                            {
+                                //left-top circle
+                                _movingTop -= 1;
+                                _movingLeft += 1;
+                            }
+                        }
                         SetTop(_moving, _movingTop);
                         SetLeft(_moving, _movingLeft);
                     }
-                    await Task.Delay(80);
+                    await Task.Delay(60);
                 }
             });
         }
@@ -96,14 +130,14 @@ namespace Avalonia.Extensions.Controls
 
                 target = new Ellipse
                 {
-                    Width = outterRound,
-                    Height = outterRound,
+                    Width = Width,
+                    Height = Width,
                     Fill = Core.Instance.PrimaryBrush
                 };
-                target.Measure(new Size(outterRound, outterRound));
-                target.Arrange(new Rect(0, 0, outterRound, outterRound));
+                target.Measure(new Size(Width, Width));
+                target.Arrange(new Rect(0, 0, Width, Width));
                 this.Children.Add(target);
-                circleBounds = centerRound - outterRound / 2;
+                circleBounds = centerRound - Width / 2;
                 SetLeft(target, circleBounds);
                 SetTop(target, circleBounds);
             });

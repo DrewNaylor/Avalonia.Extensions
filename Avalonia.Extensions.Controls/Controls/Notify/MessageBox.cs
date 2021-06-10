@@ -15,6 +15,7 @@ namespace Avalonia.Extensions.Controls
         {
             Width = 400;
             Height = 80;
+            CanResize = false;
             CreateControls();
             if (PlatformImpl != null)
                 Graphic = Graphics.FromHwnd(PlatformImpl.Handle.Handle);

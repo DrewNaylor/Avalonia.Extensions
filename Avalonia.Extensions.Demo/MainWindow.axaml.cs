@@ -28,6 +28,8 @@ namespace Avalonia.Controls.Demo
             var imgList = this.FindControl<ListBox>("imgList");
             var cellListView = this.FindControl<CellListView>("cellListView");
             cellListView.ItemClick += CellListView_ItemRightClick;
+            var btnStart = this.FindControl<Button>("btnStart");
+            btnStart.Click += BtnStart_Click;
             Collection = new ObservableCollection<object>
             {
                 new { Url = "http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" },
@@ -48,6 +50,14 @@ namespace Avalonia.Controls.Demo
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
             var a = scrollView.Content;
+        }
+        private void BtnStart_Click(object? sender, RoutedEventArgs e)
+        {
+            var progressRing = this.FindControl<ProgressRing>("progressRing");
+            if (!progressRing.IsVisible)
+                progressRing.Show();
+            else
+                progressRing.Hidden();
         }
         private void CellListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
         {
