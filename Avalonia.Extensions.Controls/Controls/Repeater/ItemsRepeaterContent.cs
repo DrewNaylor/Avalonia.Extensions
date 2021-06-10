@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -7,16 +8,13 @@ namespace Avalonia.Extensions.Controls
     /// </summary>
     public sealed class ItemsRepeaterContent : ClickableView
     {
-        /// <summary>
-        /// handle click event
-        /// </summary>
-        protected override void OnClick()
+        protected override void OnClick(MouseButton mouseButton)
         {
             if (Parent is HorizontalItemsRepeater h_repeater)
-                h_repeater.OnContentClick(this);
+                h_repeater.OnContentClick(this, mouseButton);
             else if (Parent is VerticalItemsRepeater v_repeater)
-                v_repeater.OnContentClick(this);
-            base.OnClick();
+                v_repeater.OnContentClick(this, mouseButton);
+            base.OnClick(mouseButton);
         }
     }
 }

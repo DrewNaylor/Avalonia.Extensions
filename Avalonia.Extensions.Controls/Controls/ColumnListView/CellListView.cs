@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Extensions.Controls.Utils;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;

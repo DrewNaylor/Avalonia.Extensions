@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Raised when the user clicks the clickableview.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> Click
+        public event EventHandler<ViewRoutedEventArgs> Click
         {
             add { AddHandler(ClickEvent, value); }
             remove { RemoveHandler(ClickEvent, value); }
@@ -92,21 +92,8 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Defines the <see cref="Click"/> event.
         /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
-           RoutedEvent.Register<ClickableView, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
-        /// <summary>
-        /// Raised when the user clicks the clickableview.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> RightClick
-        {
-            add { AddHandler(RightClickEvent, value); }
-            remove { RemoveHandler(RightClickEvent, value); }
-        }
-        /// <summary>
-        /// Defines the <see cref="RightClick"/> event.
-        /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> RightClickEvent =
-           RoutedEvent.Register<ClickableView, RoutedEventArgs>(nameof(RightClick), RoutingStrategies.Bubble);        
+        public static readonly RoutedEvent<ViewRoutedEventArgs> ClickEvent =
+           RoutedEvent.Register<ClickableView, ViewRoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
         /// <summary>
         /// Gets or sets a value indicating how the <see cref="ClickableView"/> should react to clicks.
         /// </summary>
@@ -157,22 +144,9 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Invokes the <see cref="Click"/> event.
         /// </summary>
-        protected virtual void OnClick()
+        protected virtual void OnClick(MouseButton mouseButton)
         {
-            var e = new RoutedEventArgs(ClickEvent);
-            RaiseEvent(e);
-            if (!e.Handled && Command?.CanExecute(CommandParameter) == true)
-            {
-                Command.Execute(CommandParameter);
-                e.Handled = true;
-            }
-        }
-        /// <summary>
-        /// Invokes the <see cref="Click"/> event.
-        /// </summary>
-        protected virtual void OnRightClick()
-        {
-            var e = new RoutedEventArgs(RightClickEvent);
+            var e = new ViewRoutedEventArgs(ClickEvent, mouseButton);
             RaiseEvent(e);
             if (!e.Handled && Command?.CanExecute(CommandParameter) == true)
             {
@@ -222,13 +196,13 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.Key == Key.Enter)
             {
-                OnClick();
+                OnClick(MouseButton.Left);
                 e.Handled = true;
             }
             else if (e.Key == Key.Space)
             {
                 if (ClickMode == ClickMode.Press)
-                    OnClick();
+                    OnClick(MouseButton.Left);
                 IsPressed = true;
                 e.Handled = true;
             }
@@ -239,7 +213,7 @@ namespace Avalonia.Extensions.Controls
             if (e.Key == Key.Space)
             {
                 if (ClickMode == ClickMode.Release)
-                    OnClick();
+                    OnClick(MouseButton.Left);
                 IsPressed = false;
                 e.Handled = true;
             }
@@ -247,20 +221,20 @@ namespace Avalonia.Extensions.Controls
         protected override void OnPointerPressed(PointerPressedEventArgs e)
         {
             base.OnPointerPressed(e);
-            var  properties= e.GetCurrentPoint(this).Properties;
+            var properties = e.GetCurrentPoint(this).Properties;
             if (properties.IsLeftButtonPressed)
             {
                 IsPressed = true;
                 e.Handled = true;
                 if (ClickMode == ClickMode.Press)
-                    OnClick();
+                    OnClick(MouseButton.Left);
             }
-            else if(properties.IsRightButtonPressed)
+            else if (properties.IsRightButtonPressed)
             {
                 IsPressed = true;
                 e.Handled = true;
                 if (ClickMode == ClickMode.Press)
-                    OnRightClick();                
+                    OnClick(MouseButton.Right);
             }
         }
         protected override void OnPointerReleased(PointerReleasedEventArgs e)
@@ -273,9 +247,9 @@ namespace Avalonia.Extensions.Controls
                 if (ClickMode == ClickMode.Release && this.GetVisualsAt(e.GetPosition(this)).Any(c => this == c || this.IsVisualAncestorOf(c)))
                 {
                     if (e.InitialPressMouseButton == MouseButton.Left)
-                        OnClick();
+                        OnClick(MouseButton.Left);
                     else if (e.InitialPressMouseButton == MouseButton.Right)
-                        OnRightClick();
+                        OnClick(MouseButton.Right);
                 }
             }
         }
@@ -398,7 +372,7 @@ namespace Avalonia.Extensions.Controls
         private void RootCancelKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape && IsVisible && IsEnabled)
-                OnClick();
+                OnClick(MouseButton.Left);
         }
         /// <summary>
         /// Called when a key is pressed on the input root and the clickableview <see cref="IsDefault"/>.
@@ -408,7 +382,7 @@ namespace Avalonia.Extensions.Controls
         private void RootDefaultKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && IsVisible && IsEnabled)
-                OnClick();
+                OnClick(MouseButton.Left);
         }
         void ICommandSource.CanExecuteChanged(object sender, EventArgs e) => CanExecuteChanged(sender, e);
     }

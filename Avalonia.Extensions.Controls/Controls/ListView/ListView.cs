@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Extensions.Controls.Utils;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;

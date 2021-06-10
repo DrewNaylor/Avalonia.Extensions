@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
@@ -24,8 +25,8 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
-        public static readonly RoutedEvent<RoutedEventArgs> ItemClickEvent =
-            RoutedEvent.Register<VerticalItemsRepeater, RoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
+        public static readonly RoutedEvent<ViewRoutedEventArgs> ItemClickEvent =
+            RoutedEvent.Register<VerticalItemsRepeater, ViewRoutedEventArgs>(nameof(ItemClick), RoutingStrategies.Bubble);
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
@@ -50,7 +51,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// Raised when the user clicks the child item.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> ItemClick
+        public event EventHandler<ViewRoutedEventArgs> ItemClick
         {
             add { AddHandler(ItemClickEvent, value); }
             remove { RemoveHandler(ItemClickEvent, value); }
@@ -97,13 +98,13 @@ namespace Avalonia.Extensions.Controls
         /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>
         /// when child item has been click, but <seealso cref="Clickable"/> must be true
         /// </summary>
-        internal void OnContentClick(ItemsRepeaterContent itemsRepeaterContent)
+        internal void OnContentClick(ItemsRepeaterContent itemsRepeaterContent, MouseButton mouseButton)
         {
             if (Clickable == true)
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new RoutedEventArgs(ItemClickEvent);
+                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
                     this.SelectedItem = itemsRepeaterContent;
                     RaiseEvent(@event);
                     if (!@event.Handled && Command?.CanExecute(itemsRepeaterContent.CommandParameter) == true)

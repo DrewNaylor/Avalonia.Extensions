@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Layout;
 
 namespace Avalonia.Extensions.Controls
@@ -73,20 +74,11 @@ namespace Avalonia.Extensions.Controls
             if (Parent is ListBoxItem item && e.NewValue is HorizontalAlignment horizontal)
                 item.HorizontalAlignment = horizontal;
         }
-        /// <summary>
-        /// handle click event
-        /// </summary>
-        protected override void OnClick()
+        protected override void OnClick(MouseButton mouseButton)
         {
             if (Parent.Parent is CellListView itemView)
-                itemView.OnContentClick(this, Input.MouseButton.Left);
-            base.OnClick();
-        }
-        protected override void OnRightClick()
-        {
-            if (Parent.Parent is CellListView itemView)
-                itemView.OnContentClick(this, Input.MouseButton.Right);
-            base.OnRightClick();
+                itemView.OnContentClick(this, mouseButton);
+            base.OnClick(mouseButton);
         }
     }
 }
