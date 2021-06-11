@@ -37,7 +37,7 @@ namespace Avalonia.Extensions.Controls
             DrawAnimation();
         }
         private Ellipse _moving;
-        private double _movingLeft, _movingTop, _movingCenter, _movingRadian;
+        private double _movingLeft, _movingTop, _movingRadian = -90;
         private void DrawAnimation()
         {
             Dispatcher.UIThread.InvokeAsync(async () =>
@@ -45,6 +45,7 @@ namespace Avalonia.Extensions.Controls
                 while (IsVisible)
                 {
                     double round = (Width - innerRound) / 2;
+                    var movingRange = centerRound - round / 2;
                     if (_moving == null)
                     {
                         _moving = new Ellipse
@@ -52,7 +53,7 @@ namespace Avalonia.Extensions.Controls
                             ZIndex = 2,
                             Width = round,
                             Height = round,
-                            Fill = new SolidColorBrush(Colors.Red)
+                            Fill = fillBrush
                         };
                         _moving.Measure(new Size(round, round));
                         _moving.Arrange(new Rect(0, 0, round, round));
@@ -61,53 +62,17 @@ namespace Avalonia.Extensions.Controls
                     if (_movingLeft == 0 && _movingTop == 0)
                     {
                         _movingTop = 0;
-                        _movingCenter = _movingLeft = (Width / 2) - (round / 2);
                         SetTop(_moving, _movingTop);
                         SetLeft(_moving, _movingLeft);
                     }
                     else
                     {
-                        if (_movingLeft >= _movingCenter)
-                        {
-                            if (_movingTop >= _movingCenter)
-                            {
-                                //right-bottom circle
-                                if (_movingTop == _movingCenter && _movingLeft == _movingCenter * 2)
-                                    _movingRadian = 0;
-                                else
-                                    _movingRadian += 1;
-                            }
-                            else
-                            {
-                                //right-top circle
-                                if (_movingTop == 0 && _movingLeft == _movingCenter)
-                                    _movingRadian = -90;
-                                else
-                                    _movingRadian += 1;
-                            }
-                        }
-                        else
-                        {
-                            if (_movingTop >= _movingCenter)
-                            {
-                                //left-bottom circle
-                                if (_movingTop == _movingCenter * 2 && _movingLeft == _movingCenter)
-                                    _movingRadian = 0;
-                                else
-                                    _movingRadian += 1;
-                            }
-                            else
-                            {
-                                //left-top circle
-                                if (_movingTop == _movingCenter && _movingLeft == 0)
-                                    _movingRadian = 0;
-                                else
-                                    _movingRadian += 1;
-                            }
-                        }
+                        _movingRadian += 1;
+                        if (_movingRadian == 360)
+                            _movingRadian = 0;
                         var radian = _movingRadian.ToRadians();
-                        var pointX = centerRound + centerRound * Math.Cos(radian);
-                        var pointY = centerRound + centerRound * Math.Sin(radian);
+                        var pointX = movingRange + movingRange * Math.Cos(radian);
+                        var pointY = movingRange + movingRange * Math.Sin(radian);
                         _movingTop = pointY;
                         _movingLeft = pointX;
                         SetTop(_moving, _movingTop);
