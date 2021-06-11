@@ -6,7 +6,7 @@ namespace Avalonia.Extensions.Controls
     {
         public static double ToRadians(this double angle)
         {
-            return Math.PI / 180 * angle;
+            return Math.PI * angle / 180;
         }
         public static double Round(this double d, int decimals)
         {
