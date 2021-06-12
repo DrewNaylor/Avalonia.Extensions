@@ -69,12 +69,11 @@ namespace Avalonia.Extensions.Controls
         }
         private void Item_PointerPressed(object sender, PointerPressedEventArgs e)
         {
-            if (sender is ListBoxItem item && Clickable && e.GetCurrentPoint(this).Properties.IsRightButtonPressed)
+            if (sender is ListBoxItem item && Clickable && (e.GetCurrentPoint(this).Properties.IsRightButtonPressed || e.GetCurrentPoint(this).Properties.IsLeftButtonPressed))
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new ViewRoutedEventArgs(ItemClickEvent, MouseButton.Right);
-                    this.SelectedItem = item;
+                    var @event = new ViewRoutedEventArgs(ItemClickEvent, MouseButton.Right, item);
                     RaiseEvent(@event);
                     if (!@event.Handled)
                         @event.Handled = true;
@@ -172,7 +171,8 @@ namespace Avalonia.Extensions.Controls
                 _mouseButton = mouseButton;
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
+                    var listItem = (control as Control)?.Parent;
+                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, listItem);
                     RaiseEvent(@event);
                     if (control is CellListViewCell viewCell)
                     {

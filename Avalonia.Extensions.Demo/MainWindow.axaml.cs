@@ -61,10 +61,11 @@ namespace Avalonia.Controls.Demo
         }
         private void CellListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
         {
+            var content = e.ClickItem.ToString();
             if (e.ClickMouse == MouseButton.Right)
-                MessageBox.Show("tips", "CellListView -> Right Click");
+                MessageBox.Show("tips", "CellListView -> Right Click : " + content);
             else
-                MessageBox.Show("tips", "CellListView -> Left Click");
+                MessageBox.Show("tips", "CellListView -> Left Click : " + content);
         }
         private void ScrollView_ScrollTop(object? sender, RoutedEventArgs e)
         {
