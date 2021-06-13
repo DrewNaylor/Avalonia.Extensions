@@ -118,5 +118,18 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
+        internal static Window GetWindow(this IControl control)
+        {
+            Window window = null;
+            IControl parent = control.Parent;
+            while (window == null)
+            {
+                if (parent.Parent is Window win)
+                    window = win;
+                else
+                    parent = parent.Parent;
+            }
+            return window;
+        }
     }
 }

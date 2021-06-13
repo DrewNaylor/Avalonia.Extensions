@@ -6,6 +6,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Product>Avalonia.Extensions.Controls</Product>
         <Authors>michael_eddy</Authors>
+        <UserSecretsId>214483ab-ede2-45c7-ac37-b353540601d8</UserSecretsId>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DocumentationFile></DocumentationFile>
@@ -25,6 +26,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />
         <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     </ItemGroup>
 </Project>

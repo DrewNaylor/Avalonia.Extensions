@@ -1,3 +1,5 @@
+using Avalonia.Controls.Templates;
+using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -10,6 +12,7 @@ namespace Avalonia.Controls.Demo
     public class MainWindow : Window
     {
         private int Time { get; set; } = 0;
+        private Button BtnStart { get; set; }
         private Grid PopupContent { get; set; }
         private ObservableCollection<object> Collection { get; set; }
         public MainWindow()
@@ -28,8 +31,10 @@ namespace Avalonia.Controls.Demo
             var imgList = this.FindControl<ListBox>("imgList");
             var cellListView = this.FindControl<CellListView>("cellListView");
             cellListView.ItemClick += CellListView_ItemRightClick;
-            var btnStart = this.FindControl<Button>("btnStart");
-            btnStart.Click += BtnStart_Click;
+            BtnStart = this.FindControl<Button>("btnStart");
+            BtnStart.Click += BtnStart_Click;
+            var btnShow = this.FindControl<Button>("btnShow");
+            btnShow.Click += BtnShow_Click;
             Collection = new ObservableCollection<object>
             {
                 new { Url = "http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" },
@@ -50,6 +55,28 @@ namespace Avalonia.Controls.Demo
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
             var a = scrollView.Content;
+        }
+        private void BtnShow_Click(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Control control)
+            {
+                PopupMenu popupMenu = new PopupMenu();
+                popupMenu.Items = new[]
+                {
+                    new BindingModel{ Content = "1234" },
+                    new BindingModel{ Content = "1234" },
+                    new BindingModel{ Content = "1234" },
+                    new BindingModel{ Content = "1234" }
+                };
+                popupMenu.ItemTemplate = new FuncDataTemplate<BindingModel>((x, _) =>
+                new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") } );
+                popupMenu.ItemClick += PopupMenu_ItemClick;
+                popupMenu.Show(control);
+            }
+        }
+        private void PopupMenu_ItemClick(object? sender, ItemClickEventArgs e)
+        {
+            MessageBox.Show("tips", "PopupMenu -> " + e.Item.ToString());
         }
         private void BtnStart_Click(object? sender, RoutedEventArgs e)
         {

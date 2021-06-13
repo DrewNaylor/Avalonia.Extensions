@@ -119,5 +119,16 @@
         <Button Name="btnStart">开始</Button>
       </StackPanel>
     </TabItem>
+    <TabItem Header="PopupMenu">
+      <StackPanel Orientation="Vertical">
+        <Button Name="btnShow">
+          <Button.Content>
+            <StackPanel Orientation="Vertical">
+              <TextBlock Text="显示" />
+            </StackPanel>
+          </Button.Content>
+        </Button>
+      </StackPanel>
+    </TabItem>
   </TabControl>
 </Window>

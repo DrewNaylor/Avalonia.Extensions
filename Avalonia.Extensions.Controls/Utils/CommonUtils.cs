@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -44,7 +45,15 @@ namespace Avalonia.Extensions.Controls
             }
             catch
             {
-                return 0;
+                try
+                {
+                    var num = obj.ToString().Split('.').FirstOrDefault();
+                    return string.IsNullOrEmpty(num) ? 0 : int.Parse(num);
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
         /// <summary>

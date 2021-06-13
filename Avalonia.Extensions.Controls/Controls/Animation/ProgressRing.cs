@@ -59,25 +59,16 @@ namespace Avalonia.Extensions.Controls
                         _moving.Arrange(new Rect(0, 0, round, round));
                         this.Children.Add(_moving);
                     }
-                    if (_movingLeft == 0 && _movingTop == 0)
-                    {
-                        _movingTop = 0;
-                        SetTop(_moving, _movingTop);
-                        SetLeft(_moving, _movingLeft);
-                    }
-                    else
-                    {
-                        _movingRadian += 1;
-                        if (_movingRadian == 360)
-                            _movingRadian = 0;
-                        var radian = _movingRadian.ToRadians();
-                        var pointX = movingRange + movingRange * Math.Cos(radian);
-                        var pointY = movingRange + movingRange * Math.Sin(radian);
-                        _movingTop = pointY;
-                        _movingLeft = pointX;
-                        SetTop(_moving, _movingTop);
-                        SetLeft(_moving, _movingLeft);
-                    }
+                    _movingRadian += 1;
+                    if (_movingRadian == 360)
+                        _movingRadian = 0;
+                    var radian = _movingRadian.ToRadians();
+                    var pointX = movingRange + movingRange * Math.Cos(radian);
+                    var pointY = movingRange + movingRange * Math.Sin(radian);
+                    _movingTop = pointY;
+                    _movingLeft = pointX;
+                    SetTop(_moving, _movingTop);
+                    SetLeft(_moving, _movingLeft);
                     await Task.Delay(30);
                 }
             });

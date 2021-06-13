@@ -15,6 +15,7 @@ namespace Avalonia.Extensions.Controls
             Thread = new AnimationThread(this);
             Thread.DisposeEvent += Thread_DisposeEvent;
             Options = new Options(ShowPosition.BottomRight);
+            this.SystemDecorations = SystemDecorations.None;
         }
         private void Thread_DisposeEvent(object sender, EventArgs e)
         {
