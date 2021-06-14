@@ -1,5 +1,6 @@
 ﻿using Avalonia.Media;
 using Avalonia.Platform;
+using System.Globalization;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
@@ -17,6 +18,7 @@ namespace Avalonia.Extensions.Controls
             }
         }
         private Core() { }
+        public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", System.StringComparison.CurrentCultureIgnoreCase);
         private IAssetLoader assetLoader;
         public IAssetLoader AssetLoader
         {

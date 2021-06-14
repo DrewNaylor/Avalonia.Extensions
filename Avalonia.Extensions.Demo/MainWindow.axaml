@@ -121,13 +121,8 @@
     </TabItem>
     <TabItem Header="PopupMenu">
       <StackPanel Orientation="Vertical">
-        <Button Name="btnShow">
-          <Button.Content>
-            <StackPanel Orientation="Vertical">
-              <TextBlock Text="显示" />
-            </StackPanel>
-          </Button.Content>
-        </Button>
+        <Button Name="btnShow" Content="纯文本" />
+        <Button Name="btnShow2" Content="自定义" />
       </StackPanel>
     </TabItem>
   </TabControl>

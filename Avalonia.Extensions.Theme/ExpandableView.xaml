@@ -1,7 +1,6 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:local="using:Avalonia.Extensions.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Style Selector="local|ExpandableView">
+  <Style Selector="ExpandableView">
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
     <Setter Property="Template">

@@ -11,6 +11,28 @@ namespace Avalonia.Extensions.Controls
     public sealed class MessageBox : Window
     {
         private Graphics Graphic { get; }
+        private MessageBoxButtons _buttonType;
+        public MessageBoxButtons ButtonType
+        {
+            get => _buttonType;
+            internal set
+            {
+                _buttonType = value;
+                if (ButtonType == MessageBoxButtons.OkNo)
+                {
+                    var root = Content as Grid;
+                    var cancel = new Button
+                    {
+                        Name = "Cancel",
+                        HorizontalAlignment = Layout.HorizontalAlignment.Center,
+                        HorizontalContentAlignment = Layout.HorizontalAlignment.Center
+                    };
+                    root.Children.Add(cancel);
+                    Grid.SetColumn(cancel, 1);
+                    Grid.SetRow(cancel, 1);
+                }
+            }
+        }
         public MessageBox() : base()
         {
             Width = 400;
@@ -50,15 +72,18 @@ namespace Avalonia.Extensions.Controls
             root.Children.Add(ok);
             Grid.SetColumn(ok, 0);
             Grid.SetRow(ok, 1);
-            var cancel = new Button
+            if (ButtonType == MessageBoxButtons.OkNo)
             {
-                Name = "Cancel",
-                HorizontalAlignment = Layout.HorizontalAlignment.Center,
-                HorizontalContentAlignment = Layout.HorizontalAlignment.Center
-            };
-            root.Children.Add(cancel);
-            Grid.SetColumn(cancel, 1);
-            Grid.SetRow(cancel, 1);
+                var cancel = new Button
+                {
+                    Name = "Cancel",
+                    HorizontalAlignment = Layout.HorizontalAlignment.Center,
+                    HorizontalContentAlignment = Layout.HorizontalAlignment.Center
+                };
+                root.Children.Add(cancel);
+                Grid.SetColumn(cancel, 1);
+                Grid.SetRow(cancel, 1);
+            }
             this.Content = root;
         }
         public void SetSize(Size size)
@@ -70,32 +95,34 @@ namespace Avalonia.Extensions.Controls
         {
             return Graphic.MeasureString(content, new Font("Arial", 16));
         }
-        public static Task<bool?> Show(string title, string message)
+        public static Task<bool?> Show(string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)
         {
-            return Show(null, title, message);
+            return Show(null, title, message, messageBoxButtons);
         }
-        public static Task<bool?> Show(Window parent, string title, string message,
-            string okContent = "确定", string cancelContent = "取消")
+        public static Task<bool?> Show(Window parent, string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)
         {
             bool? result = null;
-            MessageBox messageBox = new MessageBox { Title = title };
+            MessageBox messageBox = new MessageBox { Title = title, ButtonType = messageBoxButtons };
             var logicals = messageBox.GetLogicalDescendants();
             var txtMessage = logicals.OfType<TextBlock>().FirstOrDefault(x => x.Name == "Message");
             txtMessage.Text = message;
             var btnOk = logicals.OfType<Button>().FirstOrDefault(x => x.Name == "Ok");
-            btnOk.Content = okContent;
-            var btnCancel = logicals.OfType<Button>().FirstOrDefault(x => x.Name == "Cancel");
-            btnCancel.Content = cancelContent;
+            btnOk.Content = Core.Instance.IsEnglish ? "Yes" : "确定";
             btnOk.Click += (s, ee) =>
             {
                 result = true;
                 messageBox.Close();
             };
-            btnCancel.Click += (s, ee) =>
+            if (messageBox.ButtonType == MessageBoxButtons.OkNo)
             {
-                result = false;
-                messageBox.Close();
-            };
+                var btnCancel = logicals.OfType<Button>().FirstOrDefault(x => x.Name == "Cancel");
+                btnCancel.Content = Core.Instance.IsEnglish ? "No" : "取消";
+                btnCancel.Click += (s, ee) =>
+                {
+                    result = false;
+                    messageBox.Close();
+                };
+            }
             var tcs = new TaskCompletionSource<bool?>();
             messageBox.Closed += delegate { tcs.TrySetResult(result); };
             if (parent != null)

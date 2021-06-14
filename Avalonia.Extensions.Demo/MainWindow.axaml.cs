@@ -35,6 +35,8 @@ namespace Avalonia.Controls.Demo
             BtnStart.Click += BtnStart_Click;
             var btnShow = this.FindControl<Button>("btnShow");
             btnShow.Click += BtnShow_Click;
+            var btnShow2 = this.FindControl<Button>("btnShow2");
+            btnShow2.Click += BtnShow_Click;
             Collection = new ObservableCollection<object>
             {
                 new { Url = "http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" },
@@ -58,20 +60,29 @@ namespace Avalonia.Controls.Demo
         }
         private void BtnShow_Click(object? sender, RoutedEventArgs e)
         {
-            if (sender is Control control)
+            if (sender is Button control)
             {
-                PopupMenu popupMenu = new PopupMenu();
-                popupMenu.Items = new[]
+                switch (control.Name)
                 {
-                    new BindingModel{ Content = "1234" },
-                    new BindingModel{ Content = "1234" },
-                    new BindingModel{ Content = "1234" },
-                    new BindingModel{ Content = "1234" }
-                };
-                popupMenu.ItemTemplate = new FuncDataTemplate<BindingModel>((x, _) =>
-                new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") } );
-                popupMenu.ItemClick += PopupMenu_ItemClick;
-                popupMenu.Show(control);
+                    case "btnShow":
+                        {
+                            PopupMenu popupMenu = new PopupMenu();
+                            popupMenu.Items = new[] { "1234", "1234", "1234", "1234" };
+                            popupMenu.ItemClick += PopupMenu_ItemClick;
+                            popupMenu.Show(control);
+                            break;
+                        }
+                    case "btnShow2":
+                        {
+                            PopupMenu popupMenu = new PopupMenu();
+                            popupMenu.Items = new[] { new CustomBindingModel("1234"), new CustomBindingModel("1234"),
+                                    new CustomBindingModel("1234"), new CustomBindingModel("1234") };
+                            popupMenu.ItemTemplate = new FuncDataTemplate<CustomBindingModel>((x, _) => new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") });
+                            popupMenu.ItemClick += PopupMenu_ItemClick;
+                            popupMenu.Show(control);
+                            break;
+                        }
+                }
             }
         }
         private void PopupMenu_ItemClick(object? sender, ItemClickEventArgs e)

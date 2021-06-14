@@ -1,5 +1,10 @@
 ﻿namespace Avalonia.Extensions.Controls
 {
+    public enum MessageBoxButtons
+    {
+        Ok,
+        OkNo
+    }
     public enum ShowPosition
     {
         TopLeft,

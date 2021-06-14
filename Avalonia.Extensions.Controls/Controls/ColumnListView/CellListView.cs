@@ -1,14 +1,9 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Templates;
-using Avalonia.Threading;
-using System;
-using System.Collections;
 using System.Collections.Specialized;
-using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -168,7 +163,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems.Count > 0)
+            if (e.NewItems != null && e.NewItems.Count > 0)
             {
                 if (CellWidth != double.NaN)
                 {

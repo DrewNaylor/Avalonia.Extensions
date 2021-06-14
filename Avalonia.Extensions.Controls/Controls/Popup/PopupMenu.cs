@@ -1,11 +1,15 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using Avalonia.Threading;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -46,6 +50,8 @@ namespace Avalonia.Extensions.Controls
         {
             this.Width = 80;
             this.Height = 60;
+            this.Topmost = true;
+            this.Focusable = true;
             ListBox = new ListBox();
             this.ShowInTaskbar = false;
             this.SystemDecorations = SystemDecorations.None;
@@ -60,7 +66,12 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnItemsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is IList array)
+            if (e.NewValue is IList<string> arrayString)
+            {
+                ListBox.Items = arrayString.Select(x => new BindingModel(x)).ToList();
+                ItemTemplate = new FuncDataTemplate<BindingModel>((x, _) => new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") });
+            }
+            else if (e.NewValue is IList array)
                 ListBox.Items = array;
         }
         protected override void OnInitialized()
@@ -76,8 +87,9 @@ namespace Avalonia.Extensions.Controls
                 try
                 {
                     var item = listBox.SelectedItem;
-                    var args = new ItemClickEventArgs(item);
-                    ItemClick?.Invoke(sender, args);
+                    var index = listBox.SelectedIndex;
+                    var args = new ItemClickEventArgs(item, index);
+                    ItemClick?.Invoke(this, args);
                 }
                 finally
                 {
@@ -98,8 +110,17 @@ namespace Avalonia.Extensions.Controls
         protected override void OnLostFocus(RoutedEventArgs e)
         {
             base.OnLostFocus(e);
-            if (!_isFocus)
-                Close();
+            Dispatcher.UIThread.InvokeAsync(async () =>
+            {
+                if (!_isFocus)
+                    Close();
+                else
+                {
+                    _isFocus = false;
+                    await Task.Delay(200);
+                    FocusManager.Instance.Focus(this);
+                }
+            });
         }
         public void Show(IControl control)
         {
