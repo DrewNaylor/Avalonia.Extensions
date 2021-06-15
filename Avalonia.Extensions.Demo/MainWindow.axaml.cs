@@ -56,7 +56,6 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
-            var a = scrollView.Content;
         }
         private void BtnShow_Click(object? sender, RoutedEventArgs e)
         {
