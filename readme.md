@@ -14,57 +14,57 @@
 
 ## TODO LIST
 
--[x] ProgressRing
+- [x] ProgressRing
 > inherit from Canvas,Implement loading animation
 
--[x] ClickableView
+- [x] ClickableView
 > Views that can trigger the click event
 
--[x] CellListView
+- [x] CellListView
 > a Multiple-Column ListView/ListBox,Just like GridView in UWP
 
--[x] CellListViewCell
+- [x] CellListViewCell
 > Item for CellListView,inherit from ClickableView,with Left/Right Click Event
 
--[x] CircleImage
+- [x] CircleImage
 > inherit from Ellipse,Round picture.Just like PersonPicture in UWP
 
--[x] ExpandableView
+- [x] ExpandableView
 > A view that shows items in a vertically scrolling two-level list
 > PrimaryView
 >> Main Item,show/hide the SecondView after selection
 > SecondView
 >> show or hide when select PrimaryView
 
--[x] ImageRemote
+- [x] ImageRemote
 > inherit from Image,loading image from http/https
 
--[x] ListView
+- [x] ListView
 > inherit from ListBox,just like the ListView in UWP
 
--[x] ListViewItem
+- [x] ListViewItem
 > Item for ListView,inherit from ListBoxItem
 
--[x] MessageBox
+- [x] MessageBox
 > Show message window
 
--[x] NotifyWindow
+- [x] NotifyWindow
 > Notify message window,the transition animation can be displayed according to the preset and automatically closed after a certain period of time
 
--[x] PopupDialog
+- [x] PopupDialog
 > inherit from Popup,show message dialog and automatically shut down after a certain period of time
 
--[x] PopupMenu
+- [x] PopupMenu
 > inherit from Window,close after selecting item and trigger the event
 
--[x] HorizontalItemsRepeater
+- [x] HorizontalItemsRepeater
 > inherit from ItemsRepeater,Horizontal layout with Clickable Item
 
--[x] VerticalItemsRepeater
+- [x] VerticalItemsRepeater
 > inherit from ItemsRepeater,Vertical layout with Clickable Item
 
--[x] ItemsRepeaterContent
+- [x] ItemsRepeaterContent
 > Item for ItemsRepeater with Clickable Event
 
--[ ] ScrollView
+- [ ] ScrollView
 >inherit from ScrollViewer,
