@@ -67,4 +67,4 @@
 > Item for ItemsRepeater with Clickable Event
 
 - [ ] ScrollView
->inherit from ScrollViewer,
+>inherit from ScrollViewer,extend sliding to the bottom, sliding to the top event
