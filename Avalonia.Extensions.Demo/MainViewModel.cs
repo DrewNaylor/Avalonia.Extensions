@@ -35,6 +35,16 @@ namespace Avalonia.Controls.Demo
                 new { content="777777"},
                 new { content="888888"},
                 new { content="999999"},
+                new { content="000000"},
+                new { content="111111"},
+                new { content="222222"},
+                new { content="333333"},
+                new { content="444444"},
+                new { content="555555"},
+                new { content="666666"},
+                new { content="777777"},
+                new { content="888888"},
+                new { content="999999"},
                 new { content="000000"}};
         }
         private void ItemClick(object obj)

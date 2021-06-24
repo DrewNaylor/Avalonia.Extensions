@@ -6,6 +6,7 @@ using Avalonia.Threading;
 using System;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
@@ -25,6 +26,16 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public static readonly StyledProperty<bool> ClickableProperty =
           AvaloniaProperty.Register<ListView, bool>(nameof(Clickable), true);
+        /// <summary>
+        /// Defines the <see cref="ScrollTop"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<RoutedEventArgs> ScrollTopEvent =
+           RoutedEvent.Register<ListView, RoutedEventArgs>(nameof(ScrollTop), RoutingStrategies.Bubble);
+        /// <summary>
+        /// Defines the <see cref="ScrollEnd"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<RoutedEventArgs> ScrollEndEvent =
+           RoutedEvent.Register<ListView, RoutedEventArgs>(nameof(ScrollEnd), RoutingStrategies.Bubble);
         /// <summary>
         /// Defines the <see cref="Command"/> property.
         /// </summary>
@@ -54,6 +65,23 @@ namespace Avalonia.Extensions.Controls
             get => _command;
             set => SetAndRaise(CommandProperty, ref _command, value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> ScrollTop
+        {
+            add { AddHandler(ScrollTopEvent, value); }
+            remove { RemoveHandler(ScrollTopEvent, value); }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> ScrollEnd
+        {
+            add { AddHandler(ScrollEndEvent, value); }
+            remove { RemoveHandler(ScrollEndEvent, value); }
+        }
+        private double lastSize = -1;
         private ICommand _command;
         private MouseButton _mouseButton;
         public MouseButton MouseClickButton => _mouseButton;
@@ -62,9 +90,43 @@ namespace Avalonia.Extensions.Controls
             ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);
             SelectionModeProperty.OverrideMetadata<ListView>(new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
+        private void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ScrollViewer scrollViewer )
+                scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+        }
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.Source is ScrollViewer scrollViewer && scrollViewer.Offset.Y > 0)
+            {
+                if (scrollViewer.Content is IControl child)
+                {
+                    if (child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
+                    {
+                        var height = virtualizing.Children.Select(x => x.Bounds.Height).All();
+                        if (scrollViewer.Offset.Y == 0 && lastSize != 0)
+                        {
+                            var args = new RoutedEventArgs(ScrollTopEvent);
+                            RaiseEvent(args);
+                            if (!args.Handled)
+                                args.Handled = true;
+                        }
+                        else if ((scrollViewer.Offset.Y + Bounds.Height) >= height)
+                        {
+                            var args = new RoutedEventArgs(ScrollEndEvent);
+                            RaiseEvent(args);
+                            if (!args.Handled)
+                                args.Handled = true;
+                        }
+                        lastSize = scrollViewer.Offset.Y;
+                    }
+                }
+            }
+        }
         public ListView()
         {
             SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
+            ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
         }
         private void Item_PointerPressed(object sender, PointerPressedEventArgs e)

@@ -20,6 +20,24 @@
         </HorizontalItemsRepeater>
       </StackPanel>
     </TabItem>
+	  <TabItem Header="ListView">
+		  <Grid>
+			  <Grid.RowDefinitions>
+				  <RowDefinition Height="auto" />
+				  <RowDefinition Height="*" />
+			  </Grid.RowDefinitions>
+			  <TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
+			  <ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
+				  <ListView.ItemTemplate>
+					  <DataTemplate>
+						  <CellListViewCell HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding content}">
+							  <TextBlock Text="{Binding content}" />
+						  </CellListViewCell>
+					  </DataTemplate>
+				  </ListView.ItemTemplate>
+			  </ListView>
+		  </Grid>
+	  </TabItem>
     <TabItem Header="ColumnListView">
       <Grid>
         <Grid.RowDefinitions>

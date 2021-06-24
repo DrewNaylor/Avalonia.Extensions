@@ -7,6 +7,13 @@ namespace Avalonia.Extensions.Controls
 {
     public static class IEnumerableUtils
     {
+        public static double All(this IEnumerable<double> items)
+        {
+            double total = 0;
+            foreach (var item in items)
+                total += item;
+            return total;
+        }
         public static int IndexOf(this IEnumerable items, object item)
         {
             if (items != null && item != null)
