@@ -7,12 +7,23 @@ namespace Avalonia.Extensions.Controls
 {
     public static class IEnumerableUtils
     {
-        public static double All(this IEnumerable<double> items)
+        public static bool IsFirst(this IEnumerable items, object item)
         {
-            double total = 0;
-            foreach (var item in items)
-                total += item;
-            return total;
+            if (items != null && item != null)
+            {
+                var firstItem = items.ElementAt(0);
+                return Equals(item, firstItem);
+            }
+            return false;
+        }
+        public static bool IsLast(this IEnumerable items, object item)
+        {
+            if (items != null && item != null)
+            {
+                if (items is IList<object> list)
+                    return Equals(item, list.LastOrDefault());
+            }
+            return false;
         }
         public static int IndexOf(this IEnumerable items, object item)
         {

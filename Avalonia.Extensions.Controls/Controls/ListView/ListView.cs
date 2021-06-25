@@ -81,7 +81,6 @@ namespace Avalonia.Extensions.Controls
             add { AddHandler(ScrollEndEvent, value); }
             remove { RemoveHandler(ScrollEndEvent, value); }
         }
-        private double lastSize = -1;
         private ICommand _command;
         private MouseButton _mouseButton;
         public MouseButton MouseClickButton => _mouseButton;
@@ -92,33 +91,41 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is ScrollViewer scrollViewer )
+            if (e.NewValue is ScrollViewer scrollViewer)
                 scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
         }
+        private bool trigger = false;
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (e.Source is ScrollViewer scrollViewer && scrollViewer.Offset.Y > 0)
+            if (e.Source is ScrollViewer scrollViewer)
             {
-                if (scrollViewer.Content is IControl child)
+                if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
                 {
-                    if (child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
+                    if (virtualizing.Children.FirstOrDefault() is ListBoxItem firstItem && Items.IsFirst(firstItem.Content))
                     {
-                        var height = virtualizing.Children.Select(x => x.Bounds.Height).All();
-                        if (scrollViewer.Offset.Y == 0 && lastSize != 0)
+                        if (!trigger)
                         {
+                            trigger = true;
                             var args = new RoutedEventArgs(ScrollTopEvent);
                             RaiseEvent(args);
                             if (!args.Handled)
                                 args.Handled = true;
                         }
-                        else if ((scrollViewer.Offset.Y + Bounds.Height) >= height)
+                        else
+                            trigger = false;
+                    }
+                    else if (virtualizing.Children.LastOrDefault() is ListBoxItem lastItem && Items.IsLast(lastItem.Content))
+                    {
+                        if (!trigger)
                         {
+                            trigger = true;
                             var args = new RoutedEventArgs(ScrollEndEvent);
                             RaiseEvent(args);
                             if (!args.Handled)
                                 args.Handled = true;
                         }
-                        lastSize = scrollViewer.Offset.Y;
+                        else
+                            trigger = false;
                     }
                 }
             }
