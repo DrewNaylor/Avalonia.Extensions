@@ -1,9 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Templates;
+using System;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -91,6 +94,8 @@ namespace Avalonia.Extensions.Controls
             get { return GetValue(VerticalAlignmentProperty); }
             set { SetValue(VerticalAlignmentProperty, value); }
         }
+        private bool trigger = true;
+        private Vector _viewHeight = new Vector();
         /// <summary>
         /// create a instance
         /// </summary>
@@ -100,6 +105,7 @@ namespace Avalonia.Extensions.Controls
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(Core.WRAP_TEMPLATE);
             SetValue(ItemsPanelProperty, target);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
+            ItemsProperty.Changed.AddClassHandler<CellListView>(OnItemsChanged);
             BoundsProperty.Changed.AddClassHandler<CellListView>(OnBoundsChange);
             ChildVerticalAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildVerticalAlignmentChange);
             ChildHorizontalAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildHorizontalAlignmentChange);
@@ -171,6 +177,52 @@ namespace Avalonia.Extensions.Controls
                     SetItemWidth(item);
                 }
             }
+        }
+        protected override void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            base.OnScrollChange(sender, e);
+            if (e.NewValue is ScrollViewer)
+                OnItemsChanged(this, e);
+        }
+        private void OnItemsChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (Scroll is ScrollViewer scrollViewer && scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is WrapPanel wrapPanel)
+            {
+                int idx = 0;
+                double viewHeight = 0;
+                var controls = wrapPanel.Children;
+                while (idx * ColumnNum < controls.Count)
+                {
+                    var array = controls.Skip(idx * ColumnNum).Take(ColumnNum);
+                    viewHeight += array.Max(x => x.Bounds.Height);
+                    idx++;
+                }
+                _viewHeight = new Vector(0, viewHeight);
+            }
+        }
+        protected override void ScrollEventHandle(ScrollViewer scrollViewer)
+        {
+            if (_viewHeight.Equals(default))
+                OnItemsChanged(this, default);
+            var scrollHieght = scrollViewer.Offset.Y + scrollViewer.Viewport.Height;
+            if (scrollHieght == scrollViewer.Viewport.Height && !trigger)
+            {
+                trigger = true;
+                var args = new RoutedEventArgs(ScrollTopEvent);
+                RaiseEvent(args);
+                if (!args.Handled)
+                    args.Handled = true;
+            }
+            else if (!trigger && scrollHieght > 0 && new Vector(0, scrollHieght).NearlyEquals(_viewHeight))
+            {
+                trigger = true;
+                var args = new RoutedEventArgs(ScrollEndEvent);
+                RaiseEvent(args);
+                if (!args.Handled)
+                    args.Handled = true;
+            }
+            else
+                trigger = false;
         }
     }
 }

@@ -29,8 +29,13 @@ namespace Avalonia.Controls.Demo
             DataContext = model;
             PopupContent = this.FindControl<Grid>("PopupContent");
             var imgList = this.FindControl<ListBox>("imgList");
+            var listView = this.FindControl<ListView>("listView");
+            listView.ScrollTop += ListView_ScrollTop;
+            listView.ScrollEnd += ListView_ScrollEnd;
             var cellListView = this.FindControl<CellListView>("cellListView");
             cellListView.ItemClick += CellListView_ItemRightClick;
+            cellListView.ScrollTop += ListView_ScrollTop;
+            cellListView.ScrollEnd += ListView_ScrollEnd;
             BtnStart = this.FindControl<Button>("btnStart");
             BtnStart.Click += BtnStart_Click;
             var btnShow = this.FindControl<Button>("btnShow");
@@ -56,9 +61,6 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
-            var listView = this.FindControl<ListView>("listView");
-            listView.ScrollEnd += ListView_ScrollEnd;
-            listView.ScrollTop += ListView_ScrollTop;
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {
@@ -67,8 +69,7 @@ namespace Avalonia.Controls.Demo
         private void ListView_ScrollEnd(object? sender, RoutedEventArgs e)
         {
             MessageBox.Show("提示", "到底了");
-        }
-        
+        }        
         private void BtnShow_Click(object? sender, RoutedEventArgs e)
         {
             if (sender is Button control)

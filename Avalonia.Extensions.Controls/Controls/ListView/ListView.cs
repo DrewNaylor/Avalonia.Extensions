@@ -86,49 +86,47 @@ namespace Avalonia.Extensions.Controls
         public MouseButton MouseClickButton => _mouseButton;
         static ListView()
         {
-            ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);
+            ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);            
             SelectionModeProperty.OverrideMetadata<ListView>(new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
-        private void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is ScrollViewer scrollViewer)
                 scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
         }
-        private bool trigger = false;
+        private bool trigger = true;
+        protected virtual void ScrollEventHandle(ScrollViewer scrollViewer)
+        {
+            if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
+            {
+                var isFirstItem = Items.IsFirst((virtualizing.Children.FirstOrDefault() as ListBoxItem).Content);
+                var isLastItem = Items.IsLast((virtualizing.Children.LastOrDefault() as ListBoxItem).Content);
+                if (isFirstItem && !trigger)
+                {
+                    trigger = true;
+                    var args = new RoutedEventArgs(ScrollTopEvent);
+                    RaiseEvent(args);
+                    if (!args.Handled)
+                        args.Handled = true;
+                }
+                else if (isLastItem && !trigger)
+                {
+                    trigger = true;
+                    var args = new RoutedEventArgs(ScrollEndEvent);
+                    RaiseEvent(args);
+                    if (!args.Handled)
+                        args.Handled = true;
+                }
+                else if (!isFirstItem && !isLastItem)
+                {
+                    trigger = false;
+                }
+            }
+        }
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (e.Source is ScrollViewer scrollViewer)
-            {
-                if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
-                {
-                    if (virtualizing.Children.FirstOrDefault() is ListBoxItem firstItem && Items.IsFirst(firstItem.Content))
-                    {
-                        if (!trigger)
-                        {
-                            trigger = true;
-                            var args = new RoutedEventArgs(ScrollTopEvent);
-                            RaiseEvent(args);
-                            if (!args.Handled)
-                                args.Handled = true;
-                        }
-                        else
-                            trigger = false;
-                    }
-                    else if (virtualizing.Children.LastOrDefault() is ListBoxItem lastItem && Items.IsLast(lastItem.Content))
-                    {
-                        if (!trigger)
-                        {
-                            trigger = true;
-                            var args = new RoutedEventArgs(ScrollEndEvent);
-                            RaiseEvent(args);
-                            if (!args.Handled)
-                                args.Handled = true;
-                        }
-                        else
-                            trigger = false;
-                    }
-                }
-            }
+                ScrollEventHandle(scrollViewer);
         }
         public ListView()
         {

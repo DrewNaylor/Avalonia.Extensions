@@ -23,29 +23,14 @@ namespace Avalonia.Controls.Demo
         public ReactiveCommand<object, Unit> OnItemClick { get; }
         public MainViewModel()
         {
-            OnItemClick= ReactiveCommand.Create<object>(ItemClick);
+            OnItemClick = ReactiveCommand.Create<object>(ItemClick);
             OnButtonClick = ReactiveCommand.Create<object>(ButtonClick);
-            items = new ObservableCollection<object>{
-                new { content="111111"},
-                new { content="222222"},
-                new { content="333333"},
-                new { content="444444"},
-                new { content="555555"},
-                new { content="666666"},
-                new { content="777777"},
-                new { content="888888"},
-                new { content="999999"},
-                new { content="123456"},
-                new { content="123457"},
-                new { content="123458"},
-                new { content="123459"},
-                new { content="123460"},
-                new { content="123461"},
-                new { content="123462"},
-                new { content="123463"},
-                new { content="123464"},
-                new { content="123465"},
-                new { content="123466"}};
+            items = new ObservableCollection<object>();
+            for (var idx = 0; idx < 9; idx++)
+            {
+                for (var idx2 = 0; idx2 < 9; idx2++)
+                    items.Add(new { content = $"{idx}#{idx2}" });
+            }
         }
         private void ItemClick(object obj)
         {
