@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class DownloadTask
+    internal sealed class DownloadTask
     {
         private bool Loading = false;
         private HttpClient HttpClient { get; }

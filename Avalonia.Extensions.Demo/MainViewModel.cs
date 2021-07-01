@@ -34,7 +34,7 @@ namespace Avalonia.Controls.Demo
         }
         private void ItemClick(object obj)
         {
-            Message = "你点击了CellListView , CommandParameter :" + obj;
+            Message = "你点击了SplitListView , CommandParameter :" + obj;
         }
         private void ButtonClick(object obj)
         {

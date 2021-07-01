@@ -31,10 +31,13 @@ namespace Avalonia.Extensions.Controls
         private void OnPrimaryViewChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.OldValue is ClickableView oldControl)
+            {
+                oldControl.Click -= ClickView_Click;
                 Children.Remove(oldControl);
+            }
             if (e.NewValue is ClickableView newControl)
             {
-                newControl.Click += NewControl_Click;
+                newControl.Click += ClickView_Click;
                 Children.Add(newControl);
             }
         }
@@ -71,7 +74,7 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(SecondViewProperty);
             set => SetValue(SecondViewProperty, value);
         }
-        private void NewControl_Click(object sender, RoutedEventArgs e)
+        private void ClickView_Click(object sender, RoutedEventArgs e)
         {
             if (Status == ExpandStatus.Collapsed)
             {

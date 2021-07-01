@@ -9,10 +9,6 @@ namespace Avalonia.Extensions.Controls
         {
             return Math.PI * angle / 180;
         }
-        public static double Round(this double d, int decimals)
-        {
-            return Math.Round(d, decimals);
-        }
         public static bool SmallerThan(this PixelPoint pixelPoint, PixelPoint point, bool inCludeEquals = false)
         {
             if (inCludeEquals && pixelPoint.X <= point.X && pixelPoint.Y <= point.Y)

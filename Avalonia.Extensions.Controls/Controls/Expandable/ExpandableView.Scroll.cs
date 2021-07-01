@@ -5,7 +5,7 @@ using Avalonia.Media;
 
 namespace Avalonia.Extensions.Controls
 {
-    public partial class ExpandableView 
+    public partial class ExpandableView
     {
         /// <summary>
         /// Defines the <see cref="Template"/> property.
@@ -17,8 +17,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public IControlTemplate Template
         {
-            get { return GetValue(TemplateProperty); }
-            set { SetValue(TemplateProperty, value); }
+            get => GetValue(TemplateProperty);
+            set => SetValue(TemplateProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="BorderBrush"/> property.
@@ -29,8 +29,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public IBrush BorderBrush
         {
-            get { return GetValue(BorderBrushProperty); }
-            set { SetValue(BorderBrushProperty, value); }
+            get => GetValue(BorderBrushProperty);
+            set => SetValue(BorderBrushProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="BorderThickness"/> property.
@@ -42,8 +42,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public Thickness BorderThickness
         {
-            get { return GetValue(BorderThicknessProperty); }
-            set { SetValue(BorderThicknessProperty, value); }
+            get => GetValue(BorderThicknessProperty);
+            set => SetValue(BorderThicknessProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="Scroll"/> property.
@@ -56,8 +56,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public IScrollable Scroll
         {
-            get { return _scroll; }
-            private set { SetAndRaise(ScrollProperty, ref _scroll, value); }
+            get => _scroll;
+            private set => SetAndRaise(ScrollProperty, ref _scroll, value);
         }
         protected void OnApplyTemplate(TemplateAppliedEventArgs e)
         {

@@ -270,16 +270,10 @@ namespace Avalonia.Extensions.Controls
         protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
         {
             base.UpdateDataValidation(property, value);
-            if (property == CommandProperty)
+            if (property == CommandProperty && value.Type == BindingValueType.BindingError && _commandCanExecute)
             {
-                if (value.Type == BindingValueType.BindingError)
-                {
-                    if (_commandCanExecute)
-                    {
-                        _commandCanExecute = false;
-                        UpdateIsEffectivelyEnabled();
-                    }
-                }
+                _commandCanExecute = false;
+                UpdateIsEffectivelyEnabled();
             }
         }
         /// <summary>

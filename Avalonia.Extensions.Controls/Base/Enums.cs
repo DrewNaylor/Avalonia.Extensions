@@ -17,4 +17,15 @@
         Vertical,
         Horizontal
     }
+    public enum ExpandStatus
+    {
+        Expanded,
+        Collapsed
+    }
+    public enum PopupLength
+    {
+        Short = 2000,
+        Default = 5000,
+        Long = 8000
+    }
 }

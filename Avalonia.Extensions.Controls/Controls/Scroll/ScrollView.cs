@@ -51,7 +51,7 @@ namespace Avalonia.Extensions.Controls
                         if (!args.Handled)
                             args.Handled = true;
                     }
-                    else if ((scrollViewer.Offset.Y + Bounds.Height) >= (child.Bounds.Height * 0.8))
+                    else if ((scrollViewer.Offset.Y + Bounds.Height) >= child.Bounds.Height)
                     {
                         var args = new RoutedEventArgs(ScrollEndEvent);
                         RaiseEvent(args);

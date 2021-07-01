@@ -54,7 +54,7 @@ namespace Avalonia.Extensions.Controls
                         Dispatcher.UIThread.InvokeAsync(() =>
                         {
                             var assets = Core.Instance.AssetLoader;
-                            var bitmap = new Bitmap(assets.Open(uri));
+                            using var bitmap = new Bitmap(assets.Open(uri));
                             this.Fill = new ImageBrush { Source = bitmap };
                             DrawAgain();
                             SetSize(bitmap.Size);
@@ -89,8 +89,8 @@ namespace Avalonia.Extensions.Controls
         [Content]
         public Uri Source
         {
-            get { return GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get => GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
         /// <summary>
         /// Raised when the image load failed.

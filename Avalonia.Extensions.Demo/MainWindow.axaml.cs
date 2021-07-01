@@ -32,10 +32,10 @@ namespace Avalonia.Controls.Demo
             var listView = this.FindControl<ListView>("listView");
             listView.ScrollTop += ListView_ScrollTop;
             listView.ScrollEnd += ListView_ScrollEnd;
-            var cellListView = this.FindControl<CellListView>("cellListView");
-            cellListView.ItemClick += CellListView_ItemRightClick;
-            cellListView.ScrollTop += ListView_ScrollTop;
-            cellListView.ScrollEnd += ListView_ScrollEnd;
+            var splitListView = this.FindControl<SplitListView>("splitListView");
+            splitListView.ItemClick += SplitListView_ItemRightClick;
+            splitListView.ScrollTop += ListView_ScrollTop;
+            splitListView.ScrollEnd += ListView_ScrollEnd;
             BtnStart = this.FindControl<Button>("btnStart");
             BtnStart.Click += BtnStart_Click;
             var btnShow = this.FindControl<Button>("btnShow");
@@ -109,13 +109,13 @@ namespace Avalonia.Controls.Demo
             else
                 progressRing.Hidden();
         }
-        private void CellListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
+        private void SplitListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
         {
             var content = e.ClickItem.ToString();
             if (e.ClickMouse == MouseButton.Right)
-                MessageBox.Show("tips", "CellListView -> Right Click : " + content);
+                MessageBox.Show("tips", "SplitListView -> Right Click : " + content);
             else
-                MessageBox.Show("tips", "CellListView -> Left Click : " + content);
+                MessageBox.Show("tips", "SplitListView -> Left Click : " + content);
         }
         private void ScrollView_ScrollTop(object? sender, RoutedEventArgs e)
         {

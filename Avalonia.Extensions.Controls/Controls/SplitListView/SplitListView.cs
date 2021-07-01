@@ -13,7 +13,7 @@ namespace Avalonia.Extensions.Controls
     /// you need to set "ColumnNum" for columns count
     /// https://stackoverflow.com/questions/23084576/wpf-combobox-multiple-columns
     /// </summary>
-    public class CellListView : ListView
+    public class SplitListView : ListView
     {
         /// <summary>
         /// The width of each cell.
@@ -23,7 +23,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ColumnNum"/> property.
         /// </summary>
         public static readonly StyledProperty<int> ColumnNumProperty =
-          AvaloniaProperty.Register<CellListView, int>(nameof(ColumnNum), 1);
+          AvaloniaProperty.Register<SplitListView, int>(nameof(ColumnNum), 1);
         /// <summary>
         /// get or set column number.
         /// default value is 1.if the value smaller than 1 it's means depend layout by item controls
@@ -44,7 +44,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ChildHorizontalContentAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<HorizontalAlignment> ChildHorizontalContentAlignmentProperty =
-            AvaloniaProperty.Register<CellListView, HorizontalAlignment>(nameof(ChildHorizontalContentAlignment));
+            AvaloniaProperty.Register<SplitListView, HorizontalAlignment>(nameof(ChildHorizontalContentAlignment));
         /// <summary>
         /// Gets or sets the horizontal alignment of the content within the control.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ChildVerticalContentAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<VerticalAlignment> ChildVerticalContentAlignmentProperty =
-            AvaloniaProperty.Register<CellListView, VerticalAlignment>(nameof(ChildVerticalContentAlignment));
+            AvaloniaProperty.Register<SplitListView, VerticalAlignment>(nameof(ChildVerticalContentAlignment));
         /// <summary>
         /// Gets or sets the vertical alignment of the content within the control.
         /// </summary>
@@ -70,7 +70,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="HorizontalAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<HorizontalAlignment> ChildHorizontalAlignmentProperty =
-            AvaloniaProperty.Register<CellListView, HorizontalAlignment>(nameof(ChildHorizontalAlignment));
+            AvaloniaProperty.Register<SplitListView, HorizontalAlignment>(nameof(ChildHorizontalAlignment));
         /// <summary>
         /// Gets or sets the element's preferred horizontal alignment in its parent.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="VerticalAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<VerticalAlignment> ChildVerticalAlignmentProperty =
-            AvaloniaProperty.Register<CellListView, VerticalAlignment>(nameof(ChildVerticalAlignment));
+            AvaloniaProperty.Register<SplitListView, VerticalAlignment>(nameof(ChildVerticalAlignment));
         /// <summary>
         /// Gets or sets the element's preferred vertical alignment in its parent.
         /// </summary>
@@ -95,17 +95,18 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// create a instance
         /// </summary>
-        public CellListView()
+        public SplitListView()
         {
+            ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(Core.WRAP_TEMPLATE);
             SetValue(ItemsPanelProperty, target);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
-            BoundsProperty.Changed.AddClassHandler<CellListView>(OnBoundsChange);
-            ChildVerticalAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildVerticalAlignmentChange);
-            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildHorizontalAlignmentChange);
-            ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildVerticalContentAlignmentChange);
-            ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<CellListView>(OnChildHorizontalContentAlignmentChange);
+            BoundsProperty.Changed.AddClassHandler<SplitListView>(OnBoundsChange);
+            ChildVerticalAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildVerticalAlignmentChange);
+            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildHorizontalAlignmentChange);
+            ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildVerticalContentAlignmentChange);
+            ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildHorizontalContentAlignmentChange);
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -141,16 +142,13 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnBoundsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Rect rect)
+            if (e.NewValue is Rect rect && CellWidth != double.NaN)
             {
-                if (CellWidth != double.NaN)
+                CellWidth = rect.Width / ColumnNum;
+                for (var index = 0; index < LogicalChildren.Count; index++)
                 {
-                    CellWidth = rect.Width / ColumnNum;
-                    for (var index = 0; index < LogicalChildren.Count; index++)
-                    {
-                        var item = LogicalChildren.ElementAt(index);
-                        SetItemWidth(item);
-                    }
+                    var item = LogicalChildren.ElementAt(index);
+                    SetItemWidth(item);
                 }
             }
         }
@@ -164,13 +162,10 @@ namespace Avalonia.Extensions.Controls
         }
         private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Count > 0)
+            if (e.NewItems != null && e.NewItems.Count > 0 && CellWidth != double.NaN)
             {
-                if (CellWidth != double.NaN)
-                {
-                    var item = e.NewItems.ElementAt(0);
-                    SetItemWidth(item);
-                }
+                var item = e.NewItems.ElementAt(0);
+                SetItemWidth(item);
             }
         }
         private bool scrollTopEnable = false;

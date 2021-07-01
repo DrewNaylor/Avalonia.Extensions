@@ -126,9 +126,9 @@ namespace Avalonia.Extensions.Controls
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                var window = control.GetWindow();
                 if ((control.TransformedBounds as dynamic).Clip is Rect rect)
                 {
+                    var window = control.GetWindow();
                     int x = (rect.X + window.Position.X).ToInt32(),
                         y = (rect.Y + window.Position.Y).ToInt32();
                     Position = new PixelPoint(x, y);

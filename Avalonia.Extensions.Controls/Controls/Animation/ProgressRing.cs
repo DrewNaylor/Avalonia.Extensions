@@ -20,6 +20,7 @@ namespace Avalonia.Extensions.Controls
                 Width = 128;
                 Height = 128;
             }
+            ZIndex = int.MaxValue;
         }
         private void OnWidthChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
