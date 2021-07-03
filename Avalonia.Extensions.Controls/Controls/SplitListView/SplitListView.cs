@@ -165,6 +165,11 @@ namespace Avalonia.Extensions.Controls
             if (e.NewItems != null && e.NewItems.Count > 0 && CellWidth != double.NaN)
             {
                 var item = e.NewItems.ElementAt(0);
+                if (item is ListBoxItem listItem)
+                {
+                    listItem.HorizontalAlignment = this.ChildHorizontalAlignment;
+                    listItem.HorizontalContentAlignment = this.ChildHorizontalContentAlignment;
+                }
                 SetItemWidth(item);
             }
         }

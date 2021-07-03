@@ -99,8 +99,8 @@ namespace Avalonia.Extensions.Controls
         {
             if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
             {
-                var isFirstItem = Items.IsFirst((virtualizing.Children.FirstOrDefault() as ListBoxItem).Content);
-                var isLastItem = Items.IsLast((virtualizing.Children.LastOrDefault() as ListBoxItem).Content);
+                var isFirstItem = Items.IsFirst((virtualizing.Children.FirstOrDefault() as ListBoxItem)?.Content);
+                var isLastItem = Items.IsLast((virtualizing.Children.LastOrDefault() as ListBoxItem)?.Content);
                 if (isFirstItem && !trigger)
                 {
                     trigger = true;

@@ -12,7 +12,7 @@ namespace Avalonia.Extensions.Controls
             if (items != null && item != null)
             {
                 var firstItem = items.ElementAt(0);
-                return Equals(item, firstItem);
+                return ReferenceEquals(item, firstItem);
             }
             return false;
         }
@@ -20,8 +20,10 @@ namespace Avalonia.Extensions.Controls
         {
             if (items != null && item != null)
             {
-                if (items is IList<object> list)
-                    return Equals(item, list.LastOrDefault());
+                if (items is IEnumerable<object> array)
+                    return ReferenceEquals(item, array.LastOrDefault());
+                else if (items is IList<object> list)
+                    return ReferenceEquals(item, list.LastOrDefault());
             }
             return false;
         }
