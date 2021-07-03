@@ -50,8 +50,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public HorizontalAlignment ChildHorizontalContentAlignment
         {
-            get { return GetValue(ChildHorizontalContentAlignmentProperty); }
-            set { SetValue(ChildHorizontalContentAlignmentProperty, value); }
+            get => GetValue(ChildHorizontalContentAlignmentProperty);
+            set => SetValue(ChildHorizontalContentAlignmentProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="ChildVerticalContentAlignment"/> property.
@@ -63,8 +63,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public VerticalAlignment ChildVerticalContentAlignment
         {
-            get { return GetValue(ChildVerticalContentAlignmentProperty); }
-            set { SetValue(ChildVerticalContentAlignmentProperty, value); }
+            get => GetValue(ChildVerticalContentAlignmentProperty);
+            set => SetValue(ChildVerticalContentAlignmentProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="HorizontalAlignment"/> property.
@@ -76,8 +76,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public HorizontalAlignment ChildHorizontalAlignment
         {
-            get { return GetValue(HorizontalAlignmentProperty); }
-            set { SetValue(HorizontalAlignmentProperty, value); }
+            get => GetValue(HorizontalAlignmentProperty);
+            set => SetValue(HorizontalAlignmentProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="VerticalAlignment"/> property.
@@ -89,8 +89,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public VerticalAlignment ChildVerticalAlignment
         {
-            get { return GetValue(VerticalAlignmentProperty); }
-            set { SetValue(VerticalAlignmentProperty, value); }
+            get => GetValue(VerticalAlignmentProperty);
+            set => SetValue(VerticalAlignmentProperty, value);
         }
         /// <summary>
         /// create a instance

@@ -5,7 +5,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
-        public static double ToRadians(this double angle)
+        internal static double ToRadians(this double angle)
         {
             return Math.PI * angle / 180;
         }
@@ -23,7 +23,7 @@ namespace Avalonia.Extensions.Controls
             else
                 return pixelPoint.X > point.X && pixelPoint.Y > point.Y;
         }
-        public static int ToInt32(this object obj)
+        internal static int ToInt32(this object obj)
         {
             try
             {

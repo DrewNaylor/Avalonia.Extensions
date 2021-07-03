@@ -157,25 +157,19 @@ namespace Avalonia.Extensions.Controls
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnAttachedToVisualTree(e);
-            if (IsDefault)
+            if (e.Root is IInputElement inputElement)
             {
-                if (e.Root is IInputElement inputElement)
+                if (IsDefault)
                     ListenForDefault(inputElement);
-            }
-            if (IsCancel)
-            {
-                if (e.Root is IInputElement inputElement)
+                if (IsCancel)
                     ListenForCancel(inputElement);
             }
         }
         protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnDetachedFromVisualTree(e);
-            if (IsDefault)
-            {
-                if (e.Root is IInputElement inputElement)
-                    StopListeningForDefault(inputElement);
-            }
+            if (IsDefault && e.Root is IInputElement inputElement)
+                StopListeningForDefault(inputElement);
         }
         protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
         {

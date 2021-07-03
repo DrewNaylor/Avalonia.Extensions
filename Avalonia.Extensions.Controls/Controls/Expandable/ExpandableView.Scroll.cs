@@ -66,7 +66,6 @@ namespace Avalonia.Extensions.Controls
         public override void ApplyTemplate()
         {
             base.ApplyTemplate();
-
             if (Template != null)
             {
                 var (_, nameScope) = Template.Build(this);

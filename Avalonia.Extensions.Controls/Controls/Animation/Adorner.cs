@@ -1,11 +1,9 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
 using System;
-using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -19,7 +17,7 @@ namespace Avalonia.Extensions.Controls
         protected Adorner(Control adornedControl)
         {
             _adornedControl = adornedControl ?? throw new ArgumentNullException("adornedElement");
-            _isClipEnabled = false;            
+            _isClipEnabled = false;
             Dispatcher.UIThread.InvokeAsync(() =>
             {
                 //Adorner adorner = this;
@@ -62,10 +60,7 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public bool IsClipEnabled
         {
-            get
-            {
-                return _isClipEnabled;
-            }
+            get => _isClipEnabled;
             set
             {
                 _isClipEnabled = value;
@@ -79,14 +74,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         internal Geometry AdornerClip
         {
-            get
-            {
-                return Clip;
-            }
-            set
-            {
-                Clip = value;
-            }
+            get => Clip;
+            set => Clip = value;
         }
         /// <summary>
         /// Gets or sets the transform of this Visual.
@@ -94,14 +83,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         internal ITransform AdornerTransform
         {
-            get
-            {
-                return RenderTransform;
-            }
-            set
-            {
-                RenderTransform = value;
-            }
+            get => RenderTransform;
+            set => RenderTransform = value;
         }
     }
 }

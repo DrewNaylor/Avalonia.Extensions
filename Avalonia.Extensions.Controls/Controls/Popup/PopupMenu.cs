@@ -40,8 +40,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public IDataTemplate ItemTemplate
         {
-            get { return GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
+            get => GetValue(ItemTemplateProperty);
+            set => SetValue(ItemTemplateProperty, value);
         }
         private IList _items;
         private bool _isFocus = true;
