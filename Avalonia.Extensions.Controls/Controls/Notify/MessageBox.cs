@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
-using Avalonia.Threading;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -50,45 +49,42 @@ namespace Avalonia.Extensions.Controls
         }
         private void CreateControls()
         {
-            Dispatcher.UIThread.InvokeAsync(() =>
+            Grid root = new Grid
             {
-                Grid root = new Grid
+                RowDefinitions = RowDefinitions.Parse("*,*"),
+                ColumnDefinitions = ColumnDefinitions.Parse("*,*")
+            };
+            var tb = new TextBlock
+            {
+                Name = "Message",
+                TextWrapping = TextWrapping.Wrap
+            };
+            root.Children.Add(tb);
+            Grid.SetColumn(tb, 0);
+            Grid.SetRow(tb, 0);
+            Grid.SetColumnSpan(tb, 2);
+            var ok = new Button
+            {
+                Name = "Ok",
+                HorizontalAlignment = Layout.HorizontalAlignment.Center,
+                HorizontalContentAlignment = Layout.HorizontalAlignment.Center
+            };
+            root.Children.Add(ok);
+            Grid.SetColumn(ok, 0);
+            Grid.SetRow(ok, 1);
+            if (ButtonType == MessageBoxButtons.OkNo)
+            {
+                var cancel = new Button
                 {
-                    RowDefinitions = RowDefinitions.Parse("*,*"),
-                    ColumnDefinitions = ColumnDefinitions.Parse("*,*")
-                };
-                var tb = new TextBlock
-                {
-                    Name = "Message",
-                    TextWrapping = TextWrapping.Wrap
-                };
-                root.Children.Add(tb);
-                Grid.SetColumn(tb, 0);
-                Grid.SetRow(tb, 0);
-                Grid.SetColumnSpan(tb, 2);
-                var ok = new Button
-                {
-                    Name = "Ok",
+                    Name = "Cancel",
                     HorizontalAlignment = Layout.HorizontalAlignment.Center,
                     HorizontalContentAlignment = Layout.HorizontalAlignment.Center
                 };
-                root.Children.Add(ok);
-                Grid.SetColumn(ok, 0);
-                Grid.SetRow(ok, 1);
-                if (ButtonType == MessageBoxButtons.OkNo)
-                {
-                    var cancel = new Button
-                    {
-                        Name = "Cancel",
-                        HorizontalAlignment = Layout.HorizontalAlignment.Center,
-                        HorizontalContentAlignment = Layout.HorizontalAlignment.Center
-                    };
-                    root.Children.Add(cancel);
-                    Grid.SetColumn(cancel, 1);
-                    Grid.SetRow(cancel, 1);
-                }
-                this.Content = root;
-            });
+                root.Children.Add(cancel);
+                Grid.SetColumn(cancel, 1);
+                Grid.SetRow(cancel, 1);
+            }
+            this.Content = root;
         }
         public void SetSize(Size size)
         {
