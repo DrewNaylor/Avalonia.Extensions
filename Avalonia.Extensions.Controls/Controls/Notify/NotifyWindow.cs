@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Threading;
 using System;
+using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -24,6 +25,15 @@ namespace Avalonia.Extensions.Controls
                 this.Close();
             });
         }
+        public void Popup(int timeout)
+        {
+            Show();
+            Dispatcher.UIThread.InvokeAsync(async() =>
+            {
+                await Task.Delay(timeout);
+                this.Close();
+            });
+        }
         public void Show(Options options)
         {
             if (!options.IsVaidate)
@@ -32,7 +42,7 @@ namespace Avalonia.Extensions.Controls
             {
                 Width = options.Size.Width;
                 Height = options.Size.Height;
-                base.Show();
+                Show();
                 Options.Update(options);
                 HandleAnimation(options.Position);
             }

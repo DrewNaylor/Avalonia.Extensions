@@ -77,6 +77,11 @@ namespace Avalonia.Extensions.Controls
                 var round = Math.Min(size.Width, size.Height);
                 Height = Width = round;
             }
+            else
+            {
+                var maxValue = Math.Max(Width, Height);
+                Height = Width = maxValue;
+            }
         }
         public void DrawAgain()
         {
