@@ -20,11 +20,11 @@
 - [x] ClickableView
 > Views that can trigger the click event
 
-- [x] CellListView
+- [x] ~CellListView~ SplitListView
 > a Multiple-Column ListView/ListBox,Just like GridView in UWP
 
-- [x] CellListViewCell
-> Item for CellListView,inherit from ClickableView,with Left/Right Click Event
+- [x] ~CellListViewCell~ SplitListViewItem
+> Item for ~CellListView~ SplitListView,inherit from ClickableView,with Left/Right Click Event
 
 - [x] CircleImage
 > inherit from Ellipse,Round picture.Just like PersonPicture in UWP
