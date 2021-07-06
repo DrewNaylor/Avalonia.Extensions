@@ -10,10 +10,12 @@ namespace Avalonia.Extensions.Controls
     {
         public PopupToast() : base()
         {
+            Opacity = 0.6;
             Topmost = true;
             CanResize = false;
             ShowInTaskbar = false;
-            this.SystemDecorations = SystemDecorations.None;
+            SystemDecorations = SystemDecorations.None;
+            Background = new SolidColorBrush(Color.Parse("#333"));
         }
         public void Popup(string content)
         {
@@ -41,10 +43,10 @@ namespace Avalonia.Extensions.Controls
             {
                 Text = content,
                 TextWrapping = wrapping,
+                Foreground= options.Foreground,
                 VerticalAlignment = options.VerticalAlignment,
                 HorizontalAlignment = options.HorizontalAlignment
             };
-            this.Background = new SolidColorBrush(Color.Parse("#333"), 0.6);
             SetLoaction();
             Show();
             Dispatcher.UIThread.InvokeAsync(async () =>
