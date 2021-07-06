@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Platform;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
@@ -74,6 +76,28 @@ namespace Avalonia.Extensions.Controls
                 return true;
             double delta = value1 - value2;
             return (delta < Epsilon) && (delta > -Epsilon);
+        }
+        public static SizeF MeasureString(this IWindowImpl impl, string content)
+        {
+            if (impl != null)
+            {
+                var graphic = Graphics.FromHwnd(impl.Handle.Handle);
+                StringFormat sf = StringFormat.GenericTypographic;
+                sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+                return graphic.MeasureString(content.Trim(), new Font("Arial", 16), PointF.Empty, sf);
+            }
+            return default;
+        }
+        public static SizeF MeasureString(this IWindowImpl impl, string content, float maxWidth)
+        {
+            if (impl != null)
+            {
+                var graphic = Graphics.FromHwnd(impl.Handle.Handle);
+                StringFormat sf = StringFormat.GenericTypographic;
+                sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+                return graphic.MeasureString(content.Trim(), new Font("Arial", 16), new SizeF(maxWidth, 0), sf);
+            }
+            return default;
         }
         public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
         {

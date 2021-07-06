@@ -70,6 +70,7 @@
                     <Button Click="OnNotifyClick" CommandParameter="4">BottomRight / Horizontal</Button>
                     <Button Click="OnNotifyClick" CommandParameter="5">BottomLeft / Vertical</Button>
                     <Button Click="OnNotifyClick" CommandParameter="6">BottomRight / Vertical</Button>
+					<Button Click="OnNotifyPopupClick">Popup</Button>
                 </StackPanel>
             </Grid>
         </TabItem>

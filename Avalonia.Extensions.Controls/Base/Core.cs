@@ -47,7 +47,7 @@ namespace Avalonia.Extensions.Controls
             get
             {
                 if (_primaryBrush == null)
-                    _primaryBrush = new SolidColorBrush(Color.FromRgb(139, 68, 172));
+                    _primaryBrush = new SolidColorBrush(Media.Color.FromRgb(139, 68, 172));
                 return _primaryBrush;
             }
         }

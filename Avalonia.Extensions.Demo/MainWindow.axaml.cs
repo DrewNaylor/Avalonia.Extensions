@@ -136,6 +136,11 @@ namespace Avalonia.Controls.Demo
                 dialog.Open($"PopupDialog has been show for {Time} times");
             });
         }
+        private void OnNotifyPopupClick(object sender, RoutedEventArgs e)
+        {
+            PopupToast window = new PopupToast();
+            window.Popup("大大大大大大大大大大大大大大大大大大", new PopupOptions { Width = 120 });
+        }
         private void OnNotifyClick(object sender, RoutedEventArgs e)
         {
             var text = ((Button)sender).CommandParameter.ToInt32();
@@ -182,7 +187,7 @@ namespace Avalonia.Controls.Demo
             }
             NotifyWindow window = new NotifyWindow();
             window.Content = new TextBlock { Text = "大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大" };
-            var options = new Options(position, new Size(160, 60), orientation);
+            var options = new NotifyOptions(position, new Size(160, 60), orientation);
             window.Show(options);
         }
     }

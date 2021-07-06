@@ -1,21 +1,21 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Threading;
 using System;
-using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
     public sealed class NotifyWindow : Window
     {
-        private Options Options { get; }
+        private NotifyOptions Options { get; }
         private AnimationThread Thread { get; }
         public NotifyWindow() : base()
         {
+            Topmost = true;
             CanResize = false;
             ShowInTaskbar = false;
             Thread = new AnimationThread(this);
             Thread.DisposeEvent += Thread_DisposeEvent;
-            Options = new Options(ShowPosition.BottomRight);
+            Options = new NotifyOptions(ShowPosition.BottomRight);
             this.SystemDecorations = SystemDecorations.None;
         }
         private void Thread_DisposeEvent(object sender, EventArgs e)
@@ -25,16 +25,7 @@ namespace Avalonia.Extensions.Controls
                 this.Close();
             });
         }
-        public void Popup(int timeout)
-        {
-            Show();
-            Dispatcher.UIThread.InvokeAsync(async() =>
-            {
-                await Task.Delay(timeout);
-                this.Close();
-            });
-        }
-        public void Show(Options options)
+        public void Show(NotifyOptions options)
         {
             if (!options.IsVaidate)
                 throw new NotSupportedException("when Position is Top***,the Scroll Way(ScollOrientation) cannot be Vertical!");

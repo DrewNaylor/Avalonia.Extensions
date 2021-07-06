@@ -10,7 +10,7 @@ namespace Avalonia.Extensions.Controls
     {
         private Thread Thread { get; }
         private Window Window { get; }
-        private Options Options { get; set; }
+        private NotifyOptions Options { get; set; }
         private PixelPoint StopPosition { get; set; }
         private PixelPoint StartPosition { get; set; }
         private PixelPoint LeftHorizontalNext { get; set; }
@@ -22,7 +22,7 @@ namespace Avalonia.Extensions.Controls
             this.Window = window;
             Thread = new Thread(RunJob) { IsBackground = true };
         }
-        public void Start(Options options)
+        public void Start(NotifyOptions options)
         {
             if (options.IsVaidate)
             {

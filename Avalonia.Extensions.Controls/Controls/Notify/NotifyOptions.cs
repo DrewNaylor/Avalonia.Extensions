@@ -1,26 +1,26 @@
 ﻿namespace Avalonia.Extensions.Controls
 {
-    public sealed class Options
+    public sealed class NotifyOptions
     {
-        public Options(ShowPosition position)
+        public NotifyOptions(ShowPosition position)
         {
             this.Position = position;
             this.Size = new Size(160, 60);
         }
-        public Options(ShowPosition position, Size size)
+        public NotifyOptions(ShowPosition position, Size size)
         {
             this.Size = size;
             this.Position = position;
         }
-        public Options(ShowPosition position, Size size, ScollOrientation scollOrientation) : this(position, size)
+        public NotifyOptions(ShowPosition position, Size size, ScollOrientation scollOrientation) : this(position, size)
         {
             this.ScollOrientation = scollOrientation;
         }
-        public Options(ShowPosition position, Size size, ScollOrientation scollOrientation, int movePixel) : this(position, size, scollOrientation)
+        public NotifyOptions(ShowPosition position, Size size, ScollOrientation scollOrientation, int movePixel) : this(position, size, scollOrientation)
         {
             this.MovePixel = movePixel;
         }
-        public Options(ShowPosition position, Size size, ScollOrientation scollOrientation, int movePixel, int moveDelay) : this(position, size, scollOrientation, movePixel)
+        public NotifyOptions(ShowPosition position, Size size, ScollOrientation scollOrientation, int movePixel, int moveDelay) : this(position, size, scollOrientation, movePixel)
         {
             this.MoveDelay = moveDelay;
         }
@@ -37,7 +37,7 @@
                     && ScollOrientation == ScollOrientation.Vertical);
             }
         }
-        public void Update(Options options)
+        public void Update(NotifyOptions options)
         {
             Size = options.Size;
             Position = options.Position;

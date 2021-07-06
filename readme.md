@@ -68,3 +68,7 @@
 
 - [ ] ScrollView
 >inherit from ScrollViewer,extend sliding to the bottom, sliding to the top event
+
+- [x] PopupToast
+> inherit from Window,show message dialog and automatically shut down after a certain period of time
+>> diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel

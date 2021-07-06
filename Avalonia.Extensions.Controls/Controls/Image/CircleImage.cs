@@ -43,10 +43,13 @@ namespace Avalonia.Extensions.Controls
                         {
                             Task.Create(uri, (result) =>
                             {
-                                var bitmap = new Bitmap(result.Stream);
-                                this.Fill = new ImageBrush { Source = bitmap };
-                                DrawAgain();
-                                SetSize(bitmap.Size);
+                                if (result.Stream != null)
+                                {
+                                    var bitmap = new Bitmap(result.Stream);
+                                    this.Fill = new ImageBrush { Source = bitmap };
+                                    DrawAgain();
+                                    SetSize(bitmap.Size);
+                                }
                             });
                         });
                         break;
