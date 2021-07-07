@@ -77,4 +77,37 @@
 
 ># EXTEND
 - [x] Chinese Input Support
-> call SetChineseInputSupport in App.axaml.cs when Initialize,you can override it and call the method like `Current.SetChineseInputSupport()`
+> call SetChineseInputSupport in App.axaml.cs when Initialize,you can override it and call the method like `Current.SetChineseInputSupport()`'
+
+- [x] ActualWidth
+> get visable control actual width
+
+- [x] ActualHeight
+> get visable control actual height
+
+- [x] GetPrivateField
+> get control/namescope private field
+
+- [x] SetPrivateField
+> set value for control private field
+
+- [x] GetPrivateProperty
+> get control private property
+
+- [x] SetPrivateProperty
+> set value for control private property
+
+- [x] MeasureString
+> get string text display width
+
+- [x] AreClose
+> between value is too close or not
+
+- [x] InvokePrivateMethod
+> call control private method
+
+- [x] FindControls
+> find child control by control type
+
+- [x] GetWindow
+> get window who own this control

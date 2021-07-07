@@ -66,6 +66,20 @@ namespace Avalonia.Extensions.Controls
                 throw ex;
             }
         }
+        public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
+        {
+            try
+            {
+                var type = control.GetType();
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                var property = type.GetProperty(propertyName, flag);
+                property?.SetValue(control, propertyValue);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         internal static bool AreClose(Size size1, Size size2)
         {
             return AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
@@ -98,20 +112,6 @@ namespace Avalonia.Extensions.Controls
                 return graphic.MeasureString(content.Trim(), new Font("Arial", 16), new SizeF(maxWidth, 0), sf);
             }
             return default;
-        }
-        public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
-        {
-            try
-            {
-                var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
-                var property = type.GetProperty(propertyName, flag);
-                property?.SetValue(control, propertyValue);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
         public static object InvokePrivateMethod(this Control control, string methodName, object[] parameters = null)
         {
