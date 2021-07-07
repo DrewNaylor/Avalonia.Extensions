@@ -1,28 +1,10 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Styling;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
-        public static void SetChineseInputSupport(this Application application)
-        {
-            try
-            {
-                var style = new Style();
-                var selector = default(Selector).OfType<TextBox>();
-                style.Selector = selector;
-                style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty, new Media.FontFamily("avares://Avalonia.Extensions.Controls/Assets/Fonts#WenQuanYi Micro Hei")));
-                application.Styles.Add(style);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         internal static double ToRadians(this double angle)
         {
             return Math.PI * angle / 180;
