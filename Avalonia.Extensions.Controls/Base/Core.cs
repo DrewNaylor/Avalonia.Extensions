@@ -1,5 +1,11 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Media;
 using Avalonia.Platform;
+using Avalonia.Styling;
+using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
 
@@ -17,8 +23,12 @@ namespace Avalonia.Extensions.Controls
                 return instance;
             }
         }
-        private Core() { }
-        public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", System.StringComparison.CurrentCultureIgnoreCase);
+        private Core()
+        {
+            FontDefault = new Font("Arial", 16);
+        }
+        public Font FontDefault { get; private set; }
+        public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
         private IAssetLoader assetLoader;
         public IAssetLoader AssetLoader
         {

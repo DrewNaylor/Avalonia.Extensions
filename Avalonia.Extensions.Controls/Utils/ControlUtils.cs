@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
                 var graphic = Graphics.FromHwnd(impl.Handle.Handle);
                 StringFormat sf = StringFormat.GenericTypographic;
                 sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                return graphic.MeasureString(content.Trim(), new Font("Arial", 16), PointF.Empty, sf);
+                return graphic.MeasureString(content.Trim(), Core.Instance.FontDefault, PointF.Empty, sf);
             }
             return default;
         }

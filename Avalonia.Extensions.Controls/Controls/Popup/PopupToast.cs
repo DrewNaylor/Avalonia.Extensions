@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class PopupToast : Window
+    public partial class PopupToast : Window
     {
         public PopupToast() : base()
         {
@@ -15,11 +15,10 @@ namespace Avalonia.Extensions.Controls
             CanResize = false;
             ShowInTaskbar = false;
             SystemDecorations = SystemDecorations.None;
-            Background = new SolidColorBrush(Color.Parse("#333"));
         }
         public void Popup(string content)
         {
-            PopupOptions options = new PopupOptions();
+            PopupOptions options = new PopupOptions { ForegroundColor = Colors.White };
             Popup(content, options);
         }
         public void Popup(string content, PopupOptions options = default)
@@ -34,7 +33,7 @@ namespace Avalonia.Extensions.Controls
             else
             {
                 var size = PlatformImpl.MeasureString(content, options.Width);
-                this.Width = options.Width;
+                this.Width = size.Width;
                 this.Height = size.Height;
                 if (PlatformImpl.MeasureString(content).Width > size.Width)
                     wrapping = TextWrapping.WrapWithOverflow;
@@ -47,6 +46,7 @@ namespace Avalonia.Extensions.Controls
                 VerticalAlignment = options.VerticalAlignment,
                 HorizontalAlignment = options.HorizontalAlignment
             };
+            this.Background = options.Background;
             SetLoaction();
             Show();
             Dispatcher.UIThread.InvokeAsync(async () =>

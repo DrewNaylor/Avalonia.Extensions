@@ -139,7 +139,7 @@ namespace Avalonia.Controls.Demo
         private void OnNotifyPopupClick(object sender, RoutedEventArgs e)
         {
             PopupToast window = new PopupToast();
-            window.Popup("大大大大大大大大大大大大大大大大大大", new PopupOptions { Width = 120 });
+            window.Popup("大大大大大大大大大大大大大大大大大大");
         }
         private void OnNotifyClick(object sender, RoutedEventArgs e)
         {

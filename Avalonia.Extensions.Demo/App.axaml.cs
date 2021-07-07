@@ -1,8 +1,6 @@
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Extensions.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.Styling;
-using Avalonia.Styling;
-using System;
 
 namespace Avalonia.Controls.Demo
 {
@@ -11,6 +9,8 @@ namespace Avalonia.Controls.Demo
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+
+            Current.SetChineseInputSupport();
         }
         public override void OnFrameworkInitializationCompleted()
         {

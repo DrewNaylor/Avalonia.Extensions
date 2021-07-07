@@ -14,6 +14,8 @@
 
 ## TODO LIST
 
+># CONTROLS
+
 - [x] ProgressRing
 > inherit from Canvas,Implement loading animation
 
@@ -72,3 +74,7 @@
 - [x] PopupToast
 > inherit from Window,show message dialog and automatically shut down after a certain period of time
 >> diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel
+
+># EXTEND
+- [x] Chinese Input Support
+> call SetChineseInputSupport in App.axaml.cs when Initialize,you can override it and call the method like `Current.SetChineseInputSupport()`

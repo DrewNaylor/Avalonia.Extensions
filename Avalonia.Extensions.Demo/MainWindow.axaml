@@ -144,5 +144,10 @@
                 <Button Name="btnShow2" Content="自定义" />
             </StackPanel>
         </TabItem>
+		<TabItem Header="Chinese Textbox">
+			<StackPanel Orientation="Vertical">
+				<TextBox Text="山川异域 不共戴天" />
+			</StackPanel>
+		</TabItem>
     </TabControl>
 </Window>
