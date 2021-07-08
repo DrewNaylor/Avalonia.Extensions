@@ -93,7 +93,7 @@ namespace Avalonia.Extensions.Controls
         }
         public SizeF ContentSize(string content)
         {
-            return PlatformImpl.MeasureString(content);
+            return PlatformImpl.MeasureString(content, Core.Instance.FontDefault);
         }
         public static Task<bool?> Show(string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)
         {

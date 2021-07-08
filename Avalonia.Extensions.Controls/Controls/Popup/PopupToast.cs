@@ -26,23 +26,23 @@ namespace Avalonia.Extensions.Controls
             TextWrapping wrapping = TextWrapping.NoWrap;
             if (double.IsNaN(options.Width))
             {
-                var size = PlatformImpl.MeasureString(content);
+                var size = PlatformImpl.MeasureString(content, Core.Instance.FontDefault);
                 this.Width = size.Width;
                 this.Height = size.Height;
             }
             else
             {
-                var size = PlatformImpl.MeasureString(content, options.Width);
+                var size = PlatformImpl.MeasureString(content, options.Width, Core.Instance.FontDefault);
                 this.Width = size.Width;
                 this.Height = size.Height;
-                if (PlatformImpl.MeasureString(content).Width > size.Width)
+                if (PlatformImpl.MeasureString(content, Core.Instance.FontDefault).Width > size.Width)
                     wrapping = TextWrapping.WrapWithOverflow;
             }
             this.Content = new TextBlock
             {
                 Text = content,
                 TextWrapping = wrapping,
-                Foreground= options.Foreground,
+                Foreground = options.Foreground,
                 VerticalAlignment = options.VerticalAlignment,
                 HorizontalAlignment = options.HorizontalAlignment
             };

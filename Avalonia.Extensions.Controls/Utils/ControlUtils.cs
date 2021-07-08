@@ -91,27 +91,25 @@ namespace Avalonia.Extensions.Controls
             double delta = value1 - value2;
             return (delta < Epsilon) && (delta > -Epsilon);
         }
-        public static SizeF MeasureString(this IWindowImpl impl, string content)
+        public static SizeF MeasureString(this IWindowImpl impl, string content, Font font, float maxWidth = 0)
         {
             if (impl != null)
             {
                 var graphic = Graphics.FromHwnd(impl.Handle.Handle);
                 StringFormat sf = StringFormat.GenericTypographic;
                 sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                return graphic.MeasureString(content.Trim(), Core.Instance.FontDefault, PointF.Empty, sf);
+                if (maxWidth != 0)
+                    return graphic.MeasureString(content.Trim(), font, new SizeF(maxWidth, 0), sf);
+                else
+                    return graphic.MeasureString(content.Trim(), font, PointF.Empty, sf);
             }
             return default;
         }
-        public static SizeF MeasureString(this IWindowImpl impl, string content, float maxWidth)
+        public static SizeF MeasureString(this string text, Font font, float maxwidth)
         {
-            if (impl != null)
-            {
-                var graphic = Graphics.FromHwnd(impl.Handle.Handle);
-                StringFormat sf = StringFormat.GenericTypographic;
-                sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                return graphic.MeasureString(content.Trim(), new Font("Arial", 16), new SizeF(maxWidth, 0), sf);
-            }
-            return default;
+            var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font,
+                Convert.ToInt32(maxwidth * 96f / 100f));
+            return new SizeF(p.Width * 100f / 96f, p.Height * 100f / 96f);
         }
         public static object InvokePrivateMethod(this Control control, string methodName, object[] parameters = null)
         {
