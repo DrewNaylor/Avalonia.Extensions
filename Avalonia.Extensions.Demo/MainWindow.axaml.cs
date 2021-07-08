@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Demo
 {
-    public class MainWindow : Window
+    public class MainWindow : AeroGlassWindow
     {
         private int Time { get; set; } = 0;
         private Button BtnStart { get; set; }

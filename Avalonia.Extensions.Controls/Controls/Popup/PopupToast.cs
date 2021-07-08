@@ -32,7 +32,7 @@ namespace Avalonia.Extensions.Controls
             }
             else
             {
-                var size = PlatformImpl.MeasureString(content, options.Width, Core.Instance.FontDefault);
+                var size = PlatformImpl.MeasureString(content, Core.Instance.FontDefault, options.Width);
                 this.Width = size.Width;
                 this.Height = size.Height;
                 if (PlatformImpl.MeasureString(content, Core.Instance.FontDefault).Width > size.Width)

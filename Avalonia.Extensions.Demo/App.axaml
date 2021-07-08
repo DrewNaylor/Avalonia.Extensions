@@ -2,7 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Avalonia.Controls.Demo.App">
     <Application.Styles>
-        <FluentTheme Mode="Light"/>
+        <FluentTheme Mode="Dark"/>
       <StyleInclude Source="avares://Avalonia.Extensions.Theme/DefaultTheme.xaml" />
+		<Style Selector="TemplatedControl">
+			<Setter Property="Foreground" Value="White" />
+		</Style>
     </Application.Styles>
 </Application>

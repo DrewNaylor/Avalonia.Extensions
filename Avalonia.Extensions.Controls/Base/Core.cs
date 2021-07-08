@@ -1,10 +1,6 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using Avalonia.Platform;
-using Avalonia.Styling;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
