@@ -1,4 +1,16 @@
 # Controls Extensions for Avalonia
+
+---
+## INPORTANT
+To enable extension the `UseDoveExtensions` method call should be present in your Program.cs file:
+```csharp
+public static AppBuilder BuildAvaloniaApp()
+    => AppBuilder.Configure<App>()
+        .UsePlatformDetect()
+        .UseDoveExtensions()
+        .LogToTrace();
+```
+
 ---
 ## ABOUT FOLDER 
 
