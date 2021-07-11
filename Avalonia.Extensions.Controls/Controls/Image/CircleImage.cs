@@ -17,6 +17,11 @@ namespace Avalonia.Extensions.Controls
         public static readonly StyledProperty<Uri> SourceProperty =
             AvaloniaProperty.Register<CircleImage, Uri>(nameof(Source));
         /// <summary>
+        /// Defines the <see cref="ImageSource"/> property.
+        /// </summary>
+        public static readonly StyledProperty<Bitmap?> ImageSourceProperty =
+            AvaloniaProperty.Register<CircleImage, Bitmap?>(nameof(ImageSource));
+        /// <summary>
         /// Defines the <see cref="Failed"/> property.
         /// </summary>
         public static readonly RoutedEvent<RoutedEventArgs> FailedEvent =
@@ -30,6 +35,16 @@ namespace Avalonia.Extensions.Controls
         {
             Task = new DownloadTask();
             SourceProperty.Changed.AddClassHandler<CircleImage>(OnSourceChange);
+            ImageSourceProperty.Changed.AddClassHandler<CircleImage>(OnImageSourceProperty);
+        }
+        private void OnImageSourceProperty(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is Bitmap bitmap)
+            {
+                this.Fill = new ImageBrush { Source = bitmap };
+                DrawAgain();
+                SetSize(bitmap.Size);
+            }
         }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -99,6 +114,15 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(SourceProperty);
             set => SetValue(SourceProperty, value);
+        }
+        /// <summary>
+        /// Gets or sets the source of the image.
+        /// </summary>
+        [Content]
+        public Bitmap? ImageSource
+        {
+            get => GetValue(ImageSourceProperty);
+            set => SetValue(ImageSourceProperty, value);
         }
         /// <summary>
         /// Raised when the image load failed.

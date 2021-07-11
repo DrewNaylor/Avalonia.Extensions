@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
+using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -19,6 +20,7 @@ namespace Avalonia.Extensions.Controls
                 return instance;
             }
         }
+        internal Assembly AppAssembly { get; set; }
         private Core()
         {
             FontDefault = new Font("Arial", 16);
@@ -31,7 +33,11 @@ namespace Avalonia.Extensions.Controls
             get
             {
                 if (assetLoader == null)
+                {
                     assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                    if (AppAssembly != null)
+                        assetLoader.SetDefaultAssembly(AppAssembly);
+                }
                 return assetLoader;
             }
         }

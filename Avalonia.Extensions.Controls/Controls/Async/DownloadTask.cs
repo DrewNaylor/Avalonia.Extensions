@@ -26,7 +26,7 @@ namespace Avalonia.Extensions.Controls
                     {
                         HttpResponseMessage hr = await HttpClient.GetAsync(url);
                         hr.EnsureSuccessStatusCode();
-                        var stream = await hr.Content.ReadAsStreamAsync();
+                        using var stream = await hr.Content.ReadAsStreamAsync();
                         callBack?.Invoke(new Result(stream));
                     }
                 }
