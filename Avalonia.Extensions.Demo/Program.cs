@@ -1,3 +1,5 @@
+using Avalonia.Extensions.Controls;
+
 namespace Avalonia.Controls.Demo
 {
     class Program
@@ -6,6 +8,7 @@ namespace Avalonia.Controls.Demo
         {
             AppBuilder.Configure<App>()
                     .UsePlatformDetect()
+                    .UseDoveExtensions()
                     .LogToTrace()
             .StartWithClassicDesktopLifetime(args);
         }

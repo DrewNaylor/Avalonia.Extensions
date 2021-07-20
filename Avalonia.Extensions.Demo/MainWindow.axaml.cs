@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Demo
 {
-    public class MainWindow : AeroGlassWindow
+    public class MainWindow : AeroWindow
     {
         private int Time { get; set; } = 0;
         private Button BtnStart { get; set; }
@@ -25,8 +25,7 @@ namespace Avalonia.Controls.Demo
         {
             Width = 800;
             Height = 600;
-            var model = new MainViewModel();
-            DataContext = model;
+            DataContext = new MainViewModel();
             PopupContent = this.FindControl<Grid>("PopupContent");
             var imgList = this.FindControl<ListBox>("imgList");
             var listView = this.FindControl<ListView>("listView");

@@ -9,7 +9,6 @@ namespace Avalonia.Controls.Demo
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
-
             Current.SetChineseInputSupport();
         }
         public override void OnFrameworkInitializationCompleted()

@@ -5,13 +5,13 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class AeroGlassWindow : Window, IStyleable
+    public class AeroWindow : Window, IStyleable
     {
         Type IStyleable.StyleKey => typeof(Window);
-        public AeroGlassWindow()
+        public AeroWindow()
         {
             ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaTitleBarHeightHint = -1;
+            ExtendClientAreaTitleBarHeightHint = 36;
             TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
             this.GetObservable(WindowStateProperty)
                 .Subscribe(x =>

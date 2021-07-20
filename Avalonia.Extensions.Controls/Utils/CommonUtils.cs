@@ -1,10 +1,20 @@
-﻿using System;
+﻿using Avalonia.Markup.Xaml.MarkupExtensions;
+using System;
 using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static ResourceInclude AsResource(this string uri)
+        {
+            try
+            {
+                return new ResourceInclude { Source = new Uri(uri) };
+            }
+            catch { }
+            return default;
+        }
         internal static double ToRadians(this double angle)
         {
             return Math.PI * angle / 180;

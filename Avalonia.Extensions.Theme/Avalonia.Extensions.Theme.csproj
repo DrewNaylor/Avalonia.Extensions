@@ -7,17 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
     <EmbeddedResource Include="*.xaml" />
+    <None Remove="AeroWindow.xaml" />
     <None Remove="ExpandableView.xaml" />
+    <None Remove="Themes\Dark.xaml" />
+    <None Remove="Themes\Light.xaml" />
     <AvaloniaResource Include="DefaultTheme.xaml" />
+    <AvaloniaResource Include="Themes\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Themes\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="AeroWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="ExpandableView.xaml">
       <Generator></Generator>
     </EmbeddedResource>
