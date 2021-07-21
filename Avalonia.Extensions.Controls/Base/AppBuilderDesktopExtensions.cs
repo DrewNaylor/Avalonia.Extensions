@@ -10,7 +10,7 @@ namespace Avalonia.Extensions.Controls
             Core.Instance.AppAssembly = builder.ApplicationType.Assembly;
             builder.AfterSetup((_) =>
             {
-                //ExtThemes.AddTheme();
+                ExtThemes.AddTheme();
             });
             return builder;
         }
