@@ -1,70 +1,11 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Avalonia.Extensions.Theme.DefaultTheme">
-	<StyleInclude Source="resm:Avalonia.Extensions.Theme.ListView.xaml?assembly=Avalonia.Extensions.Theme" />
-	<StyleInclude Source="resm:Avalonia.Extensions.Theme.ListViewItem.xaml?assembly=Avalonia.Extensions.Theme" />
-	<StyleInclude Source="resm:Avalonia.Extensions.Theme.AeroWindow.xaml?assembly=Avalonia.Extensions.Theme" />
+    <StyleInclude Source="resm:Avalonia.Extensions.Theme.ListView.xaml?assembly=Avalonia.Extensions.Theme" />
+    <StyleInclude Source="resm:Avalonia.Extensions.Theme.ListViewItem.xaml?assembly=Avalonia.Extensions.Theme" />
+    <StyleInclude Source="resm:Avalonia.Extensions.Theme.AeroWindow.xaml?assembly=Avalonia.Extensions.Theme" />
     <StyleInclude Source="resm:Avalonia.Extensions.Theme.SplitListView.xaml?assembly=Avalonia.Extensions.Theme" />
     <StyleInclude Source="resm:Avalonia.Extensions.Theme.ExpandableView.xaml?assembly=Avalonia.Extensions.Theme" />
-	<StyleInclude Source="resm:Avalonia.Extensions.Theme.VerticalItemsRepeater.xaml?assembly=Avalonia.Extensions.Theme" />
-	<StyleInclude Source="resm:Avalonia.Extensions.Theme.HorizontalItemsRepeater.xaml?assembly=Avalonia.Extensions.Theme" />	
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ToolTip.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.DataValidationErrors.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.FocusAdorner.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Button.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Carousel.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.CheckBox.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.CaptionButtons.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ComboBox.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ComboBoxItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ContentControl.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Label.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.GridSplitter.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ItemsControl.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ListBox.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ListBoxItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Menu.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ContextMenu.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.MenuItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.OverlayPopupHost.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.PathIcon.xaml?assembly=Avalonia.Extensions.Theme" />
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.PopupRoot.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ProgressBar.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.RadioButton.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.RepeatButton.xaml?assembly=Avalonia.Extensions.Theme" />
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Separator.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Slider.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ScrollBar.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ScrollViewer.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TabStrip.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TabStripItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TabControl.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TabItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TextBox.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ToggleButton.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Expander.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TitleBar.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TreeView.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TreeViewItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.UserControl.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Window.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.EmbeddableControlRoot.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.CalendarButton.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.CalendarDayButton.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.CalendarItem.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.Calendar.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.CalendarDatePicker.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ButtonSpinner.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.NumericUpDown.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.AutoCompleteBox.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.WindowNotificationManager.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.NotificationCard.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.NativeMenuBar.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ToggleSwitch.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.SplitView.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.DatePicker.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.TimePicker.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.FlyoutPresenter.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.MenuFlyoutPresenter.xaml?assembly=Avalonia.Extensions.Theme"/>
-  <StyleInclude Source="resm:Avalonia.Extensions.Theme.ManagedFileChooser.xaml?assembly=Avalonia.Extensions.Theme"/>
+    <StyleInclude Source="resm:Avalonia.Extensions.Theme.VerticalItemsRepeater.xaml?assembly=Avalonia.Extensions.Theme" />
+    <StyleInclude Source="resm:Avalonia.Extensions.Theme.HorizontalItemsRepeater.xaml?assembly=Avalonia.Extensions.Theme" />
 </Styles>
