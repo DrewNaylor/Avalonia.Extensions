@@ -241,7 +241,7 @@ namespace Avalonia.Extensions.Controls
                     var listItem = (control as Control)?.Parent;
                     var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, listItem);
                     RaiseEvent(@event);
-                    if (control is SplitListViewItem viewCell)
+                    if (control is GridViewItem viewCell)
                     {
                         this.SelectedItem = viewCell;
                         if (!@event.Handled && Command?.CanExecute(viewCell.CommandParameter) == true)

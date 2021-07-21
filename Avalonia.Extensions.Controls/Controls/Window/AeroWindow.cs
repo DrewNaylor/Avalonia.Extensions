@@ -11,7 +11,7 @@ namespace Avalonia.Extensions.Controls
         public AeroWindow()
         {
             ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaTitleBarHeightHint = 36;
+            ExtendClientAreaTitleBarHeightHint = -1;
             TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
             this.GetObservable(WindowStateProperty)
                 .Subscribe(x =>

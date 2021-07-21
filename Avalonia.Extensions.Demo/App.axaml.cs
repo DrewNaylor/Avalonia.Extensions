@@ -15,6 +15,7 @@ namespace Avalonia.Controls.Demo
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 desktop.MainWindow = new MainWindow();
+
             base.OnFrameworkInitializationCompleted();
         }
     }

@@ -5,16 +5,16 @@ using Avalonia.Layout;
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
-    /// the control:<see cref="SplitListView"/> used.
+    /// the control:<see cref="GridView"/> used.
     /// it just a uwp like "GridViewItem"
     /// </summary>
-    public sealed class SplitListViewItem : ClickableView
+    public sealed class GridViewItem : ClickableView
     {
         /// <summary>
         /// Defines the <see cref="HorizontalContentAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty =
-            AvaloniaProperty.Register<SplitListViewItem, HorizontalAlignment>(nameof(HorizontalContentAlignment));
+            AvaloniaProperty.Register<GridViewItem, HorizontalAlignment>(nameof(HorizontalContentAlignment));
         /// <summary>
         /// Gets or sets the horizontal alignment of the content within the control.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="VerticalContentAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty =
-            AvaloniaProperty.Register<SplitListViewItem, VerticalAlignment>(nameof(VerticalContentAlignment));
+            AvaloniaProperty.Register<GridViewItem, VerticalAlignment>(nameof(VerticalContentAlignment));
         /// <summary>
         /// Gets or sets the vertical alignment of the content within the control.
         /// </summary>
@@ -36,13 +36,13 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(VerticalContentAlignmentProperty);
             set => SetValue(VerticalContentAlignmentProperty, value);
         }
-        public SplitListViewItem() : base()
+        public GridViewItem() : base()
         {
-            ParentProperty.Changed.AddClassHandler<SplitListViewItem>(OnParentChanged);
-            VerticalAlignmentProperty.Changed.AddClassHandler<SplitListViewItem>(OnVerticalAlignmentChange);
-            HorizontalAlignmentProperty.Changed.AddClassHandler<SplitListViewItem>(OnHorizontalAlignmentChange);
-            VerticalContentAlignmentProperty.Changed.AddClassHandler<SplitListViewItem>(OnVerticalContentAlignmentChange);
-            HorizontalContentAlignmentProperty.Changed.AddClassHandler<SplitListViewItem>(OnHorizontalContentAlignmentChange);
+            ParentProperty.Changed.AddClassHandler<GridViewItem>(OnParentChanged);
+            VerticalAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnVerticalAlignmentChange);
+            HorizontalAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnHorizontalAlignmentChange);
+            VerticalContentAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnVerticalContentAlignmentChange);
+            HorizontalContentAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnHorizontalContentAlignmentChange);
         }
         private void OnHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -76,7 +76,7 @@ namespace Avalonia.Extensions.Controls
         }
         protected override void OnClick(MouseButton mouseButton)
         {
-            if (Parent.Parent is SplitListView itemView)
+            if (Parent.Parent is GridView itemView)
                 itemView.OnContentClick(this, mouseButton);
             base.OnClick(mouseButton);
         }
