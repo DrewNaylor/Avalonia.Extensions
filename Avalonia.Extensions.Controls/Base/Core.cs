@@ -1,6 +1,5 @@
 ﻿using Avalonia.Media;
 using Avalonia.Platform;
-using Avalonia.Themes.Fluent;
 using System;
 using System.Drawing;
 using System.Globalization;

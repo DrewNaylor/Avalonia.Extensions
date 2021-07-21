@@ -1,11 +1,11 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="Avalonia.Extensions.Theme.DefaultTheme">
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.ListView.xaml?assembly=Avalonia.Extensions.Theme" />
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.ListViewItem.xaml?assembly=Avalonia.Extensions.Theme" />
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.AeroWindow.xaml?assembly=Avalonia.Extensions.Theme" />
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.SplitListView.xaml?assembly=Avalonia.Extensions.Theme" />
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.ExpandableView.xaml?assembly=Avalonia.Extensions.Theme" />
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.VerticalItemsRepeater.xaml?assembly=Avalonia.Extensions.Theme" />
-    <StyleInclude Source="resm:Avalonia.Extensions.Theme.HorizontalItemsRepeater.xaml?assembly=Avalonia.Extensions.Theme" />
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <StyleInclude Source="avares://Avalonia.Extensions.Theme/ListView.xaml" />
+    <StyleInclude Source="avares://Avalonia.Extensions.Theme/AeroWindow.xaml" />
+    <StyleInclude Source="avares://Avalonia.Extensions.Theme/SplitListView.xaml" />
+    <StyleInclude Source="avares://Avalonia.Extensions.Theme/ExpandableView.xaml" />
+    <StyleInclude Source="avares://Avalonia.Extensions.Theme/VerticalItemsRepeater.xaml" />
+    <StyleInclude Source="avares://Avalonia.Extensions.Theme/HorizontalItemsRepeater.xaml" />
 </Styles>

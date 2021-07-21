@@ -2,11 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Avalonia.Controls.Demo.App">
   <Application.Styles>
-    <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/BaseLight.xaml" />
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/Base.xaml" />
-    <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentBaseLight.xaml" />
-    <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentControlResourcesLight.xaml" />
+    <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/BaseLight.xaml" />
+    <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/AccentColors.xaml" />
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/Controls/FluentControls.xaml" />
+    <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentControlResourcesLight.xaml" />
 
     <StyleInclude Source="avares://Avalonia.Extensions.Theme/DefaultTheme.xaml" />
   </Application.Styles>

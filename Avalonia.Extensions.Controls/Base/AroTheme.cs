@@ -4,7 +4,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class ExtThemes
+    public sealed class AroTheme
     {
         internal static FluentThemeMode? theme;
         private const string DARK_URL = "avares://Avalonia.Extensions.Theme/Themes/Dark.xaml";
@@ -17,7 +17,7 @@ namespace Avalonia.Extensions.Controls
             else
                 SwitchLight();
             Application.Current.Styles.Add(STYLES_URL.AsStyle());
-            ExtThemes.theme = theme;
+            AroTheme.theme = theme;
         }
         public static void SwitchDark()
         {
