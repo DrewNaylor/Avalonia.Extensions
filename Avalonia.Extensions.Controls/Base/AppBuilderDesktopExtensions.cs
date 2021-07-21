@@ -10,11 +10,7 @@ namespace Avalonia.Extensions.Controls
             Core.Instance.AppAssembly = builder.ApplicationType.Assembly;
             builder.AfterSetup((_) =>
             {
-                for (var idx = 0; idx < Application.Current.Styles.Count; idx++)
-                {
-                    if (Application.Current.Styles.ElementAt(idx) is FluentTheme fluentTheme)
-                        Themes.AddTheme(fluentTheme.Mode);
-                }
+                //ExtThemes.AddTheme();
             });
             return builder;
         }

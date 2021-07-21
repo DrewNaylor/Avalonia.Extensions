@@ -1,4 +1,5 @@
 ﻿using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Markup.Xaml.Styling;
 using System;
 using System.Linq;
 
@@ -11,6 +12,18 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 return new ResourceInclude { Source = new Uri(uri) };
+            }
+            catch { }
+            return default;
+        }
+        public static StyleInclude AsStyle(this string uri)
+        {
+            try
+            {
+                return new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls"))
+                {
+                    Source = new Uri(uri)
+                };
             }
             catch { }
             return default;

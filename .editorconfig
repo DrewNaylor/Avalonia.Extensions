@@ -5,3 +5,9 @@ dotnet_diagnostic.CS8618.severity = none
 
 # CS8632: 只能在 "#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释。
 dotnet_diagnostic.CS8632.severity = none
+
+# IDE0011: 添加大括号
+dotnet_diagnostic.IDE0011.severity = none
+
+# IDE0008: 使用显式类型
+dotnet_diagnostic.IDE0008.severity = none

@@ -12,15 +12,6 @@
         <DocumentationFile></DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <AvaloniaXaml Remove="Controls\Notify\NotifyWindow.axaml" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Remove="Controls\Notify\NotifyWindow.axaml.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Remove="DefaultTheme.xaml" />
-    </ItemGroup>
-    <ItemGroup>
         <None Include="..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
@@ -28,7 +19,7 @@
         <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
         <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+        <PackageReference Include="System.Reactive" Version="5.0.0" />
     </ItemGroup>
 </Project>

@@ -3,30 +3,27 @@ using System.Linq;
 
 namespace Avalonia.Controls.Demo
 {
-    static class Units
+    internal static class Units
     {
         internal static int ToInt32(this object obj)
         {
             try
             {
-                if (obj is int result)
-                    return result;
-                else if (obj is double d && double.IsNaN(d))
-                    return 0;
-                else
-                {
-                    if (int.TryParse(obj.ToString(), out result))
-                        return result;
-                    else
-                        return Convert.ToInt32(obj.ToString());
-                }
+                return obj is int result ? result
+                    : obj is double d && double.IsNaN(d) ? 0 :
+                    int.TryParse(obj.ToString(), out result) ? result : Convert.ToInt32(obj.ToString());
             }
             catch
             {
                 try
                 {
-                    var num = obj.ToString().Split('.').FirstOrDefault();
-                    return string.IsNullOrEmpty(num) ? 0 : int.Parse(num);
+                    if (obj == null)
+                        return default;
+                    else
+                    {
+                        var num = obj.ToString()?.Split('.').FirstOrDefault();
+                        return string.IsNullOrEmpty(num) ? 0 : int.Parse(num);
+                    }
                 }
                 catch
                 {

@@ -1,41 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Authors>michael_eddy</Authors>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="*.xaml" />
-    <None Remove="AeroWindow.xaml" />
-    <None Remove="ExpandableView.xaml" />
-    <None Remove="Themes\Dark.xaml" />
-    <None Remove="Themes\Light.xaml" />
-    <AvaloniaResource Include="DefaultTheme.xaml" />
-    <AvaloniaResource Include="Themes\Dark.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </AvaloniaResource>
-    <AvaloniaResource Include="Themes\Light.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </AvaloniaResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.6" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="AeroWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="ExpandableView.xaml">
-      <Generator></Generator>
-    </EmbeddedResource>
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Authors>michael_eddy</Authors>
+    </PropertyGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="**/*.xaml" />
+        <AvaloniaResource Include="Themes/*.xaml" />
+        <AvaloniaResource Include="DefaultTheme.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.6" />
+        <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
+        <PackageReference Include="System.Reactive" Version="5.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+    </ItemGroup>
 </Project>

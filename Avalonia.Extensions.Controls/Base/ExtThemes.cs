@@ -4,16 +4,20 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class Themes
+    public sealed class ExtThemes
     {
-        internal static FluentThemeMode theme;
+        internal static FluentThemeMode? theme;
         private const string DARK_URL = "avares://Avalonia.Extensions.Theme/Themes/Dark.xaml";
         private const string LIGHT_URL = "avares://Avalonia.Extensions.Theme/Themes/Light.xaml";
-        public static void AddTheme(FluentThemeMode theme)
+        private const string STYLES_URL = "avares://Avalonia.Extensions.Theme/DefaultTheme.xaml";
+        public static void AddTheme(FluentThemeMode theme = FluentThemeMode.Dark)
         {
-            Themes.theme = theme;
-            var xaml = theme == FluentThemeMode.Dark ? DARK_URL : LIGHT_URL;
-            Application.Current.Resources.MergedDictionaries.Add(xaml.AsResource());
+            if (theme == FluentThemeMode.Dark)
+                SwitchDark();
+            else
+                SwitchLight();
+            Application.Current.Styles.Add(STYLES_URL.AsStyle());
+            ExtThemes.theme = theme;
         }
         public static void SwitchDark()
         {
