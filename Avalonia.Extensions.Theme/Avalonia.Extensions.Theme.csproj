@@ -5,14 +5,13 @@
         <Authors>michael_eddy</Authors>
     </PropertyGroup>
     <ItemGroup>
-        <EmbeddedResource Include="**/*.xaml" />
-        <AvaloniaResource Include="Themes/*.xaml" />
-        <AvaloniaResource Include="DefaultTheme.xaml" />
+        <AvaloniaResource Include="**\*.xaml">
+            <SubType>Designer</SubType>
+        </AvaloniaResource>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />
-        <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
-        <PackageReference Include="System.Reactive" Version="5.0.0" />
+        <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.6.10" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
