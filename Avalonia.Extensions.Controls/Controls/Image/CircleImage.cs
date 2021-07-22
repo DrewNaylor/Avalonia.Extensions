@@ -90,16 +90,12 @@ namespace Avalonia.Extensions.Controls
         }
         private void SetSize(Size size)
         {
-            if (double.IsNaN(Width) || double.IsNaN(Height))
-            {
-                var round = Math.Min(size.Width, size.Height);
-                Height = Width = round;
-            }
-            else
-            {
-                var maxValue = Math.Max(Width, Height);
-                Height = Width = maxValue;
-            }
+            if (double.IsNaN(Width) && double.IsNaN(Height))
+                Height = Width = Math.Min(size.Width, size.Height);
+            else if (double.IsNaN(Width) && Height > 0)
+                Width = Height;
+            else if (double.IsNaN(Height) && Width > 0)
+                Height = Width;
         }
         public void DrawAgain()
         {

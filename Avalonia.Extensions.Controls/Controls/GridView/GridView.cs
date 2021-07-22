@@ -13,7 +13,7 @@ namespace Avalonia.Extensions.Controls
     /// you need to set "ColumnNum" for columns count
     /// https://stackoverflow.com/questions/23084576/wpf-combobox-multiple-columns
     /// </summary>
-    public class SplitListView : ListView
+    public class GridView : ListView
     {
         /// <summary>
         /// The width of each cell.
@@ -23,7 +23,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ColumnNum"/> property.
         /// </summary>
         public static readonly StyledProperty<int> ColumnNumProperty =
-          AvaloniaProperty.Register<SplitListView, int>(nameof(ColumnNum), 1);
+          AvaloniaProperty.Register<GridView, int>(nameof(ColumnNum), 1);
         /// <summary>
         /// get or set column number.
         /// default value is 1.if the value smaller than 1 it's means depend layout by item controls
@@ -44,7 +44,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ChildHorizontalContentAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<HorizontalAlignment> ChildHorizontalContentAlignmentProperty =
-            AvaloniaProperty.Register<SplitListView, HorizontalAlignment>(nameof(ChildHorizontalContentAlignment));
+            AvaloniaProperty.Register<GridView, HorizontalAlignment>(nameof(ChildHorizontalContentAlignment));
         /// <summary>
         /// Gets or sets the horizontal alignment of the content within the control.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ChildVerticalContentAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<VerticalAlignment> ChildVerticalContentAlignmentProperty =
-            AvaloniaProperty.Register<SplitListView, VerticalAlignment>(nameof(ChildVerticalContentAlignment));
+            AvaloniaProperty.Register<GridView, VerticalAlignment>(nameof(ChildVerticalContentAlignment));
         /// <summary>
         /// Gets or sets the vertical alignment of the content within the control.
         /// </summary>
@@ -70,7 +70,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="HorizontalAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<HorizontalAlignment> ChildHorizontalAlignmentProperty =
-            AvaloniaProperty.Register<SplitListView, HorizontalAlignment>(nameof(ChildHorizontalAlignment));
+            AvaloniaProperty.Register<GridView, HorizontalAlignment>(nameof(ChildHorizontalAlignment));
         /// <summary>
         /// Gets or sets the element's preferred horizontal alignment in its parent.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="VerticalAlignment"/> property.
         /// </summary>
         public static readonly StyledProperty<VerticalAlignment> ChildVerticalAlignmentProperty =
-            AvaloniaProperty.Register<SplitListView, VerticalAlignment>(nameof(ChildVerticalAlignment));
+            AvaloniaProperty.Register<GridView, VerticalAlignment>(nameof(ChildVerticalAlignment));
         /// <summary>
         /// Gets or sets the element's preferred vertical alignment in its parent.
         /// </summary>
@@ -95,18 +95,18 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// create a instance
         /// </summary>
-        public SplitListView()
+        public GridView()
         {
             ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(Core.WRAP_TEMPLATE);
             SetValue(ItemsPanelProperty, target);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
-            BoundsProperty.Changed.AddClassHandler<SplitListView>(OnBoundsChange);
-            ChildVerticalAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildVerticalAlignmentChange);
-            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildHorizontalAlignmentChange);
-            ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildVerticalContentAlignmentChange);
-            ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<SplitListView>(OnChildHorizontalContentAlignmentChange);
+            BoundsProperty.Changed.AddClassHandler<GridView>(OnBoundsChange);
+            ChildVerticalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalAlignmentChange);
+            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalAlignmentChange);
+            ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
+            ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
