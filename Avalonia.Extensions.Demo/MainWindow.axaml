@@ -27,15 +27,15 @@
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-        <ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <GridViewItem HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding content}">
-                <TextBlock Text="{Binding content}" />
-              </GridViewItem>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
+		  <ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
+			  <ListView.ItemTemplate>
+				  <DataTemplate>
+					  <GridViewItem HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding content}">
+						  <TextBlock Text="{Binding content}" />
+					  </GridViewItem>
+				  </DataTemplate>
+			  </ListView.ItemTemplate>
+		  </ListView>
       </Grid>
     </TabItem>
     <TabItem Header="SplitListView">
