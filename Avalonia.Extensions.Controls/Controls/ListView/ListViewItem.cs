@@ -18,12 +18,13 @@ namespace Avalonia.Extensions.Controls
     {
         private ICommand _command;
         private bool _commandCanExecute = true;
-        public Type StyleKey => typeof(ListViewItem);
+        public Type StyleKey => typeof(ListBoxItem);
         public ListViewItem()
         {
             IsCancelProperty.Changed.Subscribe(IsCancelChanged);
             IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
             CommandProperty.Changed.Subscribe(CommandChanged);
+            Resources.Add("ListViewItem", "avares://Avalonia.Extensions.Theme/ListView.xaml".AsResource());
         }
         private void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
         {

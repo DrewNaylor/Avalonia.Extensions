@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Generators;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
@@ -89,6 +90,13 @@ namespace Avalonia.Extensions.Controls
             ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);            
             SelectionModeProperty.OverrideMetadata<ListView>(new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
+        public ListView()
+        {
+            SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
+            ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
+            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
+            Resources.Add("ListView", "avares://Avalonia.Extensions.Theme/ListView.xaml".AsResource());
+        }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is ScrollViewer scrollViewer)
@@ -127,12 +135,6 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.Source is ScrollViewer scrollViewer)
                 ScrollEventHandle(scrollViewer);
-        }
-        public ListView()
-        {
-            SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
-            ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
-            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
         }
         private void Item_PointerPressed(object sender, PointerPressedEventArgs e)
         {
@@ -225,6 +227,13 @@ namespace Avalonia.Extensions.Controls
                 Defaultstyle = null;
         }
         public ViewBase PreviousView { get; private set; }
+        protected override IItemContainerGenerator CreateItemContainerGenerator()
+        {
+            return new ItemsGenerator(
+                this,
+                ListViewItem.ContentProperty,
+                ListViewItem.ContentTemplateProperty);
+        }
         /// <summary>
         /// handle clild item click event,
         /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>
@@ -241,7 +250,7 @@ namespace Avalonia.Extensions.Controls
                     var listItem = (control as Control)?.Parent;
                     var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, listItem);
                     RaiseEvent(@event);
-                    if (control is GridViewItem viewCell)
+                    if (control is ListViewItem viewCell)
                     {
                         this.SelectedItem = viewCell;
                         if (!@event.Handled && Command?.CanExecute(viewCell.CommandParameter) == true)
