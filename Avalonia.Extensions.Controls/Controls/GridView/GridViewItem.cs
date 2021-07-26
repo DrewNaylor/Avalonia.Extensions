@@ -8,34 +8,8 @@ namespace Avalonia.Extensions.Controls
     /// the control:<see cref="GridView"/> used.
     /// it just a uwp like "GridViewItem"
     /// </summary>
-    public sealed class GridViewItem : ClickableView
+    public sealed class GridViewItem : ListViewItem
     {
-        /// <summary>
-        /// Defines the <see cref="HorizontalContentAlignment"/> property.
-        /// </summary>
-        public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty =
-            AvaloniaProperty.Register<GridViewItem, HorizontalAlignment>(nameof(HorizontalContentAlignment));
-        /// <summary>
-        /// Gets or sets the horizontal alignment of the content within the control.
-        /// </summary>
-        public HorizontalAlignment HorizontalContentAlignment
-        {
-            get => GetValue(HorizontalContentAlignmentProperty);
-            set => SetValue(HorizontalContentAlignmentProperty, value);
-        }
-        /// <summary>
-        /// Defines the <see cref="VerticalContentAlignment"/> property.
-        /// </summary>
-        public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty =
-            AvaloniaProperty.Register<GridViewItem, VerticalAlignment>(nameof(VerticalContentAlignment));
-        /// <summary>
-        /// Gets or sets the vertical alignment of the content within the control.
-        /// </summary>
-        public VerticalAlignment VerticalContentAlignment
-        {
-            get => GetValue(VerticalContentAlignmentProperty);
-            set => SetValue(VerticalContentAlignmentProperty, value);
-        }
         public GridViewItem() : base()
         {
             ParentProperty.Changed.AddClassHandler<GridViewItem>(OnParentChanged);
@@ -58,10 +32,10 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.NewValue is ListBoxItem item)
             {
-                item.VerticalAlignment = this.VerticalAlignment;
-                item.HorizontalAlignment = this.HorizontalAlignment;
-                item.VerticalContentAlignment = this.VerticalContentAlignment;
-                item.HorizontalContentAlignment = this.HorizontalContentAlignment;
+                item.VerticalAlignment = VerticalAlignment;
+                item.HorizontalAlignment = HorizontalAlignment;
+                item.VerticalContentAlignment = VerticalContentAlignment;
+                item.HorizontalContentAlignment = HorizontalContentAlignment;
             }
         }
         private void OnVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
