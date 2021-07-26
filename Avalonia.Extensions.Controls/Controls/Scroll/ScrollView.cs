@@ -4,10 +4,21 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ScrollView : ScrollViewer
+    public partial class ScrollView : ScrollViewer
     {
         private double lastSize = -1;
-        public ScrollView() : base() { }
+        public ScrollView() : base()
+        {
+            LayoutUpdated += (_, _) =>
+            {
+                this.InvokePrivateMethod("RaiseScrollChanged");
+            };
+            ContentProperty.Changed.AddClassHandler<ScrollView>(OnContentChange);
+        }
+        private void OnContentChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+
+        }
         /// <summary>
         /// Defines the <see cref="ScrollTop"/> event.
         /// </summary>
