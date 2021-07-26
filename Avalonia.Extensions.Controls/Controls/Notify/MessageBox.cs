@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
                 Grid.SetColumn(cancel, 1);
                 Grid.SetRow(cancel, 1);
             }
-            this.Content = root;
+            Content = root;
         }
         public void SetSize(Size size)
         {

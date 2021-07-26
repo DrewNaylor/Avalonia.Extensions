@@ -140,6 +140,14 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
+        public static void InitStyle(this IStyling styling)
+        {
+            try
+            {
+                styling.AddResource();
+            }
+            catch { }
+        }
         internal static Window GetWindow(this IControl control)
         {
             Window window = null;

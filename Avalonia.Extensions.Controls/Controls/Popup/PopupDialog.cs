@@ -20,7 +20,7 @@ namespace Avalonia.Extensions.Controls
         public PopupDialog(Panel panel, int timeout) : base()
         {
             Contract.Requires<ArgumentNullException>(panel != null);
-            this.Panel = panel;
+            Panel = panel;
             Timeout = timeout;
             Panel.Children.Add(this);
         }
@@ -31,7 +31,7 @@ namespace Avalonia.Extensions.Controls
         public PopupDialog(Panel panel, PopupLength length = PopupLength.Default) : base()
         {
             Contract.Requires<ArgumentNullException>(panel != null);
-            this.Panel = panel;
+            Panel = panel;
             Timeout = (int)length;
             Panel.Children.Add(this);
         }

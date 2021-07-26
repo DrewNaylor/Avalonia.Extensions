@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Generators;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
@@ -14,7 +15,7 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// fork from https://github.com/jhofinger/Avalonia/tree/listview
     /// </summary>
-    public class ListView : ListBox, IStyleable
+    public class ListView : ListBox, IStyling
     {
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
@@ -82,12 +83,18 @@ namespace Avalonia.Extensions.Controls
             remove { RemoveHandler(ScrollEndEvent, value); }
         }
         private ICommand _command;
-        private MouseButton _mouseButton;
-        public MouseButton MouseClickButton => _mouseButton;
+        public MouseButton MouseClickButton { get; private set; }
         static ListView()
         {
-            ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);            
+            ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);
             SelectionModeProperty.OverrideMetadata<ListView>(new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
+        }
+        public ListView()
+        {
+            SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
+            ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
+            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
+            this.InitStyle();
         }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -127,12 +134,6 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.Source is ScrollViewer scrollViewer)
                 ScrollEventHandle(scrollViewer);
-        }
-        public ListView()
-        {
-            SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
-            ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
-            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
         }
         private void Item_PointerPressed(object sender, PointerPressedEventArgs e)
         {
@@ -219,12 +220,16 @@ namespace Avalonia.Extensions.Controls
         private void ApplyNewView()
         {
             ViewBase newView = View;
-            if (newView != null)
-                Defaultstyle = newView.DefaultStyleKey;
-            else
-                Defaultstyle = null;
+            Defaultstyle = newView?.DefaultStyleKey;
         }
         public ViewBase PreviousView { get; private set; }
+        protected override IItemContainerGenerator CreateItemContainerGenerator()
+        {
+            return new ItemsGenerator(
+                this,
+                ContentControl.ContentProperty,
+                ContentControl.ContentTemplateProperty);
+        }
         /// <summary>
         /// handle clild item click event,
         /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>
@@ -233,17 +238,17 @@ namespace Avalonia.Extensions.Controls
         /// <param name="viewCell"></param>
         internal virtual void OnContentClick(object control, MouseButton mouseButton)
         {
-            if (Clickable == true && control != null)
+            if (Clickable && control != null)
             {
-                _mouseButton = mouseButton;
+                MouseClickButton = mouseButton;
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var listItem = (control as Control)?.Parent;
                     var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, listItem);
                     RaiseEvent(@event);
-                    if (control is GridViewItem viewCell)
+                    if (control is ListViewItem viewCell)
                     {
-                        this.SelectedItem = viewCell;
+                        SelectedItem = viewCell;
                         if (!@event.Handled && Command?.CanExecute(viewCell.CommandParameter) == true)
                         {
                             Command.Execute(viewCell.CommandParameter);

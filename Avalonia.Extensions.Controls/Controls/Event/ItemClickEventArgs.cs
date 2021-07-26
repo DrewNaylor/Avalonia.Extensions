@@ -8,12 +8,12 @@ namespace Avalonia.Extensions.Controls
         public int ItemIndex { get; }
         public ItemClickEventArgs(object item)
         {
-            this.Item = item;
+            Item = item;
         }
         public ItemClickEventArgs(object item, int index)
         {
-            this.Item = item;
-            this.ItemIndex = index;
+            Item = item;
+            ItemIndex = index;
         }
     }
 }

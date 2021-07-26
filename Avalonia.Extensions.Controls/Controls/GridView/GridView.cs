@@ -11,9 +11,9 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// the uwp like "GridView", it just define itempanel with wrappanel
     /// you need to set "ColumnNum" for columns count
-    /// https://stackoverflow.com/questions/23084576/wpf-combobox-multiple-columns
+    /// https://social.technet.microsoft.com/wiki/contents/articles/19395.multiple-columns-in-wpf-listbox.aspx
     /// </summary>
-    public class GridView : ListView
+    public class GridView : ListView, IStyling
     {
         /// <summary>
         /// The width of each cell.
@@ -33,10 +33,7 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ColumnNumProperty);
             set
             {
-                if (value > 0)
-                    CellWidth = Bounds.Width / value;
-                else
-                    CellWidth = double.NaN;
+                CellWidth = value > 0 ? Bounds.Width / value : double.NaN;
                 SetValue(ColumnNumProperty, value);
             }
         }
@@ -107,13 +104,14 @@ namespace Avalonia.Extensions.Controls
             ChildHorizontalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalAlignmentChange);
             ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
+            this.InitStyle();
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             for (var index = 0; index < LogicalChildren.Count; index++)
             {
                 if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.VerticalAlignment = this.ChildVerticalAlignment;
+                    listBoxItem.VerticalAlignment = ChildVerticalAlignment;
             }
         }
         private void OnChildHorizontalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
@@ -121,7 +119,7 @@ namespace Avalonia.Extensions.Controls
             for (var index = 0; index < LogicalChildren.Count; index++)
             {
                 if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.HorizontalAlignment = this.ChildHorizontalAlignment;
+                    listBoxItem.HorizontalAlignment = ChildHorizontalAlignment;
             }
         }
         private void OnChildVerticalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
@@ -129,7 +127,7 @@ namespace Avalonia.Extensions.Controls
             for (var index = 0; index < LogicalChildren.Count; index++)
             {
                 if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.VerticalContentAlignment = this.ChildVerticalContentAlignment;
+                    listBoxItem.VerticalContentAlignment = ChildVerticalContentAlignment;
             }
         }
         private void OnChildHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
@@ -137,7 +135,7 @@ namespace Avalonia.Extensions.Controls
             for (var index = 0; index < LogicalChildren.Count; index++)
             {
                 if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.HorizontalContentAlignment = this.ChildHorizontalContentAlignment;
+                    listBoxItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
             }
         }
         private void OnBoundsChange(object sender, AvaloniaPropertyChangedEventArgs e)
@@ -167,8 +165,8 @@ namespace Avalonia.Extensions.Controls
                 var item = e.NewItems.ElementAt(0);
                 if (item is ListBoxItem listItem)
                 {
-                    listItem.HorizontalAlignment = this.ChildHorizontalAlignment;
-                    listItem.HorizontalContentAlignment = this.ChildHorizontalContentAlignment;
+                    listItem.HorizontalAlignment = ChildHorizontalAlignment;
+                    listItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
                 }
                 SetItemWidth(item);
             }

@@ -12,7 +12,7 @@ namespace Avalonia.Extensions.Controls
     /// the itemsrepeater layout <seealso cref="this.Orientation"/> as
     /// <seealso cref="Orientation.Vertical"/>
     /// </summary>
-    public class VerticalItemsRepeater : ItemsRepeater
+    public class VerticalItemsRepeater : ItemsRepeater, IStyling
     {
         private ICommand _command;
         /// <summary>
@@ -21,6 +21,7 @@ namespace Avalonia.Extensions.Controls
         public VerticalItemsRepeater()
         {
             DrawLayout();
+            this.InitStyle();
         }
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
@@ -46,7 +47,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="Command"/> property.
         /// </summary>
         public static readonly DirectProperty<VerticalItemsRepeater, ICommand> CommandProperty =
-             AvaloniaProperty.RegisterDirect<VerticalItemsRepeater, ICommand>(nameof(Command), content => content.Command, 
+             AvaloniaProperty.RegisterDirect<VerticalItemsRepeater, ICommand>(nameof(Command), content => content.Command,
                  (content, command) => content.Command = command, enableDataValidation: true);
         /// <summary>
         /// Raised when the user clicks the child item.
@@ -100,12 +101,12 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         internal void OnContentClick(ItemsRepeaterContent itemsRepeaterContent, MouseButton mouseButton)
         {
-            if (Clickable == true)
+            if (Clickable)
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
-                    this.SelectedItem = itemsRepeaterContent;
+                    SelectedItem = itemsRepeaterContent;
                     RaiseEvent(@event);
                     if (!@event.Handled && Command?.CanExecute(itemsRepeaterContent.CommandParameter) == true)
                     {

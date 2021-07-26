@@ -3,7 +3,6 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
-using Avalonia.Styling;
 using Avalonia.VisualTree;
 using System;
 using System.Linq;
@@ -14,16 +13,17 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// fork from https://github.com/jhofinger/Avalonia/tree/listview
     /// </summary>
-    public class ListViewItem : ListBoxItem, ICommandSource, IStyleable
+    public class ListViewItem : ListBoxItem, ICommandSource, IStyling
     {
         private ICommand _command;
         private bool _commandCanExecute = true;
-        public Type StyleKey => typeof(ListViewItem);
+        public Type StyleKey => typeof(ListBoxItem);
         public ListViewItem()
         {
             IsCancelProperty.Changed.Subscribe(IsCancelChanged);
             IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
             CommandProperty.Changed.Subscribe(CommandChanged);
+            this.InitStyle();
         }
         private void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
         {
