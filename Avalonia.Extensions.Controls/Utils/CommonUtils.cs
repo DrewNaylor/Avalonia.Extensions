@@ -7,11 +7,16 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
-        public static ResourceInclude AsResource(this string uri)
+        public static ResourceInclude AsResource(this string url)
+        {
+            var uri = new Uri(url);
+            return uri.AsResource();
+        }
+        public static ResourceInclude AsResource(this Uri uri)
         {
             try
             {
-                return new ResourceInclude { Source = new Uri(uri) };
+                return new ResourceInclude { Source = uri };
             }
             catch { }
             return default;
@@ -76,7 +81,7 @@ namespace Avalonia.Extensions.Controls
             }
         }
         /// <summary>
-        /// only target is Initialized can get the value
+        /// only target is Initialized
         /// </summary>
         /// <param name="visual">target</param>
         /// <returns>size</returns>
@@ -85,7 +90,7 @@ namespace Avalonia.Extensions.Controls
             return visual.Bounds.Width;
         }
         /// <summary>
-        /// only target is Initialized can get the value
+        /// only target is Initialized
         /// </summary>
         /// <param name="visual">target</param>
         /// <returns>size</returns>

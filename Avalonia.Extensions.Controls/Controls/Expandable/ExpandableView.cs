@@ -5,7 +5,7 @@ using Avalonia.Styling;
 
 namespace Avalonia.Extensions.Controls
 {
-    public partial class ExpandableView : StackPanel, ITemplatedControl
+    public partial class ExpandableView : StackPanel, ITemplatedControl, IStyling
     {
         public ExpandableView() : base()
         {
@@ -13,6 +13,7 @@ namespace Avalonia.Extensions.Controls
             Orientation = Orientation.Vertical;
             SecondViewProperty.Changed.AddClassHandler<ExpandableView>(OnSecondViewChange);
             PrimaryViewProperty.Changed.AddClassHandler<ExpandableView>(OnPrimaryViewChange);
+            this.InitStyle();
         }
         private void OnSecondViewChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {

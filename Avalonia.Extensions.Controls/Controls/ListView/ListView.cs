@@ -15,7 +15,7 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// fork from https://github.com/jhofinger/Avalonia/tree/listview
     /// </summary>
-    public class ListView : ListBox, IStyleable
+    public class ListView : ListBox, IStyling
     {
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
@@ -83,11 +83,10 @@ namespace Avalonia.Extensions.Controls
             remove { RemoveHandler(ScrollEndEvent, value); }
         }
         private ICommand _command;
-        private MouseButton _mouseButton;
-        public MouseButton MouseClickButton => _mouseButton;
+        public MouseButton MouseClickButton { get; private set; }
         static ListView()
         {
-            ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);            
+            ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);
             SelectionModeProperty.OverrideMetadata<ListView>(new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
         public ListView()
@@ -95,7 +94,7 @@ namespace Avalonia.Extensions.Controls
             SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
             ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
-            Resources.Add("ListView", "avares://Avalonia.Extensions.Theme/ListView.xaml".AsResource());
+            this.InitStyle();
         }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -221,18 +220,15 @@ namespace Avalonia.Extensions.Controls
         private void ApplyNewView()
         {
             ViewBase newView = View;
-            if (newView != null)
-                Defaultstyle = newView.DefaultStyleKey;
-            else
-                Defaultstyle = null;
+            Defaultstyle = newView?.DefaultStyleKey;
         }
         public ViewBase PreviousView { get; private set; }
         protected override IItemContainerGenerator CreateItemContainerGenerator()
         {
             return new ItemsGenerator(
                 this,
-                ListViewItem.ContentProperty,
-                ListViewItem.ContentTemplateProperty);
+                ContentControl.ContentProperty,
+                ContentControl.ContentTemplateProperty);
         }
         /// <summary>
         /// handle clild item click event,
@@ -242,9 +238,9 @@ namespace Avalonia.Extensions.Controls
         /// <param name="viewCell"></param>
         internal virtual void OnContentClick(object control, MouseButton mouseButton)
         {
-            if (Clickable == true && control != null)
+            if (Clickable && control != null)
             {
-                _mouseButton = mouseButton;
+                MouseClickButton = mouseButton;
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var listItem = (control as Control)?.Parent;
@@ -252,7 +248,7 @@ namespace Avalonia.Extensions.Controls
                     RaiseEvent(@event);
                     if (control is ListViewItem viewCell)
                     {
-                        this.SelectedItem = viewCell;
+                        SelectedItem = viewCell;
                         if (!@event.Handled && Command?.CanExecute(viewCell.CommandParameter) == true)
                         {
                             Command.Execute(viewCell.CommandParameter);

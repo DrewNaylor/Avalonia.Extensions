@@ -19,14 +19,14 @@ namespace Avalonia.Extensions.Controls
         public event EventHandler DisposeEvent;
         public AnimationThread(Window window)
         {
-            this.Window = window;
+            Window = window;
             Thread = new Thread(RunJob) { IsBackground = true };
         }
         public void Start(NotifyOptions options)
         {
             if (options.IsVaidate)
             {
-                this.Options = options;
+                Options = options;
                 LeftHorizontalNext = new PixelPoint(Options.MovePixel, 0);
                 BottomVerticalNext = new PixelPoint(0, -Options.MovePixel);
                 RightHorizontalNext = new PixelPoint(-Options.MovePixel, 0);
@@ -39,8 +39,8 @@ namespace Avalonia.Extensions.Controls
         }
         public void SetPath(PixelPoint startPosition, PixelPoint endPosition)
         {
-            this.StopPosition = endPosition;
-            this.StartPosition = startPosition;
+            StopPosition = endPosition;
+            StartPosition = startPosition;
         }
         private async void RunJob()
         {

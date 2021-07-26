@@ -48,13 +48,13 @@ namespace Avalonia.Extensions.Controls
         public event EventHandler<ItemClickEventArgs> ItemClick;
         public PopupMenu()
         {
-            this.Width = 80;
-            this.Height = 60;
-            this.Topmost = true;
-            this.Focusable = true;
+            Width = 80;
+            Height = 60;
+            Topmost = true;
+            Focusable = true;
             ListBox = new ListBox();
-            this.ShowInTaskbar = false;
-            this.SystemDecorations = SystemDecorations.None;
+            ShowInTaskbar = false;
+            SystemDecorations = SystemDecorations.None;
             ListBox.VirtualizationMode = ItemVirtualizationMode.None;
             ItemsProperty.Changed.AddClassHandler<PopupMenu>(OnItemsChange);
             ItemTemplateProperty.Changed.AddClassHandler<PopupMenu>(OnItemTemplateChanged);
@@ -78,7 +78,7 @@ namespace Avalonia.Extensions.Controls
         {
             base.OnInitialized();
             ListBox.SelectionChanged += ListBox_SelectionChanged;
-            this.Content = ListBox;
+            Content = ListBox;
         }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -16,13 +16,13 @@ namespace Avalonia.Extensions.Controls
             Thread = new AnimationThread(this);
             Thread.DisposeEvent += Thread_DisposeEvent;
             Options = new NotifyOptions(ShowPosition.BottomRight);
-            this.SystemDecorations = SystemDecorations.None;
+            SystemDecorations = SystemDecorations.None;
         }
         private void Thread_DisposeEvent(object sender, EventArgs e)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                this.Close();
+                Close();
             });
         }
         public void Show(NotifyOptions options)
@@ -54,33 +54,27 @@ namespace Avalonia.Extensions.Controls
                     case ShowPosition.BottomLeft:
                         {
                             var top = sh - h;
-                            this.Position = new PixelPoint(0, top);
-                            if (Options.ScollOrientation == ScollOrientation.Vertical)
-                                endPoint = new PixelPoint(0, 0);
-                            else
-                                endPoint = new PixelPoint(-w, 0);
+                            Position = new PixelPoint(0, top);
+                            endPoint = Options.ScollOrientation == ScollOrientation.Vertical ? new PixelPoint(0, 0) : new PixelPoint(-w, 0);
                             break;
                         }
                     case ShowPosition.BottomRight:
                         {
                             int left = sw - w, top = sh - h;
-                            this.Position = new PixelPoint(left, top);
-                            if (Options.ScollOrientation == ScollOrientation.Vertical)
-                                endPoint = new PixelPoint(left, 0);
-                            else
-                                endPoint = new PixelPoint(sw, top);
+                            Position = new PixelPoint(left, top);
+                            endPoint = Options.ScollOrientation == ScollOrientation.Vertical ? new PixelPoint(left, 0) : new PixelPoint(sw, top);
                             break;
                         }
                     case ShowPosition.TopLeft:
                         {
-                            this.Position = new PixelPoint(0, 0);
+                            Position = new PixelPoint(0, 0);
                             endPoint = new PixelPoint(-w, 0);
                             break;
                         }
                     case ShowPosition.TopRight:
                         {
                             var left = sw - w;
-                            this.Position = new PixelPoint(left, 0);
+                            Position = new PixelPoint(left, 0);
                             endPoint = new PixelPoint(sw, 0);
                             break;
                         }

@@ -12,7 +12,7 @@ namespace Avalonia.Extensions.Controls
     /// the itemsrepeater layout <seealso cref="this.Orientation"/> as
     /// <seealso cref="Orientation.Horizontal"/>
     /// </summary>
-    public class HorizontalItemsRepeater : ItemsRepeater
+    public class HorizontalItemsRepeater : ItemsRepeater, IStyling
     {
         private ICommand _command;
         /// <summary>
@@ -21,6 +21,7 @@ namespace Avalonia.Extensions.Controls
         public HorizontalItemsRepeater()
         {
             DrawLayout();
+            this.InitStyle();
         }
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
@@ -100,12 +101,12 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         internal void OnContentClick(ItemsRepeaterContent itemsRepeaterContent, MouseButton mouseButton)
         {
-            if (Clickable == true && itemsRepeaterContent != null)
+            if (Clickable && itemsRepeaterContent != null)
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
-                    this.SelectedItem = itemsRepeaterContent;
+                    SelectedItem = itemsRepeaterContent;
                     RaiseEvent(@event);
                     if (!@event.Handled && Command?.CanExecute(itemsRepeaterContent.CommandParameter) == true)
                     {

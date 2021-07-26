@@ -372,6 +372,9 @@ namespace Avalonia.Extensions.Controls
             if (e.Key == Key.Enter && IsVisible && IsEnabled)
                 OnClick(MouseButton.Left);
         }
-        void ICommandSource.CanExecuteChanged(object sender, EventArgs e) => CanExecuteChanged(sender, e);
+        void ICommandSource.CanExecuteChanged(object sender, EventArgs e)
+        {
+            CanExecuteChanged(sender, e);
+        }
     }
 }

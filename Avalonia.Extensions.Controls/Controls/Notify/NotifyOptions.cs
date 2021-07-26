@@ -4,39 +4,33 @@
     {
         public NotifyOptions(ShowPosition position)
         {
-            this.Position = position;
-            this.Size = new Size(160, 60);
+            Position = position;
+            Size = new Size(160, 60);
         }
         public NotifyOptions(ShowPosition position, Size size)
         {
-            this.Size = size;
-            this.Position = position;
+            Size = size;
+            Position = position;
         }
         public NotifyOptions(ShowPosition position, Size size, ScollOrientation scollOrientation) : this(position, size)
         {
-            this.ScollOrientation = scollOrientation;
+            ScollOrientation = scollOrientation;
         }
         public NotifyOptions(ShowPosition position, Size size, ScollOrientation scollOrientation, int movePixel) : this(position, size, scollOrientation)
         {
-            this.MovePixel = movePixel;
+            MovePixel = movePixel;
         }
         public NotifyOptions(ShowPosition position, Size size, ScollOrientation scollOrientation, int movePixel, int moveDelay) : this(position, size, scollOrientation, movePixel)
         {
-            this.MoveDelay = moveDelay;
+            MoveDelay = moveDelay;
         }
         public Size Size { get; set; }
         public ShowPosition Position { get; set; }
         public int MovePixel { get; set; } = 1;
         public int MoveDelay { get; set; } = 20;
         public ScollOrientation ScollOrientation { get; set; }
-        public bool IsVaidate
-        {
-            get
-            {
-                return !((Position == ShowPosition.TopLeft || Position == ShowPosition.TopRight)
+        public bool IsVaidate => !((Position == ShowPosition.TopLeft || Position == ShowPosition.TopRight)
                     && ScollOrientation == ScollOrientation.Vertical);
-            }
-        }
         public void Update(NotifyOptions options)
         {
             Size = options.Size;

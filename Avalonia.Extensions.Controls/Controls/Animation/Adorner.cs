@@ -10,13 +10,13 @@ namespace Avalonia.Extensions.Controls
     public abstract class Adorner : InputElement
     {
         private bool _isClipEnabled;
-        private readonly Control _adornedControl;
+
         /// <summary>
         /// Constructor
         /// </summary>
         protected Adorner(Control adornedControl)
         {
-            _adornedControl = adornedControl ?? throw new ArgumentNullException("adornedElement");
+            AdornedElement = adornedControl ?? throw new ArgumentNullException("adornedElement");
             _isClipEnabled = false;
             Dispatcher.UIThread.InvokeAsync(() =>
             {
@@ -33,10 +33,10 @@ namespace Avalonia.Extensions.Controls
         {
             Size desiredSize;
             desiredSize = new Size(AdornedElement.Bounds.Width, AdornedElement.Bounds.Height);
-            int count = this.VisualChildren.Count;
+            int count = VisualChildren.Count;
             for (int i = 0; i < count; i++)
             {
-                if (this.VisualChildren.ElementAt(i) is Control ch)
+                if (VisualChildren.ElementAt(i) is Control ch)
                     ch.Measure(desiredSize);
             }
             return desiredSize;
@@ -52,7 +52,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// UIElement this Adorner adorns.
         /// </summary>
-        public Control AdornedElement => _adornedControl;
+        public Control AdornedElement { get; }
         /// <summary>
         /// If set to true, the adorner will be clipped using the same clip geometry as the
         /// AdornedElement.  This is expensive, and therefore should not normally be used.
@@ -65,7 +65,7 @@ namespace Avalonia.Extensions.Controls
             {
                 _isClipEnabled = value;
                 InvalidateArrange();
-                AdornerLayer.GetAdornerLayer(_adornedControl).InvalidateArrange();
+                AdornerLayer.GetAdornerLayer(AdornedElement).InvalidateArrange();
             }
         }
         /// <summary>

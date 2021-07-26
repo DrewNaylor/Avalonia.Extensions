@@ -41,7 +41,7 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.NewValue is Bitmap bitmap)
             {
-                this.Fill = new ImageBrush { Source = bitmap };
+                Fill = new ImageBrush { Source = bitmap };
                 DrawAgain();
                 SetSize(bitmap.Size);
             }
@@ -61,7 +61,7 @@ namespace Avalonia.Extensions.Controls
                                 if (result.Stream != null)
                                 {
                                     var bitmap = new Bitmap(result.Stream);
-                                    this.Fill = new ImageBrush { Source = bitmap };
+                                    Fill = new ImageBrush { Source = bitmap };
                                     DrawAgain();
                                     SetSize(bitmap.Size);
                                 }
@@ -73,13 +73,13 @@ namespace Avalonia.Extensions.Controls
                         {
                             var assets = Core.Instance.AssetLoader;
                             using var bitmap = new Bitmap(assets.Open(uri));
-                            this.Fill = new ImageBrush { Source = bitmap };
+                            Fill = new ImageBrush { Source = bitmap };
                             DrawAgain();
                             SetSize(bitmap.Size);
                         });
                         break;
                     default:
-                        failedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
+                        FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
                         var @event = new RoutedEventArgs(FailedEvent);
                         RaiseEvent(@event);
                         if (!@event.Handled)
@@ -128,10 +128,9 @@ namespace Avalonia.Extensions.Controls
             add { AddHandler(FailedEvent, value); }
             remove { RemoveHandler(FailedEvent, value); }
         }
-        private string failedMessage;
         /// <summary>
         /// error message if loading failed
         /// </summary>
-        public string FailedMessage => failedMessage;
+        public string FailedMessage { get; private set; }
     }
 }

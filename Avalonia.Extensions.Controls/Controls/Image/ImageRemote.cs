@@ -16,14 +16,13 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// original image width
         /// </summary>
-        public double ImageWidth => imageWidth;
+        public double ImageWidth { get; private set; }
         /// <summary>
         /// original image height
         /// </summary>
-        public double ImageHeight => imageHeight;
-        private string _address, failedMessage;
-        private double imageWidth, imageHeight;
+        public double ImageHeight { get; private set; }
         private DownloadTask Task { get; }
+        private string _address;
         public ImageRemote() : base()
         {
             Task = new DownloadTask();
@@ -31,7 +30,7 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// error message if loading failed
         /// </summary>
-        public string FailedMessage => failedMessage;
+        public string FailedMessage { get; private set; }
         /// <summary>
         /// Defines the <see cref="Address"/> property.
         /// </summary>
@@ -66,20 +65,20 @@ namespace Avalonia.Extensions.Controls
                 if (double.IsNaN(Width) || width == 0)
                 {
                     bitmap = new Bitmap(result.Stream);
-                    Width = imageWidth = bitmap.PixelSize.Width;
-                    Height = imageHeight = bitmap.PixelSize.Height;
+                    Width = ImageWidth = bitmap.PixelSize.Width;
+                    Height = ImageHeight = bitmap.PixelSize.Height;
                 }
                 else
                 {
                     bitmap = Bitmap.DecodeToWidth(result.Stream, width);
-                    imageWidth = bitmap.PixelSize.Width;
-                    imageHeight = bitmap.PixelSize.Height;
+                    ImageWidth = bitmap.PixelSize.Width;
+                    ImageHeight = bitmap.PixelSize.Height;
                 }
-                this.Source = bitmap;
+                Source = bitmap;
             }
             else
             {
-                failedMessage = result.Message;
+                FailedMessage = result.Message;
                 var @event = new RoutedEventArgs(FailedEvent);
                 RaiseEvent(@event);
                 if (!@event.Handled)

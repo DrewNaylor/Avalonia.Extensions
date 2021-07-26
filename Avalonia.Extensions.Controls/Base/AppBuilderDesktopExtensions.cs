@@ -27,7 +27,6 @@ namespace Avalonia.Extensions.Controls
                         }
                     });
                 }
-                AroTheme.AddTheme();
             });
             return builder;
         }

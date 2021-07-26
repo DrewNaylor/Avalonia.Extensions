@@ -8,7 +8,7 @@ namespace Avalonia.Extensions.Controls
     /// the control:<see cref="GridView"/> used.
     /// it just a uwp like "GridViewItem"
     /// </summary>
-    public sealed class GridViewItem : ListViewItem
+    public sealed class GridViewItem : ListViewItem, IStyling
     {
         public GridViewItem() : base()
         {
@@ -17,6 +17,7 @@ namespace Avalonia.Extensions.Controls
             HorizontalAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnHorizontalAlignmentChange);
             VerticalContentAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnVerticalContentAlignmentChange);
             HorizontalContentAlignmentProperty.Changed.AddClassHandler<GridViewItem>(OnHorizontalContentAlignmentChange);
+            this.InitStyle();
         }
         private void OnHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {

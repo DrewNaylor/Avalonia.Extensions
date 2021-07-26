@@ -58,7 +58,7 @@ namespace Avalonia.Extensions.Controls
                         };
                         _moving.Measure(new Size(round, round));
                         _moving.Arrange(new Rect(0, 0, round, round));
-                        this.Children.Add(_moving);
+                        Children.Add(_moving);
                     }
                     _movingRadian += 1;
                     if (_movingRadian == 360)
@@ -87,7 +87,7 @@ namespace Avalonia.Extensions.Controls
                 };
                 target.Measure(new Size(innerRound, innerRound));
                 target.Arrange(new Rect(0, 0, innerRound, innerRound));
-                this.Children.Add(target);
+                Children.Add(target);
                 var top = centerRound - innerRound / 2;
                 SetLeft(target, top);
                 SetTop(target, top);
@@ -100,7 +100,7 @@ namespace Avalonia.Extensions.Controls
                 };
                 target.Measure(new Size(Width, Width));
                 target.Arrange(new Rect(0, 0, Width, Width));
-                this.Children.Add(target);
+                Children.Add(target);
                 var circleBounds = centerRound - Width / 2;
                 SetLeft(target, circleBounds);
                 SetTop(target, circleBounds);
