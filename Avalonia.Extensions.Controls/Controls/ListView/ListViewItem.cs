@@ -1,28 +1,28 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
 using System;
 using System.Linq;
-using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
 {
-    /// <summary>
-    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
-    /// </summary>
-    public class ListViewItem : ListBoxItem, ICommandSource, IStyling
+    public class ListViewItem : ListBoxItem, IStyling
     {
-        private ICommand _command;
-        private bool _commandCanExecute = true;
         public Type StyleKey => typeof(ListBoxItem);
+        private ClickMode ClickMode
+        {
+            get
+            {
+                if (Parent is ListView listView)
+                    return listView.ClickMode;
+                return ClickMode.Press;
+            }
+        }
         public ListViewItem()
         {
             IsCancelProperty.Changed.Subscribe(IsCancelChanged);
             IsDefaultProperty.Changed.Subscribe(IsDefaultChanged);
-            CommandProperty.Changed.Subscribe(CommandChanged);
             this.InitStyle();
         }
         private void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
@@ -47,20 +47,6 @@ namespace Avalonia.Extensions.Controls
                     content.ListenForCancel(inputRoot);
                 else
                     content.StopListeningForCancel(inputRoot);
-            }
-        }
-        private void CommandChanged(AvaloniaPropertyChangedEventArgs e)
-        {
-            if (e.Sender is ClickableView content)
-            {
-                if (((ILogical)content).IsAttachedToLogicalTree)
-                {
-                    if (e.OldValue is ICommand oldCommand)
-                        oldCommand.CanExecuteChanged -= content.CanExecuteChanged;
-                    if (e.NewValue is ICommand newCommand)
-                        newCommand.CanExecuteChanged += content.CanExecuteChanged;
-                }
-                content.CanExecuteChanged(content, EventArgs.Empty);
             }
         }
         /// <summary>
@@ -97,72 +83,12 @@ namespace Avalonia.Extensions.Controls
         public static readonly StyledProperty<bool> IsPressedProperty =
            AvaloniaProperty.Register<ClickableView, bool>(nameof(IsPressed));
         /// <summary>
-        /// Gets or sets a value indicating how the <see cref="ClickableView"/> should react to clicks.
-        /// </summary>
-        public ClickMode ClickMode
-        {
-            get => GetValue(ClickModeProperty);
-            set => SetValue(ClickModeProperty, value);
-        }
-        /// <summary>
-        /// Defines the <see cref="ClickMode"/> property.
-        /// </summary>
-        public static readonly StyledProperty<ClickMode> ClickModeProperty =
-            AvaloniaProperty.Register<ClickableView, ClickMode>(nameof(ClickMode), ClickMode.Press);
-
-        /// <summary>
-        /// Gets or sets an <see cref="ICommand"/> to be invoked when the ListViewItem is clicked.
-        /// </summary>
-        public ICommand Command
-        {
-            get => _command;
-            set => SetAndRaise(CommandProperty, ref _command, value);
-        }
-        /// <summary>
-        /// Gets or sets a parameter to be passed to the <see cref="Command"/>.
-        /// </summary>
-        public object CommandParameter
-        {
-            get => GetValue(CommandParameterProperty);
-            set => SetValue(CommandParameterProperty, value);
-        }
-        /// <summary>
-        /// Defines the <see cref="CommandParameter"/> property.
-        /// </summary>
-        public static readonly StyledProperty<object> CommandParameterProperty =
-           AvaloniaProperty.Register<ListViewItem, object>(nameof(CommandParameter));
-
-        /// <summary>
-        /// Defines the <see cref="Command"/> property.
-        /// </summary>
-        public static readonly DirectProperty<ListViewItem, ICommand> CommandProperty =
-          AvaloniaProperty.RegisterDirect<ListViewItem, ICommand>(nameof(Command),
-              content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
-        /// <summary>
-        /// Raised when the user clicks the ListViewItem.
-        /// </summary>
-        public event EventHandler<ViewRoutedEventArgs> Click
-        {
-            add { AddHandler(ClickEvent, value); }
-            remove { RemoveHandler(ClickEvent, value); }
-        }
-        /// <summary>
-        /// Defines the <see cref="Click"/> event.
-        /// </summary>
-        public static readonly RoutedEvent<ViewRoutedEventArgs> ClickEvent =
-           RoutedEvent.Register<ListViewItem, ViewRoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
-        /// <summary>
         /// Invokes the <see cref="Click"/> event.
         /// </summary>
         protected virtual void OnClick(MouseButton mouseButton)
         {
-            var e = new ViewRoutedEventArgs(ClickEvent, mouseButton);
-            RaiseEvent(e);
-            if (!e.Handled && Command?.CanExecute(CommandParameter) == true)
-            {
-                Command.Execute(CommandParameter);
-                e.Handled = true;
-            }
+            if (Parent is ListView listView)
+                listView.OnContentClick(this, MouseButton.Left);
         }
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -232,11 +158,8 @@ namespace Avalonia.Extensions.Controls
         protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
         {
             base.UpdateDataValidation(property, value);
-            if (property == CommandProperty && value.Type == BindingValueType.BindingError && _commandCanExecute)
-            {
-                _commandCanExecute = false;
+            if (value.Type == BindingValueType.BindingError)
                 UpdateIsEffectivelyEnabled();
-            }
         }
         /// <summary>
         /// Starts listening for the Enter key when the clickableview <see cref="IsDefault"/>.
@@ -289,15 +212,6 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.Key == Key.Enter && IsVisible && IsEnabled)
                 OnClick(MouseButton.Left);
-        }
-        public void CanExecuteChanged(object sender, EventArgs e)
-        {
-            var canExecute = Command == null || Command.CanExecute(CommandParameter);
-            if (canExecute != _commandCanExecute)
-            {
-                _commandCanExecute = canExecute;
-                UpdateIsEffectivelyEnabled();
-            }
         }
     }
 }

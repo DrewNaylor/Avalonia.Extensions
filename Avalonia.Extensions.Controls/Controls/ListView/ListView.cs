@@ -12,9 +12,6 @@ using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
 {
-    /// <summary>
-    /// fork from https://github.com/jhofinger/Avalonia/tree/listview
-    /// </summary>
     public class ListView : ListBox, IStyling
     {
         /// <summary>
@@ -42,6 +39,19 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public static readonly DirectProperty<ListView, ICommand> CommandProperty =
              AvaloniaProperty.RegisterDirect<ListView, ICommand>(nameof(Command), content => content.Command, (content, command) => content.Command = command, enableDataValidation: true);
+        /// <summary>
+        /// Defines the <see cref="ClickMode"/> property.
+        /// </summary>
+        public static readonly StyledProperty<ClickMode> ClickModeProperty =
+            AvaloniaProperty.Register<ClickableView, ClickMode>(nameof(ClickMode), ClickMode.Press);
+        /// <summary>
+        /// Gets or sets a value indicating how the <see cref="ClickableView"/> should react to clicks.
+        /// </summary>
+        public ClickMode ClickMode
+        {
+            get => GetValue(ClickModeProperty);
+            set => SetValue(ClickModeProperty, value);
+        }
         /// <summary>
         /// Raised when the user clicks the child item.
         /// </summary>
@@ -93,7 +103,6 @@ namespace Avalonia.Extensions.Controls
         {
             SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
             ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
-            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
             this.InitStyle();
         }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
@@ -134,56 +143,6 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.Source is ScrollViewer scrollViewer)
                 ScrollEventHandle(scrollViewer);
-        }
-        private void Item_PointerPressed(object sender, PointerPressedEventArgs e)
-        {
-            if (sender is ListBoxItem item && Clickable && (e.GetCurrentPoint(this).Properties.IsRightButtonPressed || e.GetCurrentPoint(this).Properties.IsLeftButtonPressed))
-            {
-                Dispatcher.UIThread.InvokeAsync(() =>
-                {
-                    var @event = new ViewRoutedEventArgs(ItemClickEvent, MouseButton.Right, item);
-                    RaiseEvent(@event);
-                    if (!@event.Handled)
-                        @event.Handled = true;
-                });
-            }
-        }
-        private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            AddListen(e.NewItems);
-            ClearListen(e.OldItems);
-        }
-        private void AddListen(IList arr)
-        {
-            try
-            {
-                if (arr != null && arr.Count > 0)
-                {
-                    for (var idx = 0; idx < arr.Count; idx++)
-                    {
-                        var item = arr.ElementAt(idx);
-                        if (item is ListBoxItem obj)
-                            obj.PointerPressed += Item_PointerPressed;
-                    }
-                }
-            }
-            catch { }
-        }
-        private void ClearListen(IList arr)
-        {
-            try
-            {
-                if (arr != null && arr.Count > 0)
-                {
-                    for (var idx = 0; idx < arr.Count; idx++)
-                    {
-                        var item = arr.ElementAt(idx);
-                        if (item is ListBoxItem obj)
-                            obj.PointerPressed -= Item_PointerPressed;
-                    }
-                }
-            }
-            catch { }
         }
         private void OnSelectionChanged((object, RoutedEventArgs) obj)
         {
@@ -243,11 +202,8 @@ namespace Avalonia.Extensions.Controls
                     if (control is ListViewItem viewCell)
                     {
                         SelectedItem = viewCell;
-                        if (!@event.Handled && Command?.CanExecute(viewCell.CommandParameter) == true)
-                        {
-                            Command.Execute(viewCell.CommandParameter);
+                        if (!@event.Handled)
                             @event.Handled = true;
-                        }
                     }
                 });
             }
