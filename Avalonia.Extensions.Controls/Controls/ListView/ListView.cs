@@ -194,8 +194,7 @@ namespace Avalonia.Extensions.Controls
                 MouseClickButton = mouseButton;
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var listItem = (control as Control)?.Parent;
-                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, listItem);
+                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, control);
                     RaiseEvent(@event);
                     if (control is ListViewItem viewCell)
                     {
