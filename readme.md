@@ -65,9 +65,9 @@ public static AppBuilder BuildAvaloniaApp()
   > > SecondView
   > > show or hide when select PrimaryView
 
-- [x] ImageRemote
+- [x] ~ImageRemote~ ImageBox
 
-  > inherit from Image,loading image from http/https
+  > inherit from Image,loading image from http/https/local
 
 - [x] ListView
 

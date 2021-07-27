@@ -223,13 +223,7 @@ namespace Avalonia.Extensions.Controls
             Defaultstyle = newView?.DefaultStyleKey;
         }
         public ViewBase PreviousView { get; private set; }
-        protected override IItemContainerGenerator CreateItemContainerGenerator()
-        {
-            return new ItemsGenerator(
-                this,
-                ContentControl.ContentProperty,
-                ContentControl.ContentTemplateProperty);
-        }
+        protected override IItemContainerGenerator CreateItemContainerGenerator() => new ItemsGenerator(this, ContentControl.ContentProperty, ContentControl.ContentTemplateProperty);
         /// <summary>
         /// handle clild item click event,
         /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>

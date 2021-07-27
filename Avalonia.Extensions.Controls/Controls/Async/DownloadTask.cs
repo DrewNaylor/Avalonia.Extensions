@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
 {
-    internal partial class DownloadTask
+    internal partial class DownloadTask : IDisposable
     {
         private bool Loading = false;
         private HttpClient HttpClient { get; }
@@ -36,6 +36,9 @@ namespace Avalonia.Extensions.Controls
                 }
                 Loading = false;
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

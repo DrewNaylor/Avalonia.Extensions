@@ -43,7 +43,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                 var field = type.GetField(fieldName, flag);
                 field?.SetValue(control, fieldValue);
             }
@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic| BindingFlags.Public;
                 var property = type.GetProperty(propertyName, flag);
                 return (T)property?.GetValue(control);
             }
@@ -71,7 +71,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                 var property = type.GetProperty(propertyName, flag);
                 property?.SetValue(control, propertyValue);
             }

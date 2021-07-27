@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class Core
+    public sealed class Core : IDisposable
     {
         private static Core instance;
         public static Core Instance
@@ -48,10 +48,20 @@ namespace Avalonia.Extensions.Controls
             if (HttpClient == null)
             {
                 var clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback += (sender, cert, chaun, ssl) => { return true; };
+                clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => { return true; };
                 HttpClient = new HttpClient(clientHandler);
             }
             return HttpClient;
+        }
+        public void Dispose()
+        {
+            try
+            {
+                HttpClient.Dispose();
+                FontDefault = null;
+                _primaryBrush = null;
+            }
+            catch { }
         }
         private SolidColorBrush _primaryBrush;
         public SolidColorBrush PrimaryBrush

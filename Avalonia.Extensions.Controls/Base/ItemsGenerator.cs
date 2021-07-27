@@ -8,8 +8,7 @@ namespace Avalonia.Extensions.Controls
     public class ItemsGenerator : ItemContainerGenerator
     {
         private string ChildItem { get; }
-        public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty)
-             : base(owner)
+        public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty) : base(owner)
         {
             Contract.Requires<ArgumentNullException>(owner != null);
             Contract.Requires<ArgumentNullException>(contentProperty != null);

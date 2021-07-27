@@ -9,8 +9,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class AppBuilderDesktopExtensions
     {
-        public static TAppBuilder UseDoveExtensions<TAppBuilder>(this TAppBuilder builder)
-            where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        public static TAppBuilder UseDoveExtensions<TAppBuilder>(this TAppBuilder builder) where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
         {
             Core.Instance.AppAssembly = builder.ApplicationType.Assembly;
             builder.AfterSetup((_) =>
@@ -37,6 +36,7 @@ namespace Avalonia.Extensions.Controls
                 if (desktop.Windows.Count(x => x is MessageBox) == desktop.Windows.Count)
                     desktop.Shutdown();
             }
+            Core.Instance.Dispose();
         }
     }
 }

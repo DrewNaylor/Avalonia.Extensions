@@ -4,14 +4,15 @@ using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Threading;
 using System;
+using System.IO;
 
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
     /// Inherited from <see cref="Image"/>.
-    /// Used to display HTTP/HTTPS pictures
+    /// Used to display HTTP/HTTPS/Local pictures
     /// </summary>
-    public sealed class ImageRemote : Image
+    public sealed class ImageBox : Image
     {
         /// <summary>
         /// original image width
@@ -22,8 +23,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public double ImageHeight { get; private set; }
         private DownloadTask Task { get; }
-        private string _address;
-        public ImageRemote() : base()
+        private Uri _source;
+        public ImageBox() : base()
         {
             Task = new DownloadTask();
         }
@@ -32,29 +33,73 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public string FailedMessage { get; private set; }
         /// <summary>
-        /// Defines the <see cref="Address"/> property.
+        /// Defines the <see cref="Source"/> property.
         /// </summary>
-        public static readonly DirectProperty<ImageRemote, string> AddressProperty =
-          AvaloniaProperty.RegisterDirect<ImageRemote, string>(nameof(Address), o => o.Address, (o, v) => o.Address = v);
+        public static new readonly DirectProperty<ImageBox, Uri> SourceProperty =
+          AvaloniaProperty.RegisterDirect<ImageBox, Uri>(nameof(Source), o => o.Source, (o, v) => o.Source = v);
         /// <summary>
         /// get or set image url address
         /// </summary>
         [Content]
-        public string Address
+        public new Uri Source
         {
-            get => _address;
+            get => _source;
             set
             {
-                SetAndRaise(AddressProperty, ref _address, value);
-                LoadBitmap(value);
+                SetAndRaise(SourceProperty, ref _source, value);
+                if (value != null)
+                    LoadBitmap(value);
             }
         }
-        private void LoadBitmap(string url)
+        private void LoadBitmap(Uri uri)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                Task.Create(url, OnDrawBitmap);
+                switch (uri.Scheme)
+                {
+                    case "http":
+                    case "https":
+                        {
+                            Task.Create(uri, OnDrawBitmap);
+                            break;
+                        }
+                    case "avares":
+                        {
+                            Dispatcher.UIThread.InvokeAsync(() =>
+                            {
+                                using var stream = Core.Instance.AssetLoader.Open(uri);
+                                SetSource(stream);
+                            });
+                            break;
+                        }
+                    default:
+                        FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
+                        var @event = new RoutedEventArgs(FailedEvent);
+                        RaiseEvent(@event);
+                        if (!@event.Handled)
+                            @event.Handled = true;
+                        break;
+                }
             });
+        }
+        private void SetSource(Stream stream)
+        {
+            if (stream != null)
+            {
+                using var bitmap = new Bitmap(stream);
+                var width = Width.ToInt32();
+                if (double.IsNaN(Width) || width == 0)
+                {
+                    Width = ImageWidth = bitmap.PixelSize.Width;
+                    Height = ImageHeight = bitmap.PixelSize.Height;
+                }
+                else
+                {
+                    ImageWidth = bitmap.PixelSize.Width;
+                    ImageHeight = bitmap.PixelSize.Height;
+                }
+                base.Source = bitmap;
+            }
         }
         private void OnDrawBitmap(DownloadTask.Result result)
         {
@@ -74,7 +119,7 @@ namespace Avalonia.Extensions.Controls
                     ImageWidth = bitmap.PixelSize.Width;
                     ImageHeight = bitmap.PixelSize.Height;
                 }
-                Source = bitmap;
+                base.Source = bitmap;
             }
             else
             {
@@ -89,7 +134,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="Failed"/> property.
         /// </summary>
         public static readonly RoutedEvent<RoutedEventArgs> FailedEvent =
-            RoutedEvent.Register<ImageRemote, RoutedEventArgs>(nameof(Failed), RoutingStrategies.Bubble);
+            RoutedEvent.Register<ImageBox, RoutedEventArgs>(nameof(Failed), RoutingStrategies.Bubble);
         /// <summary>
         /// Raised when the image load failed.
         /// </summary>
