@@ -15,10 +15,7 @@ namespace Avalonia.Extensions.Controls
                 {
                     var typeName = GetType().Name;
                     if (!control.Resources.ContainsKey(typeName))
-                    {
-                        var sourceUri = new Uri($"avares://Avalonia.Extensions.Theme/{typeName}.xaml");
-                        control.Resources.Add(typeName, sourceUri.AsResource());
-                    }
+                        control.Resources.Add(typeName, $"avares://Avalonia.Extensions.Theme/{typeName}.xaml".AsResource());
                 }
             }
             catch (Exception ex)

@@ -9,7 +9,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
-        private const double Epsilon = 0.00000153;
+        private const double Epsilon = 0.00000153; 
         public static T GetPrivateField<T>(this Control control, string fieldName)
         {
             try
@@ -43,7 +43,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                 var field = type.GetField(fieldName, flag);
                 field?.SetValue(control, fieldValue);
             }
@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic| BindingFlags.Public;
                 var property = type.GetProperty(propertyName, flag);
                 return (T)property?.GetValue(control);
             }
@@ -71,7 +71,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                 var property = type.GetProperty(propertyName, flag);
                 property?.SetValue(control, propertyValue);
             }
@@ -118,6 +118,9 @@ namespace Avalonia.Extensions.Controls
                 var type = control.GetType();
                 MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic
                     | BindingFlags.Instance);
+                if (methodInfo == null && type.BaseType != null)
+                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic
+                    | BindingFlags.Instance);
                 return methodInfo?.Invoke(control, parameters);
             }
             catch (Exception ex)
@@ -148,17 +151,25 @@ namespace Avalonia.Extensions.Controls
             }
             catch { }
         }
-        internal static Window GetWindow(this IControl control)
+        internal static Window GetWindow(this IControl control, out bool hasBase)
         {
+            hasBase = false;
             Window window = null;
-            IControl parent = control.Parent;
-            while (window == null)
+            try
             {
-                if (parent.Parent is Window win)
-                    window = win;
-                else
-                    parent = parent.Parent;
+                IControl parent = control.Parent;
+                while (window == null)
+                {
+                    if (parent.Parent is Window win)
+                    {
+                        window = win;
+                        hasBase = win is WindowBase windowBase && windowBase.Locate;
+                    }
+                    else
+                        parent = parent.Parent;
+                }
             }
+            catch { }
             return window;
         }
     }

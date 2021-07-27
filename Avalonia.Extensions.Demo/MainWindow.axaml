@@ -70,36 +70,26 @@
         </StackPanel>
       </Grid>
     </TabItem>
-    <TabItem Header="ImageRemote">
-      <ListBox Name="imgList">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <ImageRemote Address="{Binding Url}" />
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
+    <TabItem Header="ImageBox">
+			<ListBox Name="imgList">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<ImageBox Source="{Binding Url}" />
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
     </TabItem>
     <TabItem Header="ExpandableView">
       <ExpandableView>
         <ExpandableView.PrimaryView>
           <ClickableView>
-            <ImageRemote Width="64" Address="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+			  <ImageBox Width="64" Source="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
           </ClickableView>
         </ExpandableView.PrimaryView>
         <ExpandableView.SecondView>
           <StackPanel Orientation="Vertical">
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-            <ImageRemote Address="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+			  <ImageBox Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+			  <ImageBox Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
           </StackPanel>
         </ExpandableView.SecondView>
       </ExpandableView>
@@ -143,6 +133,7 @@
     <TabItem Header="Chinese Textbox">
       <StackPanel Orientation="Vertical">
         <TextBox Text="山川异域 不共戴天" />
+		<TextPresenter Text="山川异域 不共戴天" />
       </StackPanel>
     </TabItem>
   </TabControl>

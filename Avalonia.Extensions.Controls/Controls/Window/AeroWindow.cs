@@ -5,7 +5,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class AeroWindow : Window, IStyleable
+    public class AeroWindow : WindowBase, IStyleable
     {
         Type IStyleable.StyleKey => typeof(Window);
         public AeroWindow()

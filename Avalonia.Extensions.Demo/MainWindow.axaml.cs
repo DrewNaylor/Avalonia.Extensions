@@ -19,6 +19,7 @@ namespace Avalonia.Controls.Demo
         {
             AvaloniaXamlLoader.Load(this);
             InitializeComponent();
+            Locate = true;
             this.AttachDevTools();
         }
         private void InitializeComponent()

@@ -128,10 +128,19 @@ namespace Avalonia.Extensions.Controls
             {
                 if ((control.TransformedBounds as dynamic).Clip is Rect rect)
                 {
-                    var window = control.GetWindow();
-                    int x = (rect.X + window.Position.X).ToInt32(),
-                        y = (rect.Y + window.Position.Y).ToInt32();
-                    Position = new PixelPoint(x, y);
+                    var window = control.GetWindow(out bool hasBase);
+                    if (!hasBase)
+                    {
+                        int x = (rect.X + window.Position.X).ToInt32(),
+                            y = (rect.Y + window.Position.Y).ToInt32();
+                        Position = new PixelPoint(x, y);
+                    }
+                    else if (window is WindowBase windowBase)
+                    {
+                        int x = windowBase.MousePisition.X,
+                            y = windowBase.MousePisition.Y;
+                        Position = new PixelPoint(x, y);
+                    }
                 }
             });
             base.Show();

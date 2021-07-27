@@ -118,7 +118,7 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] Chinese Input Support
 
-To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file:
+To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file,you defined which controls(default is TextBox and TextPresenter):
 ```csharp
 public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
