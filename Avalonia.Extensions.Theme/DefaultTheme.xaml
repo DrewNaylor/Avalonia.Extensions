@@ -1,8 +1,0 @@
-<Styles xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <StyleInclude Source="avares://Avalonia.Extensions.Theme/ListView.xaml" />
-    <StyleInclude Source="avares://Avalonia.Extensions.Theme/GridView.xaml" />
-    <StyleInclude Source="avares://Avalonia.Extensions.Theme/ExpandableView.xaml" />
-    <StyleInclude Source="avares://Avalonia.Extensions.Theme/VerticalItemsRepeater.xaml" />
-    <StyleInclude Source="avares://Avalonia.Extensions.Theme/HorizontalItemsRepeater.xaml" />
-</Styles>

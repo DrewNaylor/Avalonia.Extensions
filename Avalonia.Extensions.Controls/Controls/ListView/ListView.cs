@@ -5,8 +5,6 @@ using Avalonia.Interactivity;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Input;
 
