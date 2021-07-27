@@ -50,7 +50,7 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] ~CellListViewCell~ ~SplitListViewItem~ GridViewItem
 
-  > Item for ~CellListView~ SplitListView,inherit from ClickableView,with Left/Right Click Event
+  > Item for ~CellListView~ ~SplitListView~ GridViewItem,inherit from ~ClickableView~ ListViewItem,with Left/Right Click Event
 
 - [x] CircleImage
 
@@ -65,7 +65,7 @@ public static AppBuilder BuildAvaloniaApp()
   > > SecondView
   > > show or hide when select PrimaryView
 
-- [x] ImageRemote
+- [x] ~ImageRemote~ ImageBox
 
   > inherit from Image,loading image from http/https
 
