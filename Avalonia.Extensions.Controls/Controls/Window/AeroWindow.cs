@@ -5,7 +5,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class AeroWindow : WindowBase, IStyleable
+    public class AeroWindow : WindowBase, IStyling
     {
         Type IStyleable.StyleKey => typeof(Window);
         public AeroWindow()
@@ -28,6 +28,7 @@ namespace Avalonia.Extensions.Controls
                         TransparencyLevelHint = WindowTransparencyLevel.Blur;
                     }
                 });
+            this.InitStyle();
         }
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
