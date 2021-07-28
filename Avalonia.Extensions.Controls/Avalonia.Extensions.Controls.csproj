@@ -3,11 +3,12 @@
         <LangVersion>latest</LangVersion>
         <TargetFramework>netstandard2.1</TargetFramework>
         <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
-        <PackageProjectUrl>https://avaloniaui.net</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/dove-team/Avalonia.Extensions</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Product>Avalonia.Extensions.Controls</Product>
         <Authors>michael_eddy</Authors>
         <UserSecretsId>214483ab-ede2-45c7-ac37-b353540601d8</UserSecretsId>
+        <Version>1.3.7</Version>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DocumentationFile></DocumentationFile>
