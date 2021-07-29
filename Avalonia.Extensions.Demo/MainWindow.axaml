@@ -147,8 +147,8 @@
 					<CircleImage Width="64" Source="https://avatars.githubusercontent.com/u/22364738" />
 				</StackPanel>
 			</TabItem>
-			<TabItem Header="ExpandableListView">
-				<ExpandableListView Name="expandableListView" />
+			<TabItem Header="ItemsView">
+				<ItemsView Name="expandableListView" />
 			</TabItem>
 			<TabItem Header="ProgressRing">
 				<StackPanel Orientation="Vertical">

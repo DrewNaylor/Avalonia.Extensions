@@ -62,7 +62,7 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
-            var expandableListView = this.FindControl<ExpandableListView>("expandableListView");
+            var expandableListView = this.FindControl<ItemsView>("expandableListView");
             expandableListView.Items = new List<ExpandableObject>
             {
                 new ExpandableObject("1111", default),
