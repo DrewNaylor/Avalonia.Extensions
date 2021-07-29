@@ -102,8 +102,23 @@
 					</ExpandableView.PrimaryView>
 					<ExpandableView.SecondView>
 						<StackPanel Orientation="Vertical">
-							<ImageBox Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-							<ImageBox Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
 						</StackPanel>
 					</ExpandableView.SecondView>
 				</ExpandableView>
@@ -131,6 +146,9 @@
 				<StackPanel Orientation="Vertical">
 					<CircleImage Width="64" Source="https://avatars.githubusercontent.com/u/22364738" />
 				</StackPanel>
+			</TabItem>
+			<TabItem Header="ExpandableListView">
+				<ExpandableListView Name="expandableListView" />
 			</TabItem>
 			<TabItem Header="ProgressRing">
 				<StackPanel Orientation="Vertical">
