@@ -57,7 +57,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-					<GridView Background="Transparent" Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
+					<GridView Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}" Background="Transparent">
 						<GridView.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding content}" />
@@ -146,9 +146,6 @@
 				<StackPanel Orientation="Vertical">
 					<CircleImage Width="64" Source="https://avatars.githubusercontent.com/u/22364738" />
 				</StackPanel>
-			</TabItem>
-			<TabItem Header="ItemsView">
-				<ItemsView Name="expandableListView" />
 			</TabItem>
 			<TabItem Header="ProgressRing">
 				<StackPanel Orientation="Vertical">

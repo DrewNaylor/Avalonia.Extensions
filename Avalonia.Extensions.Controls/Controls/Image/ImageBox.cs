@@ -22,11 +22,11 @@ namespace Avalonia.Extensions.Controls
         /// original image height
         /// </summary>
         public double ImageHeight { get; private set; }
-        private DownloadTask Task { get; }
+        private DownloadThread Task { get; }
         private Uri _source;
         public ImageBox() : base()
         {
-            Task = new DownloadTask();
+            Task = new DownloadThread();
         }
         /// <summary>
         /// error message if loading failed
@@ -101,7 +101,7 @@ namespace Avalonia.Extensions.Controls
                 base.Source = bitmap;
             }
         }
-        private void OnDrawBitmap(DownloadTask.Result result)
+        private void OnDrawBitmap(DownloadThread.Result result)
         {
             if (result.Success)
             {
