@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Demo

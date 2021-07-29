@@ -57,7 +57,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-					<GridView Background="Transparent" Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
+					<GridView Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}" Background="Transparent">
 						<GridView.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding content}" />
@@ -102,8 +102,23 @@
 					</ExpandableView.PrimaryView>
 					<ExpandableView.SecondView>
 						<StackPanel Orientation="Vertical">
-							<ImageBox Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
-							<ImageBox Source="http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" />
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
 						</StackPanel>
 					</ExpandableView.SecondView>
 				</ExpandableView>

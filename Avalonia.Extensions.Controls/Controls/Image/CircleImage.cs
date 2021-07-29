@@ -10,7 +10,7 @@ namespace Avalonia.Extensions.Controls
 {
     public sealed class CircleImage : Ellipse
     {
-        private DownloadTask Task { get; }
+        private DownloadThread Task { get; }
         /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>
@@ -33,7 +33,7 @@ namespace Avalonia.Extensions.Controls
         }
         public CircleImage() : base()
         {
-            Task = new DownloadTask();
+            Task = new DownloadThread();
             SourceProperty.Changed.AddClassHandler<CircleImage>(OnSourceChange);
             ImageSourceProperty.Changed.AddClassHandler<CircleImage>(OnImageSourceProperty);
         }

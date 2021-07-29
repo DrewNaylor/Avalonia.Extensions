@@ -3,16 +3,5 @@
     <Style Selector="ExpandableView">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                    <ScrollViewer Name="PART_ScrollViewer"
-            Background="{TemplateBinding Background}"
-            HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-            VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
-          </ScrollViewer>
-                </Border>
-            </ControlTemplate>
-        </Setter>
     </Style>
 </Styles>

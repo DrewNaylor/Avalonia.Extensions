@@ -2,6 +2,10 @@
 
 ---
 
+## DEMO screenshot
+![图片alt](/ss.png "截图")
+---
+
 ## INPORTANT
 
 To enable extension the `UseDoveExtensions` method call should be present in your Program.cs file:

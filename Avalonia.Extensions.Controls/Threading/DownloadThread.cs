@@ -4,11 +4,11 @@ using System.Net.Http;
 
 namespace Avalonia.Extensions.Controls
 {
-    internal partial class DownloadTask : IDisposable
+    internal partial class DownloadThread : IDisposable
     {
         private bool Loading = false;
         private HttpClient HttpClient { get; }
-        public DownloadTask()
+        public DownloadThread()
         {
             HttpClient = Core.Instance.GetClient();
         }

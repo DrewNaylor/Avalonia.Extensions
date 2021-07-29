@@ -3,7 +3,4 @@
 	<Style Selector="TitleBar:fullscreen">
 		<Setter Property="Background" Value="#7f000000" />
 	</Style>
-	<Style Selector="AeroWindow">
-		
-	</Style>
 </Styles>
