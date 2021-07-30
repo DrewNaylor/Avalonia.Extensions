@@ -41,7 +41,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-					<ListView Background="Transparent" Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
+					<ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding content}" />
@@ -57,7 +57,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-					<GridView Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}" Background="Transparent">
+					<GridView Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
 						<GridView.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding content}" />
