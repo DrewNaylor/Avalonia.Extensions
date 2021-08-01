@@ -93,6 +93,12 @@
 					</ListBox.ItemTemplate>
 				</ListBox>
 			</TabItem>
+			<TabItem Header="Button">
+				<StackPanel Orientation="Vertical">
+					<HyperlinkButton Content="12345" />
+					<ImageContentButton Content="234567890" />
+				</StackPanel>
+			</TabItem>
 			<TabItem Header="ExpandableView">
 				<ExpandableView>
 					<ExpandableView.PrimaryView>
