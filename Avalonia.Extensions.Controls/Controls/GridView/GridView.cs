@@ -4,8 +4,6 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Templates;
-using Avalonia.Styling;
-using System;
 using System.Collections.Specialized;
 
 namespace Avalonia.Extensions.Controls
@@ -107,7 +105,6 @@ namespace Avalonia.Extensions.Controls
             ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
             this.InitStyle();
-            Resources.MergedDictionaries.Add($"avares://Avalonia.Extensions.Theme/GridView.xaml".AsStyle());
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
