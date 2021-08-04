@@ -93,6 +93,12 @@
 					</ListBox.ItemTemplate>
 				</ListBox>
 			</TabItem>
+			<TabItem Header="Button">
+				<StackPanel Orientation="Vertical">
+					<HyperlinkButton Content="12345" />
+					<ImageContentButton Content="234567890" />
+				</StackPanel>
+			</TabItem>
 			<TabItem Header="ExpandableView">
 				<ExpandableView>
 					<ExpandableView.PrimaryView>
@@ -151,6 +157,12 @@
 				<StackPanel Orientation="Vertical">
 					<ProgressRing Name="progressRing" />
 					<Button Name="btnStart">开始</Button>
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="TipLabel">
+				<StackPanel Orientation="Vertical">
+					<TipLabel Content="123456" Padding="8" Background="Red" />
+					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="PopupMenu">

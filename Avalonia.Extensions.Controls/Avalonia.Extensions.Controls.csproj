@@ -8,10 +8,11 @@
         <Product>Avalonia.Extensions.Controls</Product>
         <Authors>michael_eddy</Authors>
         <UserSecretsId>214483ab-ede2-45c7-ac37-b353540601d8</UserSecretsId>
-        <Version>1.3.7</Version>
+        <Version>1.3.8</Version>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DocumentationFile></DocumentationFile>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -19,6 +20,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.6" />
         <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.6" />
+        <PackageReference Include="DynamicData" Version="7.2.1" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     </ItemGroup>

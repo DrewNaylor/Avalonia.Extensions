@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Avalonia.Extensions.Controls;
+using System;
 using System.IO;
 using System.Net.Http;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Threading
 {
     internal partial class DownloadThread : IDisposable
     {
