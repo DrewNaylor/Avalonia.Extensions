@@ -7,6 +7,10 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static int Upper(this double value)
+        {
+            return Convert.ToInt32(Math.Ceiling(value));
+        }
         public static ResourceInclude AsResource(this string url)
         {
             var uri = new Uri(url);

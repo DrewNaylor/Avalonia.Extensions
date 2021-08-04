@@ -1,4 +1,6 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Extensions.Styles;
 using Avalonia.Platform;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
-        private const double Epsilon = 0.00000153; 
+        private const double Epsilon = 0.00000153;
         public static T GetPrivateField<T>(this Control control, string fieldName)
         {
             try
@@ -57,7 +59,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic| BindingFlags.Public;
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                 var property = type.GetProperty(propertyName, flag);
                 return (T)property?.GetValue(control);
             }
@@ -105,7 +107,7 @@ namespace Avalonia.Extensions.Controls
             }
             return default;
         }
-        public static SizeF MeasureString(this string text, Font font, float maxwidth)
+        public static SizeF MeasureString(this string text, Font font, double maxwidth)
         {
             var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font,
                 Convert.ToInt32(maxwidth * 96f / 100f));
@@ -171,6 +173,12 @@ namespace Avalonia.Extensions.Controls
             }
             catch { }
             return window;
+        }
+        internal static Font GetFont(this TextBlock textBlock)
+        {
+            var fontFamily = textBlock.FontFamily.Name;
+            var fontSize = Convert.ToSingle(textBlock.FontSize);
+            return new Font(fontFamily, fontSize);
         }
     }
 }

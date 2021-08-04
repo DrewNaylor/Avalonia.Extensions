@@ -1,10 +1,11 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Controls;
 using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Threading
 {
     internal sealed class AnimationThread : IDisposable
     {

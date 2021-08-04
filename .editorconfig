@@ -10,3 +10,6 @@ dotnet_diagnostic.IDE0048.severity = none
 
 # IDE0045: 转换为条件表达式
 dotnet_diagnostic.IDE0045.severity = none
+
+# IDE0090: 使用 "new(...)"
+dotnet_diagnostic.IDE0090.severity = none

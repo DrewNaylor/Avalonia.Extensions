@@ -1,9 +1,10 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Controls;
 using Avalonia.Styling;
 using System;
 using System.Diagnostics;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Styles
 {
     public interface IStyling : IStyleable
     {
