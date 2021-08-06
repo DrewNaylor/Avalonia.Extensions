@@ -66,20 +66,19 @@ namespace Avalonia.Extensions.Controls
                         }
                     case "avares":
                         {
-                            Dispatcher.UIThread.InvokeAsync(() =>
-                            {
-                                using var stream = Core.Instance.AssetLoader.Open(uri);
-                                SetSource(stream);
-                            });
+                            using var stream = Core.Instance.AssetLoader.Open(uri);
+                            SetSource(stream);
                             break;
                         }
                     default:
-                        FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
-                        var @event = new RoutedEventArgs(FailedEvent);
-                        RaiseEvent(@event);
-                        if (!@event.Handled)
-                            @event.Handled = true;
-                        break;
+                        {
+                            FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
+                            var @event = new RoutedEventArgs(FailedEvent);
+                            RaiseEvent(@event);
+                            if (!@event.Handled)
+                                @event.Handled = true;
+                            break;
+                        }
                 }
             });
         }

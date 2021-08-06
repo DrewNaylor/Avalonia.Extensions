@@ -10,6 +10,16 @@ namespace Avalonia.Extensions.Controls
         private string _content;
         private Border DockPanel { get; }
         private TextBlock TextBlock { get; }
+        static TipLabel()
+        {
+            ContentProperty.Changed.AddClassHandler<TipLabel>(OnContentChange);
+            PaddingProperty.Changed.AddClassHandler<TipLabel>(OnPaddingChange);
+            ForegroundProperty.Changed.AddClassHandler<TipLabel>(OnForegroundChange);
+            BackgroundProperty.Changed.AddClassHandler<TipLabel>(OnBackgroundChange);
+            BorderBrushProperty.Changed.AddClassHandler<TipLabel>(OnBorderBrushChange);
+            CornerRadiusProperty.Changed.AddClassHandler<TipLabel>(OnCornerRadiusChanged);
+            BorderThicknessProperty.Changed.AddClassHandler<TipLabel>(OnBorderThicknessChange);
+        }
         public TipLabel() : base()
         {
             TextBlock = new TextBlock
@@ -25,16 +35,12 @@ namespace Avalonia.Extensions.Controls
                 Padding = this.Padding,
                 Background = this.Background,
                 BorderBrush = this.BorderBrush,
+                CornerRadius = this.CornerRadius,
                 BorderThickness = this.BorderThickness
             };
             DockPanel.Child = TextBlock;
             Children.Add(DockPanel);
-            ContentProperty.Changed.AddClassHandler<TipLabel>(OnContentChange);
-            PaddingProperty.Changed.AddClassHandler<TipLabel>(OnPaddingChange);
-            ForegroundProperty.Changed.AddClassHandler<TipLabel>(OnForegroundChange);
-            BackgroundProperty.Changed.AddClassHandler<TipLabel>(OnBackgroundChange);
-            BorderBrushProperty.Changed.AddClassHandler<TipLabel>(OnBorderBrushChange);
-            BorderThicknessProperty.Changed.AddClassHandler<TipLabel>(OnBorderThicknessChange);
+            SetValue(BackgroundProperty, new SolidColorBrush(Colors.Gray));
         }
         [Content]
         public string Content
@@ -47,8 +53,8 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public IBrush BorderBrush
         {
-            get { return GetValue(BorderBrushProperty); }
-            set { SetValue(BorderBrushProperty, value); }
+            get => GetValue(BorderBrushProperty);
+            set => SetValue(BorderBrushProperty, value);
         }
         /// <summary>
         /// Gets or sets the padding to place around the <see cref="Child"/> control.
@@ -71,8 +77,21 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ForegroundProperty);
             set => SetValue(ForegroundProperty, value);
         }
+        /// <summary>
+        /// Gets or sets the radius of the border rounded corners.
+        /// </summary>
+        public CornerRadius CornerRadius
+        {
+            get => GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="CornerRadius"/> property.
+        /// </summary>
+        public static readonly StyledProperty<CornerRadius> CornerRadiusProperty =
+            AvaloniaProperty.Register<TipLabel, CornerRadius>(nameof(CornerRadius), new CornerRadius(6));
         public static readonly StyledProperty<IBrush> ForegroundProperty =
-            AvaloniaProperty.Register<TipLabel, IBrush>(nameof(Foreground));
+            AvaloniaProperty.Register<TipLabel, IBrush>(nameof(Foreground), new SolidColorBrush(Colors.White));
         /// <summary>
         /// Defines the <see cref="BorderBrush"/> property.
         /// </summary>
@@ -90,46 +109,54 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public static readonly DirectProperty<TipLabel, string> ContentProperty =
                AvaloniaProperty.RegisterDirect<TipLabel, string>(nameof(Content), o => o.Content, (o, v) => o.Content = v);
-        private void OnContentChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnContentChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is string chars)
             {
-                TextBlock.Text = chars;
-                var size = chars.MeasureString(TextBlock.GetFont(), 0);
+                label.TextBlock.Text = chars;
+                var size = chars.MeasureString(label.TextBlock.GetFont(), 0);
                 if (size != null)
                 {
-                    var width = Convert.ToDouble(size.Width).Upper() + (Padding.Left + Padding.Right).Upper();
-                    this.Width = DockPanel.Width = width;
+                    var width = Convert.ToDouble(size.Width).Upper() + (label.Padding.Left + label.Padding.Right).Upper();
+                    label.Width = label.DockPanel.Width = width;
                 }
             }
         }
-        private void OnBackgroundChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnBackgroundChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is IBrush brush)
-                DockPanel.Background = brush;
+            if (e.NewValue is IBrush brush && brush != Core.Instance.Transparent)
+            {
+                label.DockPanel.Background = brush;
+                label.Background = Core.Instance.Transparent;
+            }
         }
-        private void OnPaddingChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnPaddingChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is Thickness thickness)
             {
-                DockPanel.Padding = thickness;
-                this.Height += thickness.Bottom + thickness.Top;
+                label.DockPanel.Padding = thickness;
+                label.Height += thickness.Bottom + thickness.Top;
             }
         }
-        private void OnBorderThicknessChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnBorderThicknessChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is Thickness thickness)
-                DockPanel.BorderThickness = thickness;
+                label.DockPanel.BorderThickness = thickness;
         }
-        private void OnBorderBrushChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnBorderBrushChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is IBrush brush)
-                DockPanel.BorderBrush = brush;
+                label.DockPanel.BorderBrush = brush;
         }
-        private void OnForegroundChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnForegroundChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is IBrush brush)
-                TextBlock.Foreground = brush;
+                label.TextBlock.Foreground = brush;
+        }
+        private static void OnCornerRadiusChanged(TipLabel label, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is CornerRadius radius)
+                label.DockPanel.CornerRadius = radius;
         }
     }
 }

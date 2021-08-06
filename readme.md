@@ -23,15 +23,12 @@ public static AppBuilder BuildAvaloniaApp()
 ## ABOUT FOLDER
 
 > Base
->
 > > Basic, public library
 
 > Controls
->
 > > Control extension implementation
 
 > Utils
->
 > > Extension Method Library
 
 ---
@@ -41,82 +38,79 @@ public static AppBuilder BuildAvaloniaApp()
 > # CONTROLS
 
 - [x] ProgressRing
-
   > inherit from Canvas,Implement loading animation
 
 - [x] ClickableView
-
   > Views that can trigger the click event
 
 - [x] ~CellListView~ ~SplitListView~ GridView
-
   > a Multiple-Column ListView/ListBox,Just like GridView in UWP
 
 - [x] ~CellListViewCell~ ~SplitListViewItem~ GridViewItem
-
   > Item for ~CellListView~ ~SplitListView~ GridViewItem,inherit from ~ClickableView~ ListViewItem,with Left/Right Click Event
 
 - [x] CircleImage
-
   > inherit from Ellipse,Round picture.Just like PersonPicture in UWP
 
 - [x] ExpandableView
 
   > A view that shows items in a vertically scrolling two-level list
   > PrimaryView
-  >
   > > Main Item,show/hide the SecondView after selection
   > > SecondView
   > > show or hide when select PrimaryView
 
 - [x] ~ImageRemote~ ImageBox
-
   > inherit from Image,loading image from http/https/local
 
 - [x] ListView
-
   > inherit from ListBox,just like the ListView in UWP
 
 - [x] ListViewItem
-
   > Item for ListView,inherit from ListBoxItem
 
 - [x] MessageBox
-
   > Show message window
 
 - [x] NotifyWindow
-
   > Notify message window,the transition animation can be displayed according to the preset and automatically closed after a certain period of time
 
 - [x] PopupDialog
-
   > inherit from Popup,show message dialog and automatically shut down after a certain period of time
 
 - [x] PopupMenu
-
   > inherit from Window,close after selecting item and trigger the event
 
 - [x] HorizontalItemsRepeater
-
   > inherit from ItemsRepeater,Horizontal layout with Clickable Item
 
 - [x] VerticalItemsRepeater
-
   > inherit from ItemsRepeater,Vertical layout with Clickable Item
 
 - [x] ItemsRepeaterContent
-
   > Item for ItemsRepeater with Clickable Event
 
-- [ ] ScrollView
-
+- [x] ScrollView
   > inherit from ScrollViewer,extend sliding to the bottom, sliding to the top event
 
 - [x] PopupToast
   > inherit from Window,show message dialog and automatically shut down after a certain period of time
-  >
   > > diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel
+
+- [x] RunLabel
+> Run binding just LIKE WPF/UWP in TextBlock
+
+- [x] HyperlinkButton
+> the button style LIKE HyperlinkButton in UWP
+
+- [x] AeroWindow
+> the window LIKE "Windows Aero" OR "Aero Grass"
+
+- [x] ImageContentButton
+> the button show Image and Text
+
+-[ ] FontIcon
+> the `FontIcon` in UWP
 
 > # EXTEND
 
@@ -174,3 +168,7 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] GetWindow
   > get window who own this control
+
+## 必须加入库中的功能
+1、[avalonia项目在银河麒麟操作系统arm架构上运行报错]
+(https://www.cnblogs.com/joyandjoys/p/14346935.html)
