@@ -24,6 +24,7 @@ namespace Avalonia.Extensions.Controls
         private Core()
         {
             FontDefault = new Font("Arial", 16);
+            Transparent = new SolidColorBrush(Colors.Transparent);
         }
         public Font FontDefault { get; private set; }
         public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
@@ -63,6 +64,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch { }
         }
+        internal SolidColorBrush Transparent { get; }
         private SolidColorBrush _primaryBrush;
         public SolidColorBrush PrimaryBrush
         {

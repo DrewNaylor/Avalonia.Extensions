@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
+using Avalonia.Media;
 using Avalonia.Platform;
 using System;
 using System.Collections.Generic;
@@ -179,6 +179,17 @@ namespace Avalonia.Extensions.Controls
             var fontFamily = textBlock.FontFamily.Name;
             var fontSize = Convert.ToSingle(textBlock.FontSize);
             return new Font(fontFamily, fontSize);
+        }
+        internal static double GetParagraphOffsetX(double lineWidth, double paragraphWidth, TextAlignment textAlignment)
+        {
+            if (double.IsPositiveInfinity(paragraphWidth))
+                return 0.0;
+            return textAlignment switch
+            {
+                TextAlignment.Center => (paragraphWidth - lineWidth) / 2.0,
+                TextAlignment.Right => paragraphWidth - lineWidth,
+                _ => 0.0,
+            };
         }
     }
 }

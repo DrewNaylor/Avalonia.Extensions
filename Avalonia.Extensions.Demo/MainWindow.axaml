@@ -96,7 +96,7 @@
 			<TabItem Header="Button">
 				<StackPanel Orientation="Vertical">
 					<HyperlinkButton Content="12345" />
-					<ImageContentButton Content="234567890" />
+					<ImageContentButton Content="234567890" ImageSource="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="ExpandableView">
@@ -161,7 +161,12 @@
 			</TabItem>
 			<TabItem Header="TipLabel">
 				<StackPanel Orientation="Vertical">
-					<TipLabel Content="123456" Padding="8" Background="Red" />
+					<RunLabel Foreground="White" FontSize="18">
+						<Run Content="111" />
+						<Run Content="222" />
+						<Run Content="333" />
+					</RunLabel>
+					<TipLabel Content="123456" Padding="8" Background="Red" Foreground="White" />
 					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
 				</StackPanel>
 			</TabItem>
