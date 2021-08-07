@@ -7,6 +7,21 @@ namespace Avalonia.Extensions.Controls
     {
         public object ClickItem { get; set; }
         public MouseButton ClickMouse { get; }
+        public bool IsLeftClick => ClickMouse == MouseButton.Left;
+        public bool IsRightClick => ClickMouse == MouseButton.Right;
+        public bool GetItemContent<T>(out T content)
+        {
+            if (ClickItem is ListViewItem item)
+            {
+                if (item.Content is T obj)
+                {
+                    content = obj;
+                    return true;
+                }
+            }
+            content = default;
+            return false;
+        }
         public ViewRoutedEventArgs(RoutedEvent args, MouseButton mouseButton) : base(args)
         {
             ClickMouse = mouseButton;
