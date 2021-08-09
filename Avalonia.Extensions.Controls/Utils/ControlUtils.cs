@@ -12,19 +12,36 @@ namespace Avalonia.Extensions.Controls
     public static class ControlUtils
     {
         private const double Epsilon = 0.00000153;
-        public static T GetPrivateField<T>(this Control control, string fieldName)
+        public static T GetPrivateField<T>(this object control, string fieldName)
         {
             try
             {
                 var type = control.GetType();
                 BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
                 FieldInfo field = type.GetField(fieldName, flag);
-                return (T)field?.GetValue(control);
+                if (field == null)
+                    return type.BaseType.GetPrivateField<T>(control, fieldName);
+                else
+                    return (T)field?.GetValue(control);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+        public static T GetPrivateField<T>(this Type type, object control, string fieldName)
+        {
+            try
+            {
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                FieldInfo field = type.GetField(fieldName, flag);
+                if (field == null)
+                    return type.BaseType.GetPrivateField<T>(control, fieldName);
+                else
+                    return (T)field?.GetValue(control);
+            }
+            catch { }
+            return default;
         }
         public static T GetPrivateField<T>(this NameScope scope, string fieldName)
         {

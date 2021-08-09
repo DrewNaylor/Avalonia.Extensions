@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
 using System;
+using System.Collections.Specialized;
 using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
@@ -23,7 +24,19 @@ namespace Avalonia.Extensions.Controls
         {
             DrawLayout();
             this.InitStyle();
+            Children.CollectionChanged += LogicalChildren_CollectionChanged;
         }
+        private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var viewManager = this.GetPrivateField<object>("_viewManager");
+            int count = viewManager.GetPrivateField<int>("_lastRealizedElementIndexHeldByLayout") + 1;
+        }
+        protected virtual void ContentChange(object content) { }
+        /// <summary>
+        /// Defines the <see cref="Loaded"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<RoutedEventArgs> LoadedEvent =
+           RoutedEvent.Register<HorizontalItemsRepeater, RoutedEventArgs>(nameof(Loaded), RoutingStrategies.Bubble);
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
@@ -65,6 +78,11 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(ClickableProperty);
             set => SetValue(ClickableProperty, value);
+        }
+        public event EventHandler<RoutedEventArgs> Loaded
+        {
+            add { AddHandler(LoadedEvent, value); }
+            remove { RemoveHandler(LoadedEvent, value); }
         }
         /// <summary>
         /// Gets or sets the clicked child item
