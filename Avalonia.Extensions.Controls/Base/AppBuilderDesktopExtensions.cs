@@ -14,8 +14,6 @@ namespace Avalonia.Extensions.Controls
             Core.Instance.AppAssembly = builder.ApplicationType.Assembly;
             builder.AfterSetup((_) =>
             {
-                Application.Current.Resources.Add("Dove.ThemeDictionary", "avares://Avalonia.Extensions.Theme/ThemeDictionary.xaml".AsResource());
-                Application.Current.Resources.MergedDictionaries.Add("avares://Avalonia.Extensions.Theme/ThemeDictionary.xaml".AsStyle());
                 if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     Dispatcher.UIThread.InvokeAsync(() =>
