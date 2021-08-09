@@ -1,4 +1,5 @@
 using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Theme;
 
 namespace Avalonia.Controls.Demo
 {
@@ -10,6 +11,7 @@ namespace Avalonia.Controls.Demo
                     .UsePlatformDetect()
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
+                    .UseDoveExtensionThemes()
                     .LogToTrace()
             .StartWithClassicDesktopLifetime(args);
         }

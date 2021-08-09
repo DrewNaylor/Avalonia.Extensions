@@ -15,15 +15,18 @@ namespace Avalonia.Extensions.Controls
         /// set chinese support fontfamily for controls
         /// </summary>
         /// <param name="supportContols">if default, it just works on <seealso cref="TextBox"/></param>
-        public static TAppBuilder UseChineseInputSupport<TAppBuilder>(this TAppBuilder builder, IEnumerable<Type> supportContols = null)
+        public static TAppBuilder UseChineseInputSupport<TAppBuilder>(this TAppBuilder builder, params Type[] supportContols)
             where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
         {
             builder.AfterSetup((_) =>
             {
                 try
                 {
+                    var contols = default(List<Type>);
                     if (supportContols == null || supportContols.Count() == 0)
-                        supportContols = new List<Type> { typeof(TextBox), typeof(TextPresenter) };
+                        contols = new List<Type> { typeof(TextBox), typeof(TextPresenter) };
+                    else
+                        contols = new List<Type>(supportContols);
                     ApplyStyle(supportContols);
                 }
                 catch (Exception ex)

@@ -5,7 +5,7 @@
         <Authors>michael_eddy</Authors>
         <AssemblyVersion>1.3.7.0</AssemblyVersion>
         <FileVersion>1.3.7.0</FileVersion>
-        <Version>1.3.7</Version>
+        <Version>1.4.0</Version>
         <PackageProjectUrl>https://github.com/dove-team/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
