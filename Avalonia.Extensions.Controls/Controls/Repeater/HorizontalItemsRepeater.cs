@@ -5,7 +5,6 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
 using System;
-using System.Collections.Specialized;
 using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
@@ -24,12 +23,6 @@ namespace Avalonia.Extensions.Controls
         {
             DrawLayout();
             this.InitStyle();
-            Children.CollectionChanged += LogicalChildren_CollectionChanged;
-        }
-        private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            var viewManager = this.GetPrivateField<object>("_viewManager");
-            int count = viewManager.GetPrivateField<int>("_lastRealizedElementIndexHeldByLayout") + 1;
         }
         protected virtual void ContentChange(object content) { }
         /// <summary>
