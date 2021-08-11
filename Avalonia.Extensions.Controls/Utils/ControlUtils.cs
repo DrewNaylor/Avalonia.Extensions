@@ -12,6 +12,10 @@ namespace Avalonia.Extensions.Controls
     public static class ControlUtils
     {
         private const double Epsilon = 0.00000153;
+        internal static string TypeName(this IControl control)
+        {
+            return control.GetType().Name;
+        }
         internal static bool AreClose(Size size1, Size size2)
         {
             return AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
