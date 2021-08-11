@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Avalonia.Extensions.Controls;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
@@ -124,10 +123,8 @@ namespace Avalonia.Extensions.Styles
 		{
 			new ShapedTextCharacters(glyphRun, _paragraphProperties.DefaultTextRunProperties)
 		};
-			Type type = Type.GetType("Avalonia.Media.TextFormatting.TextLineImpl");
 			object[] parameters = new object[] { textRuns, TextLineMetrics.Create(textRuns, new TextRange(startingIndex, 1), MaxWidth, _paragraphProperties) };
-			object obj = Activator.CreateInstance(type, parameters);
-			return obj as TextLine;
+			return "Avalonia.Media.TextFormatting.TextLineImpl".CreateInstance<TextLine>(parameters);
 		}
 		private void UpdateLayout()
 		{

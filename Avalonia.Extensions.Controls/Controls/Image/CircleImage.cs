@@ -51,12 +51,12 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.NewValue is Uri uri)
             {
-                switch (uri.Scheme)
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    case "http":
-                    case "https":
-                        Dispatcher.UIThread.InvokeAsync(() =>
-                        {
+                    switch (uri.Scheme)
+                    {
+                        case "http":
+                        case "https":
                             Task.Create(uri, (result) =>
                             {
                                 if (result.Stream != null)
@@ -67,26 +67,27 @@ namespace Avalonia.Extensions.Controls
                                     SetSize(bitmap.Size);
                                 }
                             });
-                        });
-                        break;
-                    case "avares":
-                        Dispatcher.UIThread.InvokeAsync(() =>
-                        {
-                            var assets = Core.Instance.AssetLoader;
-                            using var bitmap = new Bitmap(assets.Open(uri));
-                            Fill = new ImageBrush { Source = bitmap };
-                            DrawAgain();
-                            SetSize(bitmap.Size);
-                        });
-                        break;
-                    default:
-                        FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
-                        var @event = new RoutedEventArgs(FailedEvent);
-                        RaiseEvent(@event);
-                        if (!@event.Handled)
-                            @event.Handled = true;
-                        break;
-                }
+                            break;
+                        case "avares":
+                            {
+                                var assets = Core.Instance.AssetLoader;
+                                using var bitmap = new Bitmap(assets.Open(uri));
+                                Fill = new ImageBrush { Source = bitmap };
+                                DrawAgain();
+                                SetSize(bitmap.Size);
+                                break;
+                            }
+                        default:
+                            {
+                                FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
+                                var @event = new RoutedEventArgs(FailedEvent);
+                                RaiseEvent(@event);
+                                if (!@event.Handled)
+                                    @event.Handled = true;
+                                break;
+                            }
+                    }
+                });
             }
         }
         private void SetSize(Size size)

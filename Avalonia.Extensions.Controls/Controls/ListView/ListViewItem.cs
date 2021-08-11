@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
 using Avalonia.Data;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
+    [PseudoClasses(":pressed", ":selected")]
     public class ListViewItem : ListBoxItem, IStyling
     {
         public Type StyleKey => typeof(ListBoxItem);

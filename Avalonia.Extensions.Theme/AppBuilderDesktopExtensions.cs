@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Extensions.Controls;
 
 namespace Avalonia.Extensions.Theme
 {
@@ -9,8 +8,7 @@ namespace Avalonia.Extensions.Theme
         {
             builder.AfterSetup((_) =>
             {
-                Application.Current.Resources.Add("Dove.ThemeDictionary", "avares://Avalonia.Extensions.Theme/ThemeDictionary.xaml".AsResource());
-                Application.Current.Resources.MergedDictionaries.Add("avares://Avalonia.Extensions.Theme/ThemeDictionary.xaml".AsStyle());
+                Application.Current.Styles.Add(new ControlsTheme());
             });
             return builder;
         }

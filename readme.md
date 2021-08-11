@@ -15,6 +15,7 @@ public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
         .UsePlatformDetect()
         .UseDoveExtensions()
+        .UseDoveExtensionThemes()
         .LogToTrace();
 ```
 
@@ -57,7 +58,7 @@ public static AppBuilder BuildAvaloniaApp()
   > A view that shows items in a vertically scrolling two-level list
   > PrimaryView
   > > Main Item,show/hide the SecondView after selection
-  > > SecondView
+  > SecondView
   > > show or hide when select PrimaryView
 
 - [x] ~ImageRemote~ ImageBox
@@ -121,7 +122,6 @@ To enable extension the `UseChineseInputSupport` method call should be present i
 public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
         .UsePlatformDetect()
-        .UseDoveExtensions()
         .UseChineseInputSupport()
         .LogToTrace();
 ```

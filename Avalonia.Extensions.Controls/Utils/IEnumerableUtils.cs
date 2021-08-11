@@ -16,6 +16,13 @@ namespace Avalonia.Extensions.Controls
             }
             return false;
         }
+        public static T Last<T>(this IList objs)
+        {
+            var count = objs.Count;
+            if (count > 0)
+                return (T)objs.ElementAt(--count);
+            return default;
+        }
         public static bool IsLast(this IEnumerable items, object item)
         {
             if (items != null && item != null)

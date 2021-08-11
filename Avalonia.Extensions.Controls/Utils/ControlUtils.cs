@@ -12,75 +12,9 @@ namespace Avalonia.Extensions.Controls
     public static class ControlUtils
     {
         private const double Epsilon = 0.00000153;
-        public static T GetPrivateField<T>(this Control control, string fieldName)
+        internal static string TypeName(this IControl control)
         {
-            try
-            {
-                var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
-                FieldInfo field = type.GetField(fieldName, flag);
-                return (T)field?.GetValue(control);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static T GetPrivateField<T>(this NameScope scope, string fieldName)
-        {
-            try
-            {
-                var type = scope.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
-                FieldInfo field = type.GetField(fieldName, flag);
-                return (T)field?.GetValue(scope);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static void SetPrivateField(this Control control, string fieldName, object fieldValue)
-        {
-            try
-            {
-                var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-                var field = type.GetField(fieldName, flag);
-                field?.SetValue(control, fieldValue);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static T GetPrivateProperty<T>(this Control control, string propertyName)
-        {
-            try
-            {
-                var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-                var property = type.GetProperty(propertyName, flag);
-                return (T)property?.GetValue(control);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static void SetPrivateProperty(this Control control, string propertyName, object propertyValue)
-        {
-            try
-            {
-                var type = control.GetType();
-                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-                var property = type.GetProperty(propertyName, flag);
-                property?.SetValue(control, propertyValue);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return control.GetType().Name;
         }
         internal static bool AreClose(Size size1, Size size2)
         {

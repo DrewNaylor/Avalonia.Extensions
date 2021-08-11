@@ -24,6 +24,12 @@ namespace Avalonia.Extensions.Controls
             DrawLayout();
             this.InitStyle();
         }
+        protected virtual void ContentChange(object content) { }
+        /// <summary>
+        /// Defines the <see cref="Loaded"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<RoutedEventArgs> LoadedEvent =
+           RoutedEvent.Register<HorizontalItemsRepeater, RoutedEventArgs>(nameof(Loaded), RoutingStrategies.Bubble);
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
         /// </summary>
@@ -65,6 +71,11 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(ClickableProperty);
             set => SetValue(ClickableProperty, value);
+        }
+        public event EventHandler<RoutedEventArgs> Loaded
+        {
+            add { AddHandler(LoadedEvent, value); }
+            remove { RemoveHandler(LoadedEvent, value); }
         }
         /// <summary>
         /// Gets or sets the clicked child item
@@ -128,5 +139,6 @@ namespace Avalonia.Extensions.Controls
                 Orientation = Orientation.Vertical
             };
         }
+        protected bool IsLayoutInProgress => this.GetPrivateField<bool>("_isLayoutInProgress");
     }
 }

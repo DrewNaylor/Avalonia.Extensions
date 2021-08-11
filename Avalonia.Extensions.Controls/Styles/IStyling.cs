@@ -17,6 +17,7 @@ namespace Avalonia.Extensions.Styles
                     var typeName = GetType().Name;
                     if (!control.Resources.ContainsKey(typeName))
                         control.Resources.Add(typeName, $"avares://Avalonia.Extensions.Theme/{typeName}.xaml".AsResource());
+                    AvaloniaLocator.Current.GetService<IStyler>()?.ApplyStyles(this);
                 }
             }
             catch (Exception ex)
