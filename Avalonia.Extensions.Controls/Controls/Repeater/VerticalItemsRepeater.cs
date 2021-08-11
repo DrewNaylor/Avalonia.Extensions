@@ -139,5 +139,6 @@ namespace Avalonia.Extensions.Controls
                 Orientation = Orientation.Vertical
             };
         }
+        protected bool IsLayoutInProgress => this.GetPrivateField<bool>("_isLayoutInProgress");
     }
 }
