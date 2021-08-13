@@ -27,7 +27,7 @@ namespace Avalonia.Extensions.Controls
                         contols = new List<Type> { typeof(TextBox), typeof(TextPresenter) };
                     else
                         contols = new List<Type>(supportContols);
-                    ApplyStyle(supportContols);
+                    ApplyStyle(contols);
                 }
                 catch (Exception ex)
                 {
