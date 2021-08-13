@@ -7,23 +7,18 @@
 		<Setter Property="Margin" Value="0,0,0,1" />
 		<Setter Property="Padding" Value="5,2,5,2" />
 		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<!--<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type ListViewItem}">
-					<Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
-        Background="{TemplateBinding Background}" CornerRadius="2">
-						<Border Name="InnerBorder" CornerRadius="1" BorderThickness="1">
-							<Grid>
-								<Grid.RowDefinitions>
-									<RowDefinition MaxHeight="11" />
-									<RowDefinition />
-								</Grid.RowDefinitions>
-								<Rectangle Name="UpperHighlight" IsVisible="false" Fill="#75FFFFFF" />
-							</Grid>
-						</Border>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>-->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<ContentPresenter Name="PART_ContentPresenter"
+								  Background="{TemplateBinding Background}"
+								  BorderBrush="{TemplateBinding BorderBrush}"
+								  BorderThickness="{TemplateBinding BorderThickness}"
+								  ContentTemplate="{TemplateBinding ContentTemplate}"
+								  Content="{TemplateBinding Content}"
+								  Padding="{TemplateBinding Padding}"
+								  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+								  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+			</ControlTemplate>
+		</Setter>
 	</Style>
 </Styles>
