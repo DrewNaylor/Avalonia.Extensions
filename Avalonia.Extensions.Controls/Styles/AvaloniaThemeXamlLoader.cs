@@ -8,15 +8,12 @@ namespace Avalonia.Extensions.Styles
 {
     internal static class AvaloniaThemeXamlLoader
     {
-        static AvaloniaThemeXamlLoader()
+        public static void ApplyTheme(this StyledElement element, Uri sourceUri)
         {
-            Core.Instance.Init();
-        }
-        public static void ApplyTheme(this StyledElement element, string typeName)
-        {
+            if (!Core.Instance.InnerClasses.Contains(sourceUri))
+                return;
             try
             {
-                var sourceUri = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{typeName}.xml");
                 var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
                 using var stream = assets.Open(sourceUri);
                 var bytes = new byte[stream.Length];

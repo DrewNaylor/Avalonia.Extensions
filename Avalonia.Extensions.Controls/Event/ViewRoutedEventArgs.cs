@@ -1,7 +1,8 @@
-﻿using Avalonia.Input;
+﻿using Avalonia.Extensions.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Event
 {
     public class ViewRoutedEventArgs : RoutedEventArgs
     {

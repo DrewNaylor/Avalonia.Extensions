@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Generators;
+using Avalonia.Extensions.Event;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Interactivity;

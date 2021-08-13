@@ -1,6 +1,7 @@
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Event;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;

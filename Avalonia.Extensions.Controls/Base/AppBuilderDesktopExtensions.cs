@@ -15,6 +15,7 @@ namespace Avalonia.Extensions.Controls
             Core.Instance.AppAssembly = builder.ApplicationType.Assembly;
             builder.AfterSetup((_) =>
             {
+                Core.Instance.Init();
                 AvaloniaLocator.CurrentMutable.GetService<IAssetLoader>().SetDefaultAssembly(typeof(Core).Assembly);
                 if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
