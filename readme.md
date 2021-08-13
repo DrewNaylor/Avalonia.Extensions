@@ -15,7 +15,6 @@ public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
         .UsePlatformDetect()
         .UseDoveExtensions()
-        .UseDoveExtensionThemes()
         .LogToTrace();
 ```
 
