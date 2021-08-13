@@ -1,7 +1,7 @@
 ﻿using Avalonia.Collections;
 using System.Collections;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Model
 {
     public sealed class ExpandableObject
     {

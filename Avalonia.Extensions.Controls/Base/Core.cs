@@ -1,6 +1,7 @@
 ﻿using Avalonia.Media;
 using Avalonia.Platform;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
@@ -23,25 +24,23 @@ namespace Avalonia.Extensions.Controls
         internal Assembly AppAssembly { get; set; }
         private Core()
         {
+            InnerClasses = new List<Uri>();
             FontDefault = new Font("Arial", 16);
             Transparent = new SolidColorBrush(Colors.Transparent);
         }
-        public Font FontDefault { get; private set; }
-        public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
-        private IAssetLoader assetLoader;
-        public IAssetLoader AssetLoader
+        public void Init()
         {
-            get
-            {
-                if (assetLoader == null)
-                {
-                    assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
-                    if (AppAssembly != null)
-                        assetLoader.SetDefaultAssembly(AppAssembly);
-                }
-                return assetLoader;
-            }
+            AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+            var assets = AssetLoader.GetAssets(new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml"),
+                  new Uri("avares://Avalonia.Extensions.Controls"));
+            var enumerator = assets.GetEnumerator();
+            while (enumerator.MoveNext())
+                InnerClasses.Add(enumerator.Current);
         }
+        public Font FontDefault { get; }
+        public List<Uri> InnerClasses { get; private set; }
+        public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
+        public IAssetLoader AssetLoader { get; private set; }
         private HttpClient HttpClient { get; set; }
         public const string WRAP_TEMPLATE = "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>";
         public HttpClient GetClient()
@@ -58,8 +57,9 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
+                InnerClasses.Clear();
                 HttpClient.Dispose();
-                FontDefault = null;
+                InnerClasses = null;
                 _primaryBrush = null;
             }
             catch { }

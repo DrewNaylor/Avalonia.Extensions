@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Extensions.Controls
+﻿namespace Avalonia.Extensions.Model
 {
     internal sealed class BindingModel
     {

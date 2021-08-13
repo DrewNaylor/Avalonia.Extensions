@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using System;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Avalonia.Extensions.Controls
             Core.Instance.AppAssembly = builder.ApplicationType.Assembly;
             builder.AfterSetup((_) =>
             {
+                Core.Instance.Init();
+                AvaloniaLocator.CurrentMutable.GetService<IAssetLoader>().SetDefaultAssembly(typeof(Core).Assembly);
                 if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     Dispatcher.UIThread.InvokeAsync(() =>

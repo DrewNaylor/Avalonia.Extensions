@@ -16,6 +16,5 @@
     <ItemGroup>
         <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
-        <ProjectReference Include="..\Avalonia.Extensions.Theme\Avalonia.Extensions.Theme.csproj" />
     </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Event
 {
     public class ItemClickEventArgs : EventArgs
     {
