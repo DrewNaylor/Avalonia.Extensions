@@ -26,6 +26,7 @@ namespace Avalonia.Extensions.Controls
             FontDefault = new Font("Arial", 16);
             Transparent = new SolidColorBrush(Colors.Transparent);
         }
+        public void Init() { }
         public Font FontDefault { get; private set; }
         public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
         private IAssetLoader assetLoader;
@@ -34,11 +35,7 @@ namespace Avalonia.Extensions.Controls
             get
             {
                 if (assetLoader == null)
-                {
                     assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
-                    if (AppAssembly != null)
-                        assetLoader.SetDefaultAssembly(AppAssembly);
-                }
                 return assetLoader;
             }
         }

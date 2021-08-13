@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Platform;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,6 +13,20 @@ namespace Avalonia.Extensions.Controls
     public static class ControlUtils
     {
         private const double Epsilon = 0.00000153;
+        internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)
+        {
+            if (styles != null && element != null)
+            {
+                for (var idx = 0; idx < styles.Count; idx++)
+                {
+                    if (styles.ElementAt(idx) is Style style && style.Setters != null && style.Setters.Count > 0)
+                    {
+                        foreach (Setter setter in style.Setters)
+                            element.SetValue(setter.Property, setter.Value);
+                    }
+                }
+            }
+        }
         internal static string TypeName(this IControl control)
         {
             return control.GetType().Name;

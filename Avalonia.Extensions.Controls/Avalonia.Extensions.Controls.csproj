@@ -15,6 +15,14 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
+      <AvaloniaResource Include="Styles\Xaml\*.xaml">
+        <SubType>Designer</SubType>
+      </AvaloniaResource>
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaResource Include="Styles\Xaml\GridView.xml" />
+    </ItemGroup>
+    <ItemGroup>
         <None Include="..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>

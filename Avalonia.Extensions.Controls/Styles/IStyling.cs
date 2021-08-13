@@ -14,10 +14,11 @@ namespace Avalonia.Extensions.Styles
             {
                 if (this is Control control)
                 {
-                    var typeName = GetType().Name;
+                    string typeName = GetType().Name, url =
+                        $"avares://Avalonia.Extensions.Theme/{typeName}.xaml";
                     if (!control.Resources.ContainsKey(typeName))
-                        control.Resources.Add(typeName, $"avares://Avalonia.Extensions.Theme/{typeName}.xaml".AsResource());
-                    AvaloniaLocator.Current.GetService<IStyler>()?.ApplyStyles(this);
+                        control.Resources.Add(typeName, url.AsResource());
+                    control.ApplyTheme(typeName);
                 }
             }
             catch (Exception ex)
