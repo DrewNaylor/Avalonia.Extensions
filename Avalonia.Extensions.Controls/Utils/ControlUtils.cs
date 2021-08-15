@@ -22,7 +22,13 @@ namespace Avalonia.Extensions.Controls
                     if (styles.ElementAt(idx) is Style style && style.Setters != null && style.Setters.Count > 0)
                     {
                         foreach (Setter setter in style.Setters)
-                            element.SetValue(setter.Property, setter.Value);
+                        {
+                            try
+                            {
+                                element.SetValue(setter.Property, setter.Value);
+                            }
+                            catch { }
+                        }
                     }
                 }
             }

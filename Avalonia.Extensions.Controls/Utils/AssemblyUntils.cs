@@ -17,15 +17,9 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 if (param == null || param.Length == 0)
-                {
-                    var obj = Assembly.Load(assemblyString).CreateInstance(className, false);
-                    return (T)obj;
-                }
+                    return (T)Assembly.Load(assemblyString).CreateInstance(className, false);
                 else
-                {
-                    var obj = Assembly.Load(assemblyString).CreateInstance(className, true, BindingFlags.Default, null, param, null, null);
-                    return (T)obj;
-                }
+                    return (T)Assembly.Load(assemblyString).CreateInstance(className, true, BindingFlags.Default, null, param, null, null);
             }
             catch { }
             return default;
@@ -43,21 +37,18 @@ namespace Avalonia.Extensions.Controls
         {
             var type = obj.GetType();
             MethodInfo meth = type.GetMethod(methodName);
-            var result = meth.Invoke(obj, param);
-            return (T)result;
+            return (T)meth.Invoke(obj, param);
         }
         public static T InvokeStaticMethod<T>(this object obj, string methodName, params object[] param)
         {
             Type type = obj.GetType();
-            var result = type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
-            return (T)result;
+            return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
         }
         public static T InvokeStaticMethod<T>(this string assemblyString, string className, string methodName, params object[] param)
         {
             var assembly = Assembly.Load(assemblyString);
             Type type = assembly.GetType(className);
-            var result = type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
-            return (T)result;
+            return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
         }
         public static T GetPrivateField<T>(this object obj, string fieldName)
         {

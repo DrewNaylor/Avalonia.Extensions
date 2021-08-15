@@ -75,7 +75,7 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] NotifyWindow
   > Notify message window,the transition animation can be displayed according to the preset and automatically closed after a certain period of time
 
-- [x] PopupDialog
+- [x] ~PopupDialog~
   > inherit from Popup,show message dialog and automatically shut down after a certain period of time
 
 - [x] PopupMenu

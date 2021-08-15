@@ -5,7 +5,6 @@ using Avalonia.Extensions.Event;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
 using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Demo
@@ -125,17 +124,6 @@ namespace Avalonia.Controls.Demo
         private void ScrollView_ScrollEnd(object? sender, RoutedEventArgs e)
         {
             MessageBox.Show("tips", "ScrollView -> Scroll End");
-        }
-        private void OnPopupClick(object sender, RoutedEventArgs e)
-        {
-            Collection.Clear();
-            Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                Time++;
-                PopupDialog dialog = new PopupDialog(PopupContent);
-                dialog.PlacementMode = PlacementMode.Top;
-                dialog.Open($"PopupDialog has been show for {Time} times");
-            });
         }
         private void OnNotifyPopupClick(object sender, RoutedEventArgs e)
         {

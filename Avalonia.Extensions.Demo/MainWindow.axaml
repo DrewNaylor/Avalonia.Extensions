@@ -72,7 +72,6 @@
 						<RowDefinition Height=".2*"/>
 						<RowDefinition Height=".2*"/>
 					</Grid.RowDefinitions>
-					<Button Grid.Row="0" Click="OnPopupClick">Show PopupDialog</Button>
 					<StackPanel Orientation="Vertical" Grid.Row="1">
 						<Button Click="OnNotifyClick" CommandParameter="1">TopLeft / Horizontal</Button>
 						<Button Click="OnNotifyClick" CommandParameter="2">TopRight / Horizontal</Button>

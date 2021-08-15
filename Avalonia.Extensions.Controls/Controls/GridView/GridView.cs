@@ -3,8 +3,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.Templates;
 using System.Collections.Specialized;
 
 namespace Avalonia.Extensions.Controls
@@ -97,8 +95,6 @@ namespace Avalonia.Extensions.Controls
         {
             ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
-            var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(Core.WRAP_TEMPLATE);
-            SetValue(ItemsPanelProperty, target);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
             BoundsProperty.Changed.AddClassHandler<GridView>(OnBoundsChange);
             ChildVerticalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalAlignmentChange);
