@@ -2,6 +2,7 @@
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform;
 using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace Avalonia.Extensions.Styles
@@ -22,7 +23,10 @@ namespace Avalonia.Extensions.Styles
                 var styles = AvaloniaRuntimeXamlLoader.Parse<Styling.Styles>(xaml);
                 element.UpdateStyles(styles);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }

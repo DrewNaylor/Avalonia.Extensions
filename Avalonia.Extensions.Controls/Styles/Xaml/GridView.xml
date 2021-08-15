@@ -3,5 +3,10 @@
 	<Style Selector="GridView">
 		<Setter Property="Background" Value="{TemplateBinding Background}" />
 		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="ItemsPanel">
+        <ItemsPanelTemplate>
+          <WrapPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+    </Setter>
 	</Style>
 </Styles>

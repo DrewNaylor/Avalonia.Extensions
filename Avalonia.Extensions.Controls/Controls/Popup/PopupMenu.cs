@@ -17,7 +17,7 @@ namespace Avalonia.Extensions.Controls
 {
     public class PopupMenu : Window
     {
-        private ListBox ListBox { get; }
+        private ListView ListBox { get; }
         /// <summary>
         /// Defines the <see cref="Items"/> property.
         /// </summary>
@@ -54,12 +54,17 @@ namespace Avalonia.Extensions.Controls
             Height = 60;
             Topmost = true;
             Focusable = true;
-            ListBox = new ListBox();
+            ListBox = new ListView();
             ShowInTaskbar = false;
             SystemDecorations = SystemDecorations.None;
+            ListBox.SizeChange += ListBox_SizeChange;
             ListBox.VirtualizationMode = ItemVirtualizationMode.None;
             ItemsProperty.Changed.AddClassHandler<PopupMenu>(OnItemsChange);
             ItemTemplateProperty.Changed.AddClassHandler<PopupMenu>(OnItemTemplateChanged);
+        }
+        private void ListBox_SizeChange(object sender, SizeRoutedEventArgs e)
+        {
+            this.Width = e.Width;
         }
         private void OnItemTemplateChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {

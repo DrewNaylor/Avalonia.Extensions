@@ -30,6 +30,11 @@ namespace Avalonia.Extensions.Controls
         public static readonly RoutedEvent<RoutedEventArgs> ScrollTopEvent =
            RoutedEvent.Register<ListView, RoutedEventArgs>(nameof(ScrollTop), RoutingStrategies.Bubble);
         /// <summary>
+        /// Defines the <see cref="ScrollTop"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<SizeRoutedEventArgs> SizeChangeEvent =
+           RoutedEvent.Register<ListView, SizeRoutedEventArgs>(nameof(SizeChange), RoutingStrategies.Bubble);
+        /// <summary>
         /// Defines the <see cref="ScrollEnd"/> event.
         /// </summary>
         public static readonly RoutedEvent<RoutedEventArgs> ScrollEndEvent =
@@ -87,6 +92,14 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// 
         /// </summary>
+        public event EventHandler<SizeRoutedEventArgs> SizeChange
+        {
+            add { AddHandler(SizeChangeEvent, value); }
+            remove { RemoveHandler(SizeChangeEvent, value); }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<RoutedEventArgs> ScrollEnd
         {
             add { AddHandler(ScrollEndEvent, value); }
@@ -99,10 +112,21 @@ namespace Avalonia.Extensions.Controls
             ViewProperty.Changed.AddClassHandler<Grid>(OnViewChanged);
             SelectionModeProperty.OverrideMetadata<ListView>(new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
+        private void OnBoundsChange(ListView view, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is Size size)
+            {
+                var args = new SizeRoutedEventArgs(SizeChangeEvent, size);
+                RaiseEvent(args);
+                if (!args.Handled)
+                    args.Handled = true;
+            }
+        }
         public ListView()
         {
             SelectionChangedEvent.Raised.Subscribe(OnSelectionChanged);
             ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
+            BoundsProperty.Changed.AddClassHandler<ListView>(OnBoundsChange);
             this.InitStyle();
         }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
