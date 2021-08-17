@@ -33,9 +33,9 @@ namespace Avalonia.Controls.Demo
             listView.ScrollTop += ListView_ScrollTop;
             listView.ScrollEnd += ListView_ScrollEnd;
             var splitListView = this.FindControl<GridView>("splitListView");
-            splitListView.ItemClick += SplitListView_ItemRightClick;
             splitListView.ScrollTop += ListView_ScrollTop;
             splitListView.ScrollEnd += ListView_ScrollEnd;
+            splitListView.ItemClick += SplitListView_ItemRightClick;
             BtnStart = this.FindControl<Button>("btnStart");
             BtnStart.Click += BtnStart_Click;
             var btnShow = this.FindControl<Button>("btnShow");

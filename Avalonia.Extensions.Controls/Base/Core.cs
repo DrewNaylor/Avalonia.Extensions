@@ -47,7 +47,7 @@ namespace Avalonia.Extensions.Controls
             if (HttpClient == null)
             {
                 var clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => { return true; };
+                clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => true;
                 HttpClient = new HttpClient(clientHandler);
             }
             return HttpClient;

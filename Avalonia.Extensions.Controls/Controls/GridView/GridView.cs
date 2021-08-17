@@ -30,11 +30,7 @@ namespace Avalonia.Extensions.Controls
         public int ColumnNum
         {
             get => GetValue(ColumnNumProperty);
-            set
-            {
-                CellWidth = value > 0 ? Bounds.Width / value : double.NaN;
-                SetValue(ColumnNumProperty, value);
-            }
+            set => SetValue(ColumnNumProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="ChildHorizontalContentAlignment"/> property.
@@ -97,11 +93,17 @@ namespace Avalonia.Extensions.Controls
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
             BoundsProperty.Changed.AddClassHandler<GridView>(OnBoundsChange);
+            ColumnNumProperty.Changed.AddClassHandler<GridView>(OnColumnNumChanged);
             ChildVerticalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalAlignmentChange);
             ChildHorizontalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalAlignmentChange);
             ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
             this.InitStyle();
+        }
+        private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is int value)
+                CellWidth = value > 0 ? Bounds.Width / value : double.NaN;
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
