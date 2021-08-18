@@ -1,9 +1,6 @@
-﻿using Avalonia.Collections;
-using Avalonia.Controls;
-using Avalonia.Metadata;
-using System.Collections.Generic;
+﻿using Avalonia.Metadata;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Media
 {
     public sealed class Run : AvaloniaObject
     {
@@ -21,20 +18,5 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
-    }
-    public class Runs : AvaloniaList<Run>
-    {
-        public Runs()
-        {
-            ResetBehavior = ResetBehavior.Remove;
-        }
-        public Runs(IEnumerable<Run> items) : base(items)
-        {
-            ResetBehavior = ResetBehavior.Remove;
-        }
-    }
-    public interface IRun : IControl
-    {
-        Runs Children { get; }
     }
 }

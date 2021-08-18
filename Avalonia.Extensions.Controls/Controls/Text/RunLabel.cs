@@ -1,5 +1,6 @@
 ﻿using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Styles;
 using Avalonia.Layout;
 using Avalonia.LogicalTree;
@@ -45,7 +46,7 @@ namespace Avalonia.Extensions.Controls
 		private string _text;
 		private Size _constraint;
 		private TextLayout _textLayout;
-		private AvaloniaList<string> Contents { get; set; } = new AvaloniaList<string>();
+		private AvaloniaList<string> _contents = new AvaloniaList<string>();
 		Type IStyleable.StyleKey => typeof(TextBlock);
 		public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		public Thickness Padding
@@ -143,25 +144,25 @@ namespace Avalonia.Extensions.Controls
 			{
 				case NotifyCollectionChangedAction.Add:
 					controls = e.NewItems.OfType<Run>().Select(x => x.Content);
-					Contents.InsertRange(e.NewStartingIndex, controls);
+					_contents.InsertRange(e.NewStartingIndex, controls);
 					break;
 				case NotifyCollectionChangedAction.Move:
-					Contents.RemoveRange(e.OldStartingIndex, e.OldItems.Count);
+					_contents.RemoveRange(e.OldStartingIndex, e.OldItems.Count);
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					controls = e.OldItems.OfType<Run>().Select(x => x.Content);
-					Contents.RemoveAll(controls);
+					_contents.RemoveAll(controls);
 					break;
 				case NotifyCollectionChangedAction.Replace:
 					for (var i = 0; i < e.OldItems.Count; ++i)
 					{
 						var index = i + e.OldStartingIndex;
 						var child = (Run)e.NewItems[i];
-						Contents[index] = child.Content;
+						_contents[index] = child.Content;
 					}
 					break;
 			}
-			_text = string.Join("", Contents);
+			_text = string.Join("", _contents);
 			InvalidateMeasureOnChildrenChanged();
 		}
 		private protected virtual void InvalidateMeasureOnChildrenChanged()
