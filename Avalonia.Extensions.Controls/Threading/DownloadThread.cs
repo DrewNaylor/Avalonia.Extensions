@@ -5,7 +5,7 @@ using System.Net.Http;
 
 namespace Avalonia.Extensions.Threading
 {
-    internal partial class DownloadThread : IDisposable
+    internal class DownloadThread : IDisposable
     {
         private bool Loading = false;
         private HttpClient HttpClient { get; }

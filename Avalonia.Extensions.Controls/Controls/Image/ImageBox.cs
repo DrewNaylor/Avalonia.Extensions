@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
@@ -13,7 +14,7 @@ namespace Avalonia.Extensions.Controls
     /// Inherited from <see cref="Image"/>.
     /// Used to display HTTP/HTTPS/Local pictures
     /// </summary>
-    public sealed class ImageBox : Image
+    public sealed class ImageBox : Image, IBitmapSource
     {
         /// <summary>
         /// original image width
@@ -51,6 +52,10 @@ namespace Avalonia.Extensions.Controls
                 if (value != null)
                     LoadBitmap(value);
             }
+        }
+        public Bitmap BitmapSource
+        {
+            set => base.Source = value;
         }
         private void LoadBitmap(Uri uri)
         {
