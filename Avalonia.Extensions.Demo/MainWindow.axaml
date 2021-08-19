@@ -34,6 +34,9 @@
 					</HorizontalItemsRepeater>
 				</StackPanel>
 			</TabItem>
+      <TabItem Header="GroupListView">
+        <GroupListView x:Name="groupListView" />
+      </TabItem>
 			<TabItem Header="ListView">
 				<Grid>
 					<Grid.RowDefinitions>

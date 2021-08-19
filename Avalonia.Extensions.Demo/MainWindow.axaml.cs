@@ -2,9 +2,11 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
+using Avalonia.Extensions.Model;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Demo
@@ -61,6 +63,14 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
+            var groupListView = this.FindControl<GroupListView>("groupListView");
+            groupListView.Selector = x => x.Header;
+            groupListView.ItemSources = new List<GroupItem>
+            {
+                new GroupItem("1", new []{ new CustomBindingModel("1") }),
+                new GroupItem("2", new []{ new CustomBindingModel("2") }),
+                new GroupItem("3", new []{ new CustomBindingModel("3") }),
+            };
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {

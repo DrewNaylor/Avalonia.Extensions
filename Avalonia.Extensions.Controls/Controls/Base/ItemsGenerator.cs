@@ -20,10 +20,12 @@ namespace Avalonia.Extensions.Controls
         {
             get
             {
-                if (ChildItem.Equals("ListViewItem"))
-                    return typeof(ListViewItem);
-                else
-                    return typeof(GridViewItem);
+                return ChildItem switch
+                {
+                    "ListViewItem" => typeof(ListViewItem),
+                    "GroupItemView" => typeof(GroupItemView),
+                    _ => typeof(GridViewItem),
+                };
             }
         }
         protected AvaloniaProperty ContentProperty { get; }
@@ -36,8 +38,12 @@ namespace Avalonia.Extensions.Controls
             }
             else
             {
-                var result = ChildItem.Equals("ListViewItem") ? new ListViewItem() :
-                    new GridViewItem();
+                var result = ChildItem switch
+                {
+                    "ListViewItem" => new ListViewItem(),
+                    "GroupItemView" => new GroupItemView(),
+                    _ => new GridViewItem()
+                };
                 if (ContentTemplateProperty != null)
                     result.SetValue(ContentTemplateProperty, ItemTemplate, BindingPriority.Style);
                 result.SetValue(ContentProperty, item, BindingPriority.Style);

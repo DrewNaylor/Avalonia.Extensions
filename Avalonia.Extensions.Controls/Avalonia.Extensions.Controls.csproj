@@ -38,5 +38,8 @@
       <None Update="Styles\Xaml\GridView.xml">
         <Generator>MSBuild:Compile</Generator>
       </None>
+      <None Update="Styles\Xaml\SymbolIcon.xml">
+        <Generator>MSBuild:Compile</Generator>
+      </None>
     </ItemGroup>
 </Project>

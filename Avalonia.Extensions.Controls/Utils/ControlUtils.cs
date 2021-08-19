@@ -73,11 +73,9 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic
-                    | BindingFlags.Instance);
+                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
                 if (methodInfo == null && type.BaseType != null)
-                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic
-                    | BindingFlags.Instance);
+                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
                 return methodInfo?.Invoke(control, parameters);
             }
             catch (Exception ex)

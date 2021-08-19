@@ -1,11 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Design.PreviewWith>
-    <StackPanel Spacing="10" Margin="10">
-      <FontIcon Glyph="★" />
-      <FontIcon Glyph="" FontFamily="Segoe MDL2 Assets" />
-    </StackPanel>
-  </Design.PreviewWith>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="https://github.com/dove-team/avalonia.extensions">
   <Style Selector="FontIcon">
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
     <Setter Property="FontSize" Value="15" />
