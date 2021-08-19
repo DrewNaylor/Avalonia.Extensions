@@ -57,13 +57,13 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-					<GridView Name="splitListView" Grid.Row="1" ColumnNum="4" Items="{Binding Items}" Command="{Binding OnItemClick}">
-						<GridView.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding content}" />
-							</DataTemplate>
-						</GridView.ItemTemplate>
-					</GridView>
+          <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
+            <GridView.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding content}" />
+              </DataTemplate>
+            </GridView.ItemTemplate>
+          </GridView>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Popup/Notify">
@@ -158,13 +158,14 @@
 					<Button Name="btnStart">开始</Button>
 				</StackPanel>
 			</TabItem>
-			<TabItem Header="TipLabel">
+			<TabItem Header="Label">
 				<StackPanel Orientation="Vertical">
 					<RunLabel Foreground="White" FontSize="18">
 						<Run Content="111" />
 						<Run Content="222" />
 						<Run Content="333" />
 					</RunLabel>
+					<SymbolIcon Glyph="&#xE700;" />
 					<TipLabel Content="123456" Padding="8" Background="Red" Foreground="White" />
 					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
 				</StackPanel>

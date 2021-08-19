@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
+using Color = Avalonia.Media.Color;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -47,7 +48,7 @@ namespace Avalonia.Extensions.Controls
             if (HttpClient == null)
             {
                 var clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => { return true; };
+                clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => true;
                 HttpClient = new HttpClient(clientHandler);
             }
             return HttpClient;
@@ -70,7 +71,7 @@ namespace Avalonia.Extensions.Controls
             get
             {
                 if (_primaryBrush == null)
-                    _primaryBrush = new SolidColorBrush(Media.Color.FromRgb(139, 68, 172));
+                    _primaryBrush = new SolidColorBrush(Color.FromRgb(139, 68, 172));
                 return _primaryBrush;
             }
         }
