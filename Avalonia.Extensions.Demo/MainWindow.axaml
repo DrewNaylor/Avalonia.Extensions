@@ -165,7 +165,7 @@
 						<Run Content="222" />
 						<Run Content="333" />
 					</RunLabel>
-					<FontIcon Glyph="&#xE700;" />
+					<SymbolIcon Glyph="&#xE700;" />
 					<TipLabel Content="123456" Padding="8" Background="Red" Foreground="White" />
 					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
 				</StackPanel>

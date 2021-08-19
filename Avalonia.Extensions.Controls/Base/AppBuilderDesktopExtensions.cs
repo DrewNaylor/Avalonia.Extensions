@@ -51,7 +51,7 @@ namespace Avalonia.Extensions.Controls
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var style = new Style();
-                var selector = default(Selector).OfType(typeof(FontIcon));
+                var selector = default(Selector).OfType(typeof(SymbolIcon));
                 style.Selector = selector;
                 style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
                     new FontFamily("avares://Avalonia.Extensions.Controls/Assets/Fonts#SegMDL2")));

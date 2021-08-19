@@ -109,7 +109,7 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] ImageContentButton
 > the button show Image and Text
 
--[x] FontIcon
+-[x] ~FontIcon~ SymbolIcon
 > the `FontIcon` in UWP
 
 > # EXTEND

@@ -11,17 +11,17 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// https://github.com/AvaloniaUI/Avalonia/tree/feature/icons/src
     /// </summary>
-    public class FontIcon : TemplatedControl, IStyling
+    public class SymbolIcon : TemplatedControl, IStyling
     {
         public static readonly StyledProperty<string> GlyphProperty =
-             AvaloniaProperty.Register<FontIcon, string>(nameof(Glyph));
+             AvaloniaProperty.Register<SymbolIcon, string>(nameof(Glyph));
         public string Glyph
         {
             get => GetValue(GlyphProperty);
             set => SetValue(GlyphProperty, value);
         }
         Type IStyleable.StyleKey => typeof(TextBlock);
-        public FontIcon()
+        public SymbolIcon()
         {
             this.InitStyle();
             SetValue(FontFamilyProperty, "Segoe MDL2 Assets");
@@ -29,7 +29,7 @@ namespace Avalonia.Extensions.Controls
         public class FontIconSource : AvaloniaObject
         {
             public static readonly StyledProperty<string> GlyphProperty =
-                FontIcon.GlyphProperty.AddOwner<FontIconSource>();
+                SymbolIcon.GlyphProperty.AddOwner<FontIconSource>();
             /// <summary>
             /// Defines the <see cref="FontFamily"/> property.
             /// </summary>
@@ -94,13 +94,13 @@ namespace Avalonia.Extensions.Controls
                 get => GetValue(ForegroundProperty);
                 set => SetValue(ForegroundProperty, value);
             }
-            public IDataTemplate IconElementTemplate { get; } = new FuncDataTemplate<FontIconSource>((source, _) => new FontIcon
+            public IDataTemplate IconElementTemplate { get; } = new FuncDataTemplate<FontIconSource>((source, _) => new SymbolIcon
             {
-                [!ForegroundProperty] = source[!ForegroundProperty],
                 [!GlyphProperty] = source[!GlyphProperty],
-                [!FontFamilyProperty] = source[!FontFamilyProperty],
                 [!FontSizeProperty] = source[!FontSizeProperty],
                 [!FontStyleProperty] = source[!FontStyleProperty],
+                [!FontFamilyProperty] = source[!FontFamilyProperty],
+                [!ForegroundProperty] = source[!ForegroundProperty],
                 [!FontWeightProperty] = source[!FontWeightProperty]
             });
         }
