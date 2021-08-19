@@ -1,7 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
-using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using System;
@@ -28,25 +26,12 @@ namespace Avalonia.Extensions.Styles
                             control.ApplyTheme(sourceUri);
                         }
                     }
-                    ApplyGridViewStyle();
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                 }
             });
-        }
-        /// <summary>
-        /// GridView style will sometimes fail
-        /// </summary>
-        void ApplyGridViewStyle()
-        {
-            if (this is GridView)
-            {
-                var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(
-                    "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>");
-                SetValue(ItemsControl.ItemsPanelProperty, target);
-            }
         }
     }
 }

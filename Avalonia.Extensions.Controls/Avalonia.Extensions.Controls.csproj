@@ -8,8 +8,8 @@
         <Product>Avalonia.Extensions.Controls</Product>
         <Authors>michael_eddy</Authors>
         <UserSecretsId>214483ab-ede2-45c7-ac37-b353540601d8</UserSecretsId>
-        <Version>1.4.4</Version>
-        <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <Version>1.4.5</Version>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
         <RootNamespace>Avalonia.Extensions</RootNamespace>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
