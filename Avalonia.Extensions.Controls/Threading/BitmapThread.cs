@@ -2,7 +2,9 @@
 using Avalonia.Extensions.Media;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Avalonia.Extensions.Threading
 {
@@ -32,11 +34,25 @@ namespace Avalonia.Extensions.Threading
                         case "http":
                         case "https":
                             {
-
+                                CancellationTokenSource cancellationToken = new CancellationTokenSource();
+                                ThreadPool.QueueUserWorkItem(new WaitCallback(OnHttpHandle), new object[] { cancellationToken.Token, Owner.Source });
                                 break;
                             }
                     }
                 }
+            }
+        }
+        private void OnHttpHandle(object state)
+        {
+            if (state is object[] objs)
+            {
+                var uri = objs.ElementAt(1) as Uri;
+                var cancelToken = (CancellationToken)objs.ElementAt(0);
+                cancelToken.Register(() =>
+                {
+
+                });
+
             }
         }
         public void Dispose()
