@@ -1,11 +1,25 @@
 ﻿using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Platform;
 using System;
+using System.Drawing;
 using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static Graphics GetGraphics(this IWindowImpl impl)
+        {
+            try
+            {
+                return Graphics.FromHwnd(impl.Handle.Handle);
+            }
+            catch
+            {
+                Bitmap bitmap = new Bitmap(1, 1);
+                return Graphics.FromImage(bitmap);
+            }
+        }
         public static int Upper(this double value)
         {
             return Convert.ToInt32(Math.Ceiling(value));

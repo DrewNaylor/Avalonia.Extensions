@@ -39,13 +39,17 @@ namespace Avalonia.Extensions.Controls
             Height = 80;
             CanResize = false;
             CreateControls();
-            if (PlatformImpl != null)
-                Graphic = Graphics.FromHwnd(PlatformImpl.Handle.Handle);
+            Graphic = PlatformImpl.GetGraphics();
         }
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             Graphic.Dispose();
+        }
+        public override void Show()
+        {
+            base.Show();
+            Topmost = true;
         }
         private void CreateControls()
         {
