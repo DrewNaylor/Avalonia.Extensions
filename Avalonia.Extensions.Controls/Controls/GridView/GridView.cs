@@ -91,9 +91,7 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public GridView()
         {
-            var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(
-                "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>");
-            SetValue(ItemsPanelProperty, target);
+            SetColumnStyle();
             ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
@@ -105,6 +103,21 @@ namespace Avalonia.Extensions.Controls
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
             this.InitStyle();
         }
+
+        private void SetColumnStyle()
+        {
+            try
+            {
+                var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(
+                    "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>");
+                SetValue(ItemsPanelProperty, target);
+            }
+            catch
+            {
+                SetColumnStyle();
+            }
+        }
+
         private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is int value)

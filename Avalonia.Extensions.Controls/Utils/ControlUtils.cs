@@ -52,7 +52,7 @@ namespace Avalonia.Extensions.Controls
         {
             if (impl != null)
             {
-                var graphic = Graphics.FromHwnd(impl.Handle.Handle);
+                var graphic = impl.GetGraphics();
                 StringFormat sf = StringFormat.GenericTypographic;
                 sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
                 if (maxWidth != 0)
